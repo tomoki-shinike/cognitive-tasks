@@ -14,20 +14,20 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;background:#F2F3F5;color:var(--tx1);font-size:16px;line-height:1.6;}
-body[data-screen="s-menu"],body[data-screen="s-tmt"],body[data-screen="s-can"],body[data-screen="s-dr"],body[data-screen="s-lb"]{background-color:#343C4B;background-image:radial-gradient(circle,rgba(255,255,255,.20) 3px,transparent 3.6px),radial-gradient(circle,rgba(255,255,255,.11) 3px,transparent 3.6px);background-size:36px 36px;background-position:0 0,18px 18px;}
+body:not([data-screen="s-result"]):not([data-screen="s-report"]){background-color:#343C4B;background-image:radial-gradient(circle,rgba(255,255,255,.20) 3px,transparent 3.6px),radial-gradient(circle,rgba(255,255,255,.11) 3px,transparent 3.6px);background-size:36px 36px;background-position:0 0,18px 18px;}
 body[data-play="1"][data-screen]{background-color:#F2F3F5;background-image:none;}
 body[data-play="1"] #hdesc{display:none;}
 header.app{background:var(--surface);border-bottom:1px solid var(--border);padding:0;}
 .hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#171C26;color:#fff;padding:12px 18px;}
-#hdesc{min-height:104px;padding:0 18px;}
+#hdesc{min-height:118px;padding:0 18px;}
 #hdesc:empty{display:none;}
 #hdesc .phead{padding-top:14px;}
 #hdesc .phead .sub{margin-bottom:6px;}
-#hdesc .phead .back{margin-bottom:2px;}
+#hdesc .phead .back{margin-bottom:6px;}
 header.app h1{font-size:18px;color:#fff;}
 .badge{font-size:12px;background:var(--okl);color:var(--ok);border:1px solid #BFE0CF;border-radius:20px;padding:3px 12px;}
 .main{max-width:1200px;margin:0 auto;padding:16px;}
-body[data-screen="s-menu"]:not([data-play="1"]) .main,body[data-screen="s-tmt"]:not([data-play="1"]) .main,body[data-screen="s-can"]:not([data-play="1"]) .main,body[data-screen="s-dr"]:not([data-play="1"]) .main,body[data-screen="s-lb"]:not([data-play="1"]) .main{padding-top:36px;padding-bottom:36px;}
+body:not([data-screen="s-result"]):not([data-screen="s-report"]):not([data-play="1"]) .main{padding-top:36px;padding-bottom:36px;}
 .setcard{max-width:920px;min-height:480px;margin:0 auto;padding:28px 32px;display:flex;flex-direction:column;}
 .set-foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
 .set-note{flex:1 1 320px;font-size:13px;color:var(--tx2);margin:0;line-height:1.7;}
@@ -39,6 +39,7 @@ h2{font-size:20px;margin-bottom:4px;}
 .row{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;}
 .row>label{width:130px;flex-shrink:0;font-weight:700;font-size:14px;color:var(--tx2);padding-top:10px;}
 .seg{display:flex;gap:8px;flex-wrap:wrap;}
+.row>.seg{flex:1 1 0;min-width:0;}
 .seg button{min-height:48px;min-width:64px;padding:6px 16px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:700;color:var(--tx1);cursor:pointer;font-family:inherit;line-height:1.3;}
 .seg button small{display:block;font-size:11px;font-weight:400;color:var(--tx2);}
 .seg button.active{border-color:var(--ac);background:var(--acl);color:var(--acd);}
@@ -48,7 +49,8 @@ h2{font-size:20px;margin-bottom:4px;}
 .btn-d{background:var(--ngl);color:var(--ng);border:2px solid #F2C4BF;}
 .btn:disabled{opacity:.4;cursor:default;}
 .btn.big{min-height:56px;font-size:18px;padding:10px 36px;}
-.back{background:none;border:none;color:var(--ac);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;padding:6px 0;font-family:inherit;}
+.back{display:inline-flex;align-items:center;gap:6px;background:#2A6EBB;border:none;color:#fff;font-size:17px;font-weight:700;cursor:pointer;margin-bottom:10px;padding:9px 20px 9px 16px;border-radius:999px;font-family:inherit;box-shadow:0 2px 6px rgba(42,110,187,.35);}
+.back:active{background:#1E5499;transform:scale(.97);}
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:16px;}
 .mcard{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:18px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;}
 .mcard:active{transform:scale(.985);}
@@ -94,6 +96,27 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
 .rtitle{font-size:20px;font-weight:700;margin-bottom:2px;}
 .empty{color:var(--tx2);padding:24px;text-align:center;}
 .printonly{display:none;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.chip{min-height:42px;padding:6px 18px;border-radius:999px;border:2px solid rgba(255,255,255,.55);background:transparent;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.chip.active{background:#fff;color:#1A2332;border-color:#fff;}
+.mcard .tags{margin-top:auto;padding-top:10px;display:flex;gap:5px;flex-wrap:wrap;}
+.mcard .tags span{font-size:11px;font-weight:700;color:var(--tx2);background:rgba(255,255,255,.8);border-radius:999px;padding:1px 9px;}
+.mcard.th-spot{background:#E8F5EC;border-color:#A8D8B6;border-bottom:6px solid #4FAF6F;}
+.mcard.th-cor{background:#FFF4DB;border-color:#F0D189;border-bottom:6px solid #E0A526;}
+.mcard.th-calc{background:#E9ECFA;border-color:#B3BCEB;border-bottom:6px solid #6877D6;}
+.mcard.th-vol{background:#FDE9E7;border-color:#F2B3AC;border-bottom:6px solid #E4685D;}
+.bigmsg{text-align:center;font-size:22px;font-weight:700;min-height:34px;margin-bottom:6px;color:var(--tx1);}
+.calc-box{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;text-align:center;}
+.calc-q{font-size:60px;font-weight:700;letter-spacing:.04em;margin:4px 0 6px;font-variant-numeric:tabular-nums;}
+.calc-fb{min-height:32px;font-size:20px;font-weight:700;margin-bottom:8px;}
+.calc-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.calc-choices button{min-height:88px;font-size:40px;font-weight:700;border:2px solid var(--border);border-radius:14px;background:#fff;cursor:pointer;font-family:inherit;color:var(--tx1);}
+.calc-choices button:active,.calc-pad button:active{background:var(--acl);}
+.calc-disp{font-size:52px;font-weight:700;min-height:76px;border-bottom:3px solid var(--tx1);margin:0 auto 12px;max-width:320px;font-variant-numeric:tabular-nums;}
+.calc-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:0 auto;}
+.calc-pad button{min-height:66px;font-size:30px;font-weight:700;border:2px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;font-family:inherit;color:var(--tx1);}
+.calc-pad button.ok{background:#1A2332;color:#fff;border-color:#1A2332;font-size:22px;}
+.calc-pad button[data-k="del"]{font-size:20px;}
 #modal{position:fixed;inset:0;background:rgba(20,26,36,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
 #modal .mbox{background:#fff;border-radius:14px;padding:24px;max-width:440px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.35);}
 #modal p{font-size:17px;line-height:1.7;margin-bottom:18px;}
@@ -112,6 +135,83 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
   table.mt{font-size:12px;}
   table.mt tr.em td{font-size:14px;}
 }
+.cpt-box{width:100%;max-width:760px;height:380px;background:#fff;border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;touch-action:manipulation;user-select:none;}
+.cpt-digit{font-size:190px;font-weight:700;line-height:1;}
+.sdmt-pad{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin-top:10px;}
+.sdmt-pad button{font-size:34px;font-weight:700;padding:14px 0;border-radius:12px;border:2px solid var(--border);background:#fff;}
+.sdmt-pad button:active{background:#E3ECF7;}
+.stroop-word{font-size:130px;font-weight:800;line-height:1.2;margin:6px 0;}
+.stroop-btns{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px;}
+.stroop-btns button{height:96px;border-radius:16px;border:4px solid #fff;box-shadow:0 0 0 2px var(--border);}
+.stroop-btns button:active{transform:scale(.96);}
+.rt-wrap{display:flex;gap:16px;width:100%;max-width:900px;}
+.rt-pane{flex:1;height:360px;background:#fff;border:2px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;touch-action:manipulation;user-select:none;}
+.rt-dot{width:170px;height:170px;border-radius:50%;background:#2A6EBB;display:none;}
+.pairs-grid{display:grid;gap:12px;justify-content:center;}
+.pcard{width:120px;height:120px;border-radius:14px;border:3px solid #fff;background:#3B6FB6;color:#fff;font-size:44px;font-weight:700;box-shadow:0 0 0 2px var(--border);padding:0;display:flex;align-items:center;justify-content:center;}
+.pcard.open{background:#fff;border-color:#CFD8E3;}
+.pcard.ok{background:#EAF6EF;border-color:#2E7D5E;}
+.recog-ch{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.recog-ch button{width:150px;height:150px;border-radius:16px;border:2px solid var(--border);background:#fff;padding:0;}
+.recog-ch button:active{background:#E3ECF7;}
+.w3-words{display:flex;gap:30px;justify-content:center;font-size:58px;font-weight:800;margin:60px 0 20px;flex-wrap:wrap;}
+.w3-sub{text-align:center;font-size:22px;color:#5A6A7A;margin:10px 0 18px;}
+.w3-recall{display:flex;gap:16px;justify-content:center;margin:20px 0 28px;}
+.w3-recall button{width:200px;padding:22px 0;border-radius:16px;border:3px solid var(--border);background:#fff;display:flex;flex-direction:column;gap:6px;align-items:center;}
+.w3-recall button b{font-size:26px;}.w3-recall button small{font-size:14px;color:#8A97A6;}
+.w3-recall button.on{background:#EAF6EF;border-color:#2E7D5E;}
+.stroop-btns button.plain{height:90px;background:#fff;border:2px solid var(--border);box-shadow:none;font-size:34px;font-weight:700;color:var(--tx1);}
+.stroop-btns button.plain.big3{height:120px;font-size:38px;}
+.recog-ch canvas,.pcard canvas{border:0!important;box-shadow:none!important;background:transparent!important;border-radius:0!important;}
+.chk-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 18px;text-align:left;}
+.chk-list button{padding:14px 16px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:17px;text-align:left;}
+.chk-list button.on{background:#EAF6EF;border-color:#2E7D5E;font-weight:700;}
+.rot-row{display:flex;gap:26px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.rot-ch{display:grid;grid-template-columns:repeat(4,150px);gap:12px;}
+.rot-ch button,.rot-tg{border-radius:16px;border:2px solid var(--border);background:#fff;padding:0;}
+.rot-ch canvas,.rot-tg canvas{border:0!important;box-shadow:none!important;background:transparent!important;}
+.sort-keys{display:flex;gap:16px;justify-content:center;margin-bottom:18px;}
+.sort-keys button{padding:0;border-radius:14px;border:3px solid var(--border);background:#fff;}
+.sort-keys button:active{border-color:#2A6EBB;background:#EAF1FB;}
+.sort-keys canvas,.sort-resp canvas{border:0!important;box-shadow:none!important;background:transparent!important;}
+.sort-resp{display:inline-block;border-radius:14px;border:3px dashed #8FA3B8;background:#fff;}
+.seq-slots{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.seq-slot{display:flex;gap:12px;align-items:center;min-height:54px;padding:6px 14px;border-radius:12px;border:2px dashed #B8C4D2;background:#fff;font-size:22px;text-align:left;}
+.seq-slot b{width:34px;height:34px;border-radius:50%;background:#EAF1FB;color:#2A6EBB;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;}
+.seq-slot.f{border-style:solid;border-color:#2A6EBB;background:#F4F8FD;}
+.seq-pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:14px;}
+.seq-pool button{padding:14px 18px;font-size:21px;border-radius:12px;border:2px solid var(--border);background:#fff;}
+.seq-pool button:disabled{opacity:.25;}
+.money{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:12px 0;}
+.money button{border:3px solid rgba(0,0,0,.25);font-weight:800;font-size:20px;color:#1A2332;display:flex;align-items:center;justify-content:center;padding:0;}
+.money button.coin{width:78px;height:78px;border-radius:50%;}
+.money button.bill{width:140px;height:74px;border-radius:8px;}
+.money button:active{transform:scale(.94);}
+.tray{min-height:70px;border:2px dashed #8FA3B8;border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:8px 0;background:#fff;}
+.tray span{padding:6px 12px;border-radius:999px;background:#EAF1FB;font-size:18px;font-weight:700;}
+.odd-ch{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px;}
+.odd-ch button{height:130px;border-radius:16px;border:2px solid var(--border);background:#fff;font-size:30px;font-weight:700;padding:0;}
+.odd-ch button:active{background:#E3ECF7;}
+.odd-ch canvas{border:0!important;box-shadow:none!important;background:transparent!important;}
+.miniacts{display:flex;gap:10px;justify-content:center;margin-top:10px;}
+/* ---- 見やすさ・コンパクト化 ---- */
+.sub{color:#2F3B4A;font-size:18px;line-height:1.5;}
+.set-note{font-size:16px;color:#2F3B4A;line-height:1.65;}
+.row>label{font-size:17px;color:#2F3B4A;}
+.seg button small{font-size:13px;color:#44525F;}
+.seg button{font-size:16px;}
+.menu-grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;}
+.mcard{padding:10px 12px 10px;align-items:center;text-align:center;}
+.mcard .md{display:none;}
+.mcard .mi{width:44px;height:44px;margin-bottom:6px;border-radius:12px;}
+.mcard .mi svg{width:28px;height:28px;}
+.mcard .mt{font-size:15px;line-height:1.3;margin-bottom:2px;min-height:40px;display:flex;align-items:center;justify-content:center;}
+.mcard .tags{justify-content:center;padding-top:6px;gap:3px;}
+.mcard .tags span{font-size:10.5px;padding:1px 7px;}
+.mcard .tags span.staff{background:#FFE9C7;color:#8A4B00;}
+.chip.staffchip{border-color:#FFD08A;}
+.chip.staffchip.active{background:#FFD08A;color:#1A2332;}
+#hdesc{min-height:130px;}
 </style>
 </head>
 <body data-screen="s-menu">
@@ -131,12 +231,19 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
   <h2>課題を選んでください</h2>
   <p class="sub">タブレットやパソコンの画面で行う課題です。実施後の結果は「結果用紙」にまとめて印刷・PDF保存できます。</p>
   </div>
+  <div class="filters" id="menu-filters">
+    <button class="chip active" data-v="all">すべて</button><button class="chip" data-v="att">注意</button><button class="chip" data-v="mem">記憶</button><button class="chip" data-v="vis">視空間・構成</button><button class="chip" data-v="exe">遂行・計算</button><button class="chip" data-v="lang">言語・声</button><button class="chip staffchip" data-v="staff">スタッフ採点あり</button>
+  </div>
   <div class="menu-grid">
-    <button class="mcard th-cp" onclick="openTask('cp')"><div class="mi"><svg viewBox="0 0 32 32"><rect x="2.5" y="6.5" width="12" height="19" rx="2.5"/><rect x="17.5" y="6.5" width="12" height="19" rx="2.5"/><path d="M8.5 11 12 20.5H5Z"/><path d="M23.5 13.5 26.5 21H20.5Z" stroke-dasharray="2 2"/></svg></div><div class="mt">図形模写</div><div class="md">見本を見ながら別の枠に描く。大きさが違っても、形の一致度を判定します（重なる五角形など）。</div></button>
-    <button class="mcard th-dr" onclick="openTask('dr')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M3.5 22C8 6 13 6 16 15S24 25 28.5 9" stroke-dasharray="1.5 3.2"/><path d="M5 25.5 8.5 24.5 25 8 22.5 5.5 6 22Z" transform="translate(0 0)" stroke-width="0"/><path d="M9 26 12 25 26.5 10.5 23.5 7.5 9 22Z" stroke-width="1.8"/></svg></div><div class="mt">手描きなぞり</div><div class="md">見本の上をなぞる。見本との一致度を％で判定します。</div></button>
-    <button class="mcard th-tmt" onclick="openTask('tmt')"><div class="mi"><svg viewBox="0 0 32 32"><circle cx="7" cy="23" r="3.5"/><circle cx="14" cy="8.5" r="3.5"/><circle cx="25" cy="19" r="3.5"/><path d="M8.4 19.8 12.6 11.6M17.3 9.9 22.4 16.2"/></svg></div><div class="mt">TMT（A・B）</div><div class="md">数字（とひらがな）を順番にタップ。注意力・頭の切り替えを見ます。</div></button>
-    <button class="mcard th-can" onclick="openTask('can')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M16 7 18.3 12.8 24.6 13.2 19.7 17.2 21.3 23.3 16 19.9 10.7 23.3 12.3 17.2 7.4 13.2 13.7 12.8Z"/><circle cx="16" cy="16" r="13" stroke-dasharray="2.5 3.5"/></svg></div><div class="mt">抹消課題</div><div class="md">散らばった図形から指定のものを探してタップ。見落としの左右差も集計します。</div></button>
-    <button class="mcard th-lb" onclick="openTask('lb')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M3 16H29M3 11.5V20.5M29 11.5V20.5"/><path d="M16 8V24" stroke-dasharray="2 2.5"/></svg></div><div class="mt">線分二等分</div><div class="md">線の真ん中をタップ。中央からのずれ（左右どちらにずれたか）を測ります。</div></button>
+    <button class="mcard th-cp" data-cat="vis" onclick="openTask('cp')"><div class="mi"><svg viewBox="0 0 32 32"><rect x="2.5" y="6.5" width="12" height="19" rx="2.5"/><rect x="17.5" y="6.5" width="12" height="19" rx="2.5"/><path d="M8.5 11 12 20.5H5Z"/><path d="M23.5 13.5 26.5 21H20.5Z" stroke-dasharray="2 2"/></svg></div><div class="mt">図形模写</div><div class="md">見本を見ながら別の枠に描く。大きさが違っても、形の一致度を判定します（重なる五角形など）。</div></button>
+    <button class="mcard th-dr" data-cat="vis" onclick="openTask('dr')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M3.5 22C8 6 13 6 16 15S24 25 28.5 9" stroke-dasharray="1.5 3.2"/><path d="M5 25.5 8.5 24.5 25 8 22.5 5.5 6 22Z" transform="translate(0 0)" stroke-width="0"/><path d="M9 26 12 25 26.5 10.5 23.5 7.5 9 22Z" stroke-width="1.8"/></svg></div><div class="mt">手描きなぞり</div><div class="md">見本の上をなぞる。見本との一致度を％で判定します。</div></button>
+    <button class="mcard th-tmt" data-cat="att exe" onclick="openTask('tmt')"><div class="mi"><svg viewBox="0 0 32 32"><circle cx="7" cy="23" r="3.5"/><circle cx="14" cy="8.5" r="3.5"/><circle cx="25" cy="19" r="3.5"/><path d="M8.4 19.8 12.6 11.6M17.3 9.9 22.4 16.2"/></svg></div><div class="mt">TMT（A・B）</div><div class="md">数字（とひらがな）を順番にタップ。注意力・頭の切り替えを見ます。</div></button>
+    <button class="mcard th-can" data-cat="att" onclick="openTask('can')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M16 7 18.3 12.8 24.6 13.2 19.7 17.2 21.3 23.3 16 19.9 10.7 23.3 12.3 17.2 7.4 13.2 13.7 12.8Z"/><circle cx="16" cy="16" r="13" stroke-dasharray="2.5 3.5"/></svg></div><div class="mt">抹消課題</div><div class="md">散らばった図形から指定のものを探してタップ。見落としの左右差も集計します。</div></button>
+    <button class="mcard th-lb" data-cat="att vis" onclick="openTask('lb')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M3 16H29M3 11.5V20.5M29 11.5V20.5"/><path d="M16 8V24" stroke-dasharray="2 2.5"/></svg></div><div class="mt">線分二等分</div><div class="md">線の真ん中をタップ。中央からのずれ（左右どちらにずれたか）を測ります。</div></button>
+    <button class="mcard th-spot" data-cat="att vis" onclick="openTask('spot')"><div class="mi"><svg viewBox="0 0 32 32"><circle cx="14" cy="14" r="8.5"/><path d="M20.5 20.5 28 28"/><path d="M10.5 14h7M14 10.5v7" stroke-width="1.6"/></svg></div><div class="mt">間違い探し</div><div class="md">左右の絵を見比べて、違うところをタップ。見落としの左右差も集計します。</div></button>
+    <button class="mcard th-cor" data-cat="mem" onclick="openTask('cor')"><div class="mi"><svg viewBox="0 0 32 32"><rect x="4.5" y="4.5" width="8" height="8" rx="2"/><rect x="19.5" y="6.5" width="8" height="8" rx="2" fill="#1A2332"/><rect x="8.5" y="19.5" width="8" height="8" rx="2"/><rect x="21" y="21" width="7" height="7" rx="2"/></svg></div><div class="mt">順番記憶</div><div class="md">光った順番を覚えて、同じ順番でタップ。覚えていられる長さを測ります。</div></button>
+    <button class="mcard th-calc" data-cat="exe" onclick="openTask('calc')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M9 5v10M4 10h10"/><path d="M19 10h10"/><path d="M20 21l8 8M28 21l-8 8"/><path d="M4 25h10M4 29h10"/></svg></div><div class="mt">計算課題</div><div class="md">たし算・ひき算・かけ算を、タップで答える。キーボードは使いません。</div></button>
+    <button class="mcard th-vol" data-cat="lang" onclick="openTask('vol')"><div class="mi"><svg viewBox="0 0 32 32"><path d="M5 17v-2M10 21V11M15 25V7M20 21V11M25 18v-4M29 16v0"/></svg></div><div class="mt">音量メーター</div><div class="md">マイクで声の大きさを測り、目標との差をメーターで見せます（目安の値）。</div></button>
   </div>
   <div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
     <div style="flex:1 1 220px;"><b>今回の記録：<span id="menu-count">0</span> 件</b><div class="sub" style="margin:0;">実施した課題が「結果用紙」に集まります。</div></div>
@@ -261,6 +368,124 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
       <button class="btn btn-p" id="lb-done" onclick="lbEnd()" disabled>完了</button>
     </div>
     <div class="stage" id="lb-stage"><canvas id="lb-cv"></canvas></div>
+  </div>
+</section>
+
+<!-- ===== 間違い探し ===== -->
+<section class="screen" id="s-spot">
+  <div class="phead" data-home="s-spot">
+    <button class="back" onclick="show('s-menu')">← メニューに戻る</button>
+    <h2>間違い探し</h2>
+    <p class="sub">左右の絵を見比べて、違うところをタップします。</p>
+  </div>
+  <div id="spot-set" class="card setcard">
+    <div class="row"><label>違いの数</label><div class="seg" id="spot-n">
+      <button data-v="3">3つ</button><button data-v="5" class="active">5つ</button><button data-v="7">7つ</button></div></div>
+    <div class="row"><label>むずかしさ</label><div class="seg" id="spot-lv">
+      <button data-v="easy" class="active">ふつう<small>はっきり違う</small></button>
+      <button data-v="hard">むずかしい<small>絵が多く、小さな違いも混ぜる</small></button></div></div>
+    <div class="row"><label>制限時間</label><div class="seg" id="spot-lim">
+      <button data-v="0" class="active">なし</button><button data-v="2">2分</button><button data-v="3">3分</button><button data-v="5">5分</button></div></div>
+    <div class="set-foot"><p class="set-note">違いは、色・形・大きさが変わったもの、なくなったものです。違いは画面の左半分と右半分に、ほぼ同じ数だけ置かれます（見落としの左右差を集計します）。</p><button class="btn btn-p big" onclick="spotStart()">開始</button></div>
+  </div>
+  <div id="spot-play" style="display:none">
+    <div class="bar">
+      <span class="stat">時間 <b id="spot-time">0:00</b></span>
+      <span class="stat">見つけた違い <b id="spot-found">0</b></span>
+      <span class="stat">まちがい <b id="spot-wrong">0</b></span>
+      <button class="btn btn-g" style="margin-left:auto;" onclick="spotCancel()">中止</button>
+      <button class="btn btn-p" onclick="spotEnd()">終了</button>
+    </div>
+    <div class="stage" id="spot-stage"><canvas id="spot-cv"></canvas></div>
+  </div>
+</section>
+
+<!-- ===== 順番記憶 ===== -->
+<section class="screen" id="s-cor">
+  <div class="phead" data-home="s-cor">
+    <button class="back" onclick="show('s-menu')">← メニューに戻る</button>
+    <h2>順番記憶（ブロックタッピング）</h2>
+    <p class="sub">光った順番を覚えて、同じ順番でタップします。</p>
+  </div>
+  <div id="cor-set" class="card setcard">
+    <div class="row"><label>こたえ方</label><div class="seg" id="cor-dir">
+      <button data-v="fwd" class="active">同じ順番<small>光った順にタップ</small></button>
+      <button data-v="rev">逆の順番<small>光った順の、逆からタップ</small></button></div></div>
+    <div class="row"><label>光る速さ</label><div class="seg" id="cor-spd">
+      <button data-v="norm" class="active">ふつう<small>1秒ごと</small></button>
+      <button data-v="slow">ゆっくり<small>1.5秒ごと</small></button></div></div>
+    <div class="set-foot"><p class="set-note">2個から始まり、同じ長さで2回出題します。2回とも間違えたら終了です（最大9個）。1回ごとの正誤は、画面には表示しません。</p><button class="btn btn-p big" onclick="corStart()">開始</button></div>
+  </div>
+  <div id="cor-play" style="display:none">
+    <div class="bar">
+      <span class="stat">長さ <b id="cor-len">2</b> 個</span>
+      <span class="stat">この長さの <b id="cor-trial">1</b> 回目</span>
+      <button class="btn btn-g" style="margin-left:auto;" onclick="corCancel()">中止</button>
+    </div>
+    <div class="bigmsg" id="cor-msg"></div>
+    <div class="stage" id="cor-stage"><canvas id="cor-cv"></canvas></div>
+  </div>
+</section>
+
+<!-- ===== 計算課題 ===== -->
+<section class="screen" id="s-calc">
+  <div class="phead" data-home="s-calc">
+    <button class="back" onclick="show('s-menu')">← メニューに戻る</button>
+    <h2>計算課題</h2>
+    <p class="sub">出された計算の答えを、タップで答えます。</p>
+  </div>
+  <div id="calc-set" class="card setcard">
+    <div class="row"><label>しゅるい</label><div class="seg" id="calc-op">
+      <button data-v="add" class="active">たし算</button><button data-v="sub">ひき算</button><button data-v="mul">かけ算</button><button data-v="mix">まぜる</button></div></div>
+    <div class="row"><label>けた数</label><div class="seg" id="calc-lv">
+      <button data-v="1" class="active">1けた<small>やさしい</small></button><button data-v="2">2けた<small>むずかしい</small></button></div></div>
+    <div class="row"><label>問題数</label><div class="seg" id="calc-n">
+      <button data-v="5">5問</button><button data-v="10" class="active">10問</button><button data-v="20">20問</button></div></div>
+    <div class="row"><label>こたえ方</label><div class="seg" id="calc-mode">
+      <button data-v="choice" class="active">4つから選ぶ</button><button data-v="pad">数字ボタンで入力</button></div></div>
+    <div class="row"><label>実施モード</label><div class="seg" id="calc-exam">
+      <button data-v="1" class="active">本番<small>正誤は表示せず、結果を記録</small></button>
+      <button data-v="0">練習<small>正誤をすぐ表示・記録しない</small></button></div></div>
+    <div class="set-foot"><p class="set-note">答えを選ぶと、すぐ次の問題に進みます。かけ算の2けたは「2けた×1けた」です。</p><button class="btn btn-p big" onclick="calcStart()">開始</button></div>
+  </div>
+  <div id="calc-play" style="display:none">
+    <div class="bar">
+      <span class="stat">問題 <b id="calc-no">1</b></span>
+      <span class="stat">時間 <b id="calc-time">0:00</b></span>
+      <button class="btn btn-g" style="margin-left:auto;" onclick="calcCancel()">中止</button>
+    </div>
+    <div class="calc-box"><div class="calc-q" id="calc-q"></div><div class="calc-fb" id="calc-fb"></div><div id="calc-ans"></div></div>
+  </div>
+</section>
+
+<!-- ===== 音量メーター ===== -->
+<section class="screen" id="s-vol">
+  <div class="phead" data-home="s-vol">
+    <button class="back" onclick="show('s-menu')">← メニューに戻る</button>
+    <h2>音量メーター</h2>
+    <p class="sub">声の大きさをメーターで見ながら、目標の大きさで声を出す練習です。</p>
+  </div>
+  <div id="vol-set" class="card setcard">
+    <div class="row"><label>目標の大きさ</label><div class="seg" id="vol-t">
+      <button data-v="55">55</button><button data-v="60">60</button><button data-v="65" class="active">65</button><button data-v="70">70</button><button data-v="75">75</button><button data-v="80">80</button></div></div>
+    <div class="row"><label>目標の幅</label><div class="seg" id="vol-tol">
+      <button data-v="3">±3<small>きびしい</small></button><button data-v="5" class="active">±5<small>ふつう</small></button><button data-v="8">±8<small>ゆるい</small></button></div></div>
+    <div class="row"><label>測る時間</label><div class="seg" id="vol-dur">
+      <button data-v="30" class="active">30秒</button><button data-v="60">60秒</button><button data-v="90">90秒</button></div></div>
+    <div class="row"><label>補正</label><div class="seg" id="vol-corr">
+      <button data-v="-10">−10</button><button data-v="-5">−5</button><button data-v="0" class="active">0</button><button data-v="5">＋5</button><button data-v="10">＋10</button></div></div>
+    <div class="set-foot"><p class="set-note">数字は目安のdB（デシベル＝音の大きさの単位）です。iPadやスマホのマイクでは、騒音計のような正確な値は出ません（機種によって差があります）。正確さが必要なときは、騒音計の値に合わせて「補正」を変えてください。最初の1.5秒は、まわりの音を測るため静かにします。</p><button class="btn btn-p big" onclick="volStart()">開始</button></div>
+  </div>
+  <div id="vol-play" style="display:none">
+    <div class="bar">
+      <span class="stat">のこり <b id="vol-time">0</b> 秒</span>
+      <span class="stat">いまの大きさ <b id="vol-now">--</b></span>
+      <span class="stat">最大 <b id="vol-max">--</b></span>
+      <button class="btn btn-g" style="margin-left:auto;" onclick="volCancel()">中止</button>
+    </div>
+    <div class="bigmsg" id="vol-msg"></div>
+    <div class="stage" id="vol-stage"><canvas id="vol-cv"></canvas></div>
+    <p class="cap" style="color:#5A6A7A;">※目安の値です。正確な騒音計ではありません。</p>
   </div>
 </section>
 
@@ -558,32 +783,36 @@ $('tmt-cv').addEventListener('pointerdown',e=>{
   }
   tmtDraw();
 });
-function tmtEnd(completed){
+function tmtEnd(how){
+  // how: true=最後まで完了 / false=時間切れ / 'abort'=途中で中止
   if(!TS||TS.over)return;
+  const completed=(how===true),aborted=(how==='abort');
+  const now=performance.now();
   clearInterval(TS.timer);TS.over=true;
   const k=TS.taps.length;
   const last=k?TS.taps[k-1]:TS.t0;
-  const elapsed=completed?(last-TS.t0):T.lim*60000;
+  const elapsed=completed?(last-TS.t0):(aborted?now-TS.t0:T.lim*60000);
+  const status=completed?'最後まで完了':(aborted?'途中で中止':'時間切れ');
   tmtDraw();
   const image=$('tmt-cv').toDataURL('image/png');
   const name=T.mode==='A'?'TMT-A':'TMT-B';
   const metrics=[
     ['課題',name+(T.mode==='A'?'（数字を順番に）':'（数字とひらがなを交互に）')],
+    ['終了のしかた',status],
     ['丸の数',T.n+' 個'],
-    ['最後までタップできた数',TS.idx+' / '+T.n+(completed?'':'（時間切れ）')],
-    ['所要時間',fmtSec(elapsed),true],
+    ['ここまでタップできた数',TS.idx+' / '+T.n],
+    [aborted?'中止までの時間':'所要時間',fmtSec(elapsed),true],
     ['誤りの回数',TS.err+' 回'],
     ['1つあたりの平均時間',k?((last-TS.t0)/k/1000).toFixed(2)+' 秒':'—'],
     ['制限時間',T.lim+' 分']
   ];
   const t=TS;TS=null;
-  finishTask({title:name,metrics,image,legend:'誤りの回数＝順番と違う丸をタップした回数。1つあたりの平均時間＝1つの丸をタップするのにかかった時間の平均。'},T.exam);
+  finishTask({title:name+(aborted?'（途中で中止）':''),metrics,image,legend:'誤りの回数＝順番と違う丸をタップした回数。1つあたりの平均時間＝1つの丸をタップするのにかかった時間の平均。'+(aborted?'この結果は、途中で中止した時点までの記録です。':'')},T.exam);
 }
 function tmtCancel(){
-  uiConfirm('中止しますか？（この回の結果は記録されません）',()=>{
-    if(TS){clearInterval(TS.timer);TS=null;}
-    openTask('tmt');
-  },'中止する','続ける');
+  if(!TS||TS.over)return;
+  const msg=T.exam?'中止しますか？ここまでの経過時間・誤りの回数・タップできたところまでの図が、結果として記録されます。':'中止しますか？（練習モードなので、結果は記録されません）';
+  uiConfirm(msg,()=>tmtEnd('abort'),'中止する','続ける');
 }
 
 // ---------- 抹消課題 ----------
@@ -883,6 +1112,1745 @@ function lbCancel(){
     openTask('lb');
   },'中止する','続ける');
 }
+
+// ---------- メニューの領域別絞り込み ----------
+const CATS={att:'注意',mem:'記憶',vis:'視空間・構成',exe:'遂行・計算',lang:'言語・声',staff:'スタッフ採点'};
+document.querySelectorAll('.mcard[data-cat]').forEach(card=>{
+  const t=document.createElement('div');t.className='tags';
+  t.innerHTML=card.dataset.cat.split(' ').map(k=>'<span>'+CATS[k]+'</span>').join('');
+  card.appendChild(t);
+});
+$('menu-filters').addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;
+  document.querySelectorAll('#menu-filters .chip').forEach(x=>x.classList.toggle('active',x===b));
+  const v=b.dataset.v;
+  document.querySelectorAll('.mcard[data-cat]').forEach(card=>{
+    card.style.display=(v==='all'||card.dataset.cat.split(' ').includes(v))?'':'none';
+  });
+});
+
+// ================= 以下、追加課題 =================
+function enterPlay(id){
+  $(id+'-set').style.display='none';$(id+'-play').style.display='block';
+  document.body.dataset.play='1';
+}
+const ri=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+// ---------- 間違い探し ----------
+const SP={n:5,lv:'easy',lim:0};
+let SS=null;
+bindSeg('spot-n',v=>SP.n=+v);
+bindSeg('spot-lv',v=>SP.lv=v);
+bindSeg('spot-lim',v=>SP.lim=+v);
+const SP_COLS=['#D64545','#2F6FDB','#2E9E5B','#E3B31B','#8A55C7','#E8812B'];
+const SP_TYPES=['circle','square','tri','diamond','star','plus'];
+function spotStart(){
+  enterPlay('spot');
+  const[aw,ah]=availSize($('spot-stage'));
+  const[Wt,H]=fitBox(2.3,aw,ah);
+  const gap=14,Wp=Math.floor((Wt-gap)/2);
+  const ctx=setupCanvas($('spot-cv'),Wt,H);
+  const cols=6,rows=SP.lv==='easy'?3:4,cw=Wp/cols,ch=H/rows,r=Math.min(cw,ch)*0.3;
+  const L=[];
+  for(let rr=0;rr<rows;rr++)for(let cc=0;cc<cols;cc++){
+    L.push({x:(cc+0.5)*cw+rnd(-0.14,0.14)*cw,y:(rr+0.5)*ch+rnd(-0.14,0.14)*ch,
+      type:pick(SP_TYPES),col:pick(SP_COLS),s:1,gone:false,side:cc<cols/2?'L':'R'});
+  }
+  const R=L.map(o=>Object.assign({},o));
+  const li=shuffle(L.map((o,i)=>i).filter(i=>L[i].side==='L')),ri2=shuffle(L.map((o,i)=>i).filter(i=>L[i].side==='R'));
+  const nl=Math.ceil(SP.n/2),nr=SP.n-nl;
+  const first=Math.random()<0.5;
+  const chosen=(first?li.slice(0,nl).concat(ri2.slice(0,nr)):li.slice(0,nr).concat(ri2.slice(0,nl)));
+  const kinds=SP.lv==='easy'?['color','shape','missing']:['color','shape','missing','size'];
+  const kindName={color:'色が違う',shape:'形が違う',missing:'なくなっている',size:'大きさが違う'};
+  const diffs=chosen.map(i=>{
+    const k=pick(kinds),o=R[i];
+    if(k==='color'){let c;do{c=pick(SP_COLS);}while(c===o.col);o.col=c;}
+    else if(k==='shape'){let t;do{t=pick(SP_TYPES);}while(t===o.type);o.type=t;}
+    else if(k==='size'){o.s=0.7;}
+    else o.gone=true;
+    return{i,kind:k,name:kindName[k],found:false,side:L[i].side};
+  });
+  SS={ctx,Wt,H,Wp,gap,L,R,r,diffs,wrongs:[],found:0,t0:performance.now(),over:false};
+  $('spot-found').textContent='0 / '+SP.n;$('spot-wrong').textContent='0';$('spot-time').textContent='0:00';
+  spotDraw();
+  SS.timer=setInterval(()=>{
+    const el=performance.now()-SS.t0;
+    $('spot-time').textContent=fmtMS(el)+(SP.lim?' / '+SP.lim+':00':'');
+    if(SP.lim&&el>=SP.lim*60000)spotFinish('time');
+  },250);
+}
+function spotDraw(final){
+  const{ctx:c,Wt,H,Wp,gap,L,R,r,diffs,wrongs}=SS;
+  c.fillStyle='#fff';c.fillRect(0,0,Wt,H);
+  c.fillStyle='#E4E8EE';c.fillRect(Wp,0,gap,H);
+  [[L,0],[R,Wp+gap]].forEach(([arr,ox])=>arr.forEach(o=>{if(!o.gone)drawSym(c,o.type,o.x+ox,o.y,r*o.s,o.col);}));
+  diffs.forEach(d=>{
+    if(!d.found&&!final)return;
+    const o=L[d.i];
+    c.lineWidth=3.5;c.strokeStyle=d.found?'#2E7D5E':'#E67E22';c.setLineDash(d.found?[]:[6,5]);
+    [0,Wp+gap].forEach(ox=>{c.beginPath();c.arc(o.x+ox,o.y,r*1.45,0,Math.PI*2);c.stroke();});
+    c.setLineDash([]);
+  });
+  c.strokeStyle='#C0392B';c.lineWidth=3;
+  wrongs.forEach(w=>{c.beginPath();c.moveTo(w.x-7,w.y-7);c.lineTo(w.x+7,w.y+7);c.moveTo(w.x+7,w.y-7);c.lineTo(w.x-7,w.y+7);c.stroke();});
+}
+$('spot-cv').addEventListener('pointerdown',e=>{
+  if(!SS||SS.over)return;
+  e.preventDefault();
+  const[x,y]=pos(e,$('spot-cv'));
+  let lx;
+  if(x<SS.Wp)lx=x;else if(x>SS.Wp+SS.gap)lx=x-(SS.Wp+SS.gap);else return;
+  const hit=Math.max(SS.r*1.7,30);
+  let d0=null,best=hit;
+  SS.diffs.forEach(d=>{const o=SS.L[d.i],dd=Math.hypot(o.x-lx,o.y-y);if(dd<=best){best=dd;d0=d;}});
+  if(d0){
+    if(d0.found)return;
+    d0.found=true;SS.found++;
+    $('spot-found').textContent=SS.found+' / '+SP.n;
+    spotDraw();
+    if(SS.found>=SP.n)spotFinish('all');
+  }else{
+    SS.wrongs.push({x,y});$('spot-wrong').textContent=SS.wrongs.length;spotDraw();
+  }
+});
+function spotEnd(){uiConfirm('終了して結果を出しますか？',()=>spotFinish('manual'),'終了する','続ける');}
+function spotCancel(){uiConfirm('中止しますか？ここまでの結果が、途中経過として記録されます。',()=>spotFinish('abort'),'中止する','続ける');}
+function spotFinish(why){
+  if(!SS||SS.over)return;
+  clearInterval(SS.timer);SS.over=true;
+  const elapsed=why==='time'?SP.lim*60000:performance.now()-SS.t0;
+  spotDraw(true);
+  const image=$('spot-cv').toDataURL('image/png');
+  const missL=SS.diffs.filter(d=>!d.found&&d.side==='L'),missR=SS.diffs.filter(d=>!d.found&&d.side==='R');
+  const totL=SS.diffs.filter(d=>d.side==='L').length,totR=SS.diffs.filter(d=>d.side==='R').length;
+  const status={all:'すべて見つけた',manual:'探し終えて終了',time:'時間切れ',abort:'途中で中止'}[why];
+  const metrics=[
+    ['課題','間違い探し（'+(SP.lv==='easy'?'ふつう':'むずかしい')+'）'],
+    ['終了のしかた',status],
+    ['見つけた違い',SS.found+' / '+SP.n,true],
+    ['見落とし（画面の左半分）',missL.length+' / '+totL+' 個'],
+    ['見落とし（画面の右半分）',missR.length+' / '+totR+' 個'],
+    ['まちがってタップした数',SS.wrongs.length+' 回'],
+    ['所要時間',fmtSec(elapsed)]
+  ];
+  const miss=SS.diffs.filter(d=>!d.found);
+  if(miss.length)metrics.push(['見落とした違いの種類',miss.map(d=>d.name).join('、')]);
+  SS=null;
+  finishTask({title:'間違い探し',metrics,image,wide:true,legend:'図の見かた：緑の輪＝見つけた違い、オレンジの点線の輪＝見落とした違い、赤の×＝違いのない場所をタップした位置。左右の絵は、右の絵が「見本との違いを含む絵」です。'},true);
+}
+
+// ---------- 順番記憶（ブロックタッピング） ----------
+const CO={dir:'fwd',spd:'norm'};
+let COS=null;
+bindSeg('cor-dir',v=>CO.dir=v);
+bindSeg('cor-spd',v=>CO.spd=v);
+const COR_POS=[[.14,.20],[.42,.10],[.80,.18],[.27,.46],[.60,.45],[.11,.76],[.44,.84],[.80,.74],[.91,.46]];
+function corStart(){
+  enterPlay('cor');
+  const[aw,ah]=availSize($('cor-stage'));
+  const[W,H]=fitBox(1.45,aw,ah-40);
+  const ctx=setupCanvas($('cor-cv'),W,H);
+  const bs=Math.min(W,H)*0.15;
+  COS={ctx,W,H,bs,len:2,trial:1,results:[],phase:'idle',seq:[],inp:[],lit:-1,flash:-1,timers:[],t0:performance.now(),over:false};
+  corNext();
+}
+function corLater(f,ms){COS.timers.push(setTimeout(f,ms));}
+function corClear(){if(COS){COS.timers.forEach(clearTimeout);COS.timers=[];}}
+function corDraw(){
+  const{ctx:c,W,H,bs}=COS;
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  COR_POS.forEach((p,i)=>{
+    const x=p[0]*W-bs/2,y=p[1]*H-bs/2;
+    let fill='#8FA3B8';
+    if(i===COS.lit)fill='#F2B01E';
+    else if(i===COS.flash)fill='#9CC3EE';
+    c.fillStyle=fill;c.beginPath();c.roundRect?c.roundRect(x,y,bs,bs,8):c.rect(x,y,bs,bs);c.fill();
+  });
+}
+function corNext(){
+  COS.phase='show';COS.inp=[];COS.lit=-1;COS.flash=-1;
+  $('cor-len').textContent=COS.len;$('cor-trial').textContent=COS.trial;
+  const pool=shuffle([0,1,2,3,4,5,6,7,8]);COS.seq=pool.slice(0,COS.len);
+  $('cor-msg').textContent='よく見てください';
+  corDraw();
+  const step=CO.spd==='slow'?1500:1000,on=step-300,base=900;
+  COS.seq.forEach((b,i)=>{
+    corLater(()=>{COS.lit=b;corDraw();},base+i*step);
+    corLater(()=>{COS.lit=-1;corDraw();},base+i*step+on);
+  });
+  corLater(()=>{
+    COS.phase='input';
+    $('cor-msg').textContent=CO.dir==='fwd'?'同じ順番にタップしてください':'逆の順番にタップしてください（最後に光ったものから）';
+  },base+COS.len*step+150);
+}
+$('cor-cv').addEventListener('pointerdown',e=>{
+  if(!COS||COS.over||COS.phase!=='input')return;
+  e.preventDefault();
+  const[x,y]=pos(e,$('cor-cv'));
+  let hit=-1;
+  COR_POS.forEach((p,i)=>{
+    if(Math.abs(x-p[0]*COS.W)<=COS.bs*0.62&&Math.abs(y-p[1]*COS.H)<=COS.bs*0.62)hit=i;
+  });
+  if(hit<0)return;
+  const exp=(CO.dir==='fwd'?COS.seq:COS.seq.slice().reverse())[COS.inp.length];
+  COS.inp.push(hit);
+  COS.flash=hit;corDraw();corLater(()=>{COS.flash=-1;corDraw();},220);
+  if(hit!==exp){corTrialEnd(false);}
+  else if(COS.inp.length===COS.len){corTrialEnd(true);}
+});
+function corTrialEnd(ok){
+  COS.phase='wait';
+  COS.results.push({len:COS.len,trial:COS.trial,ok});
+  $('cor-msg').textContent='つぎへ進みます';
+  corLater(corAdvance,1100);
+}
+function corAdvance(){
+  const last=COS.results.filter(r=>r.len===COS.len);
+  if(COS.trial===1){COS.trial=2;corNext();return;}
+  if(last.every(r=>!r.ok)){corFinish('fail');return;}
+  if(COS.len>=9){corFinish('max');return;}
+  COS.len++;COS.trial=1;corNext();
+}
+function corCancel(){
+  uiConfirm('中止しますか？ここまでの結果が、途中経過として記録されます。',()=>corFinish('abort'),'中止する','続ける');
+}
+function corFinish(why){
+  if(!COS||COS.over)return;
+  corClear();COS.over=true;
+  const elapsed=performance.now()-COS.t0;
+  const res=COS.results;
+  const okRes=res.filter(r=>r.ok);
+  const span=okRes.length?Math.max.apply(null,okRes.map(r=>r.len)):0;
+  // 結果の図：長さごとの○×
+  const cv=document.createElement('canvas');cv.width=560;cv.height=190;
+  const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,560,190);
+  c.font='bold 18px sans-serif';c.textAlign='center';c.textBaseline='middle';
+  for(let L=2;L<=9;L++){
+    const x=40+(L-2)*68;
+    c.fillStyle='#5A6A7A';c.fillText(L+'個',x,26);
+    for(let t=1;t<=2;t++){
+      const y=t===1?80:132;
+      const r=res.find(q=>q.len===L&&q.trial===t);
+      if(!r){c.strokeStyle='#C8D0D9';c.lineWidth=2;c.setLineDash([4,4]);c.beginPath();c.arc(x,y,16,0,Math.PI*2);c.stroke();c.setLineDash([]);}
+      else if(r.ok){c.fillStyle='#2E7D5E';c.beginPath();c.arc(x,y,16,0,Math.PI*2);c.fill();c.fillStyle='#fff';c.fillText('○',x,y+1);}
+      else{c.fillStyle='#C0392B';c.beginPath();c.arc(x,y,16,0,Math.PI*2);c.fill();c.fillStyle='#fff';c.fillText('×',x,y+1);}
+    }
+  }
+  c.fillStyle='#5A6A7A';c.textAlign='left';c.font='14px sans-serif';
+  c.fillText('上＝1回目　下＝2回目　（破線の丸は、行わなかった回）',12,172);
+  const image=cv.toDataURL('image/png');
+  const status={fail:'同じ長さで2回続けて間違えた',max:'最長（9個）まで成功',abort:'途中で中止'}[why];
+  const metrics=[
+    ['課題','順番記憶（'+(CO.dir==='fwd'?'同じ順番':'逆の順番')+'）'],
+    ['終了のしかた',status],
+    ['いちばん長く成功した個数',span?span+' 個':'なし',true],
+    ['成功した回数',okRes.length+' / '+res.length+' 回'],
+    ['間違えた回数',(res.length-okRes.length)+' 回'],
+    ['光る速さ',CO.spd==='slow'?'ゆっくり（1.5秒ごと）':'ふつう（1秒ごと）'],
+    ['所要時間',fmtSec(elapsed)]
+  ];
+  COS=null;
+  finishTask({title:'順番記憶',metrics,image,wide:true,legend:'同じ長さを2回出題し、2回とも間違えたら終了します。「いちばん長く成功した個数」＝どちらか1回でも成功した、いちばん長い個数。',},true);
+}
+
+// ---------- 計算課題 ----------
+const CA={op:'add',lv:1,n:10,mode:'choice',exam:true};
+let QS=null;
+bindSeg('calc-op',v=>CA.op=v);
+bindSeg('calc-lv',v=>CA.lv=+v);
+bindSeg('calc-n',v=>CA.n=+v);
+bindSeg('calc-mode',v=>CA.mode=v);
+bindSeg('calc-exam',v=>CA.exam=v==='1');
+function calcMake(){
+  const op=CA.op==='mix'?pick(['add','sub','mul']):CA.op;
+  let a,b,ans,sym;
+  if(op==='add'){sym='＋';if(CA.lv===1){a=ri(1,9);b=ri(1,9);}else{a=ri(10,99);b=ri(10,99);}ans=a+b;}
+  else if(op==='sub'){sym='－';if(CA.lv===1){a=ri(2,18);b=ri(1,Math.min(9,a-1));}else{a=ri(20,99);b=ri(10,a-1);}ans=a-b;}
+  else{sym='×';if(CA.lv===1){a=ri(2,9);b=ri(2,9);}else{a=ri(11,29);b=ri(2,9);}ans=a*b;}
+  return{text:a+' '+sym+' '+b,ans,op};
+}
+function calcChoices(q){
+  const a=q.ans,c=new Set();
+  const cand=[a+1,a-1,a+2,a-2,a+10,a-10,a+3,a-3];
+  shuffle(cand).forEach(v=>{if(v>=0&&v!==a&&c.size<3)c.add(v);});
+  let g=a+4;while(c.size<3){if(g!==a)c.add(g);g++;}
+  return shuffle([a].concat(Array.from(c)));
+}
+function calcStart(){
+  enterPlay('calc');
+  QS={list:[],i:0,rec:[],t0:performance.now(),qt0:0,lock:false,buf:'',over:false};
+  for(let i=0;i<CA.n;i++)QS.list.push(calcMake());
+  $('calc-time').textContent='0:00';
+  QS.timer=setInterval(()=>{$('calc-time').textContent=fmtMS(performance.now()-QS.t0);},500);
+  calcShow();
+}
+function calcShow(){
+  const q=QS.list[QS.i];
+  $('calc-no').textContent=(QS.i+1)+' / '+CA.n;
+  $('calc-q').textContent=q.text+' ＝ ？';
+  $('calc-fb').textContent='';$('calc-fb').style.color='';
+  QS.buf='';QS.lock=true;QS.qt0=performance.now();
+  setTimeout(()=>{if(QS)QS.lock=false;},250);
+  const box=$('calc-ans');
+  if(CA.mode==='choice'){
+    box.innerHTML='<div class="calc-choices">'+calcChoices(q).map(v=>'<button data-v="'+v+'">'+v+'</button>').join('')+'</div>';
+    box.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>calcAnswer(+b.dataset.v)));
+  }else{
+    box.innerHTML='<div class="calc-disp" id="calc-disp">&nbsp;</div><div class="calc-pad">'
+      +[7,8,9,4,5,6,1,2,3].map(n=>'<button data-k="'+n+'">'+n+'</button>').join('')
+      +'<button data-k="del">消す</button><button data-k="0">0</button><button data-k="ok" class="ok">決定</button></div>';
+    box.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>calcKey(b.dataset.k)));
+  }
+}
+function calcKey(k){
+  if(!QS||QS.over||QS.lock)return;
+  if(k==='del'){QS.buf=QS.buf.slice(0,-1);}
+  else if(k==='ok'){if(QS.buf==='')return;calcAnswer(+QS.buf);return;}
+  else if(QS.buf.length<4){QS.buf+=k;}
+  $('calc-disp').textContent=QS.buf||' ';
+}
+function calcAnswer(v){
+  if(!QS||QS.over||QS.lock)return;
+  QS.lock=true;
+  const q=QS.list[QS.i],ok=(v===q.ans);
+  QS.rec.push({text:q.text,ans:q.ans,given:v,ok,ms:performance.now()-QS.qt0});
+  const go=()=>{
+    if(!QS)return;
+    QS.i++;
+    if(QS.i>=CA.n)calcFinish('done');else calcShow();
+  };
+  if(CA.exam){setTimeout(go,150);}
+  else{
+    $('calc-fb').textContent=ok?'せいかい！':'ざんねん。答えは '+q.ans;
+    $('calc-fb').style.color=ok?'#2E7D5E':'#C0392B';
+    setTimeout(go,ok?800:1500);
+  }
+}
+function calcCancel(){
+  const msg=CA.exam?'中止しますか？ここまでの結果が、途中経過として記録されます。':'中止しますか？（練習モードなので、結果は記録されません）';
+  uiConfirm(msg,()=>calcFinish('abort'),'中止する','続ける');
+}
+function calcFinish(why){
+  if(!QS||QS.over)return;
+  clearInterval(QS.timer);QS.over=true;
+  const elapsed=performance.now()-QS.t0;
+  const rec=QS.rec,ok=rec.filter(r=>r.ok).length;
+  const opn={add:'たし算',sub:'ひき算',mul:'かけ算',mix:'まぜる'}[CA.op];
+  const wrong=rec.filter(r=>!r.ok).map(r=>r.text+'（答え '+r.ans+'／回答 '+r.given+'）');
+  const metrics=[
+    ['課題','計算（'+opn+'・'+CA.lv+'けた・'+(CA.mode==='choice'?'4つから選ぶ':'数字ボタン入力')+'）'],
+    ['終了のしかた',why==='done'?'最後まで完了':'途中で中止'],
+    ['正答数',ok+' / '+CA.n,true],
+    ['答えた問題数',rec.length+' / '+CA.n],
+    ['所要時間',fmtSec(elapsed)],
+    ['1問あたりの平均時間',rec.length?(rec.reduce((s,r)=>s+r.ms,0)/rec.length/1000).toFixed(1)+' 秒':'—'],
+    ['間違えた問題',wrong.length?wrong.join('、'):'なし']
+  ];
+  const exam=CA.exam;QS=null;
+  finishTask({title:'計算課題'+(why==='abort'?'（途中で中止）':''),metrics,image:null,legend:'1問あたりの平均時間＝問題が出てから答えるまでの時間の平均。'},exam);
+}
+
+// ---------- 音量メーター ----------
+const V={target:65,tol:5,dur:30,corr:0};
+let VS=null;
+bindSeg('vol-t',v=>V.target=+v);
+bindSeg('vol-tol',v=>V.tol=+v);
+bindSeg('vol-dur',v=>V.dur=+v);
+bindSeg('vol-corr',v=>V.corr=+v);
+const VOL_LO=20,VOL_HI=100;
+async function volStart(){
+  if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){
+    uiAlert('この開き方では、マイクを使えません。ブラウザの設定、またはファイルの開き方（https で公開したページから開く）を確認してください。');return;
+  }
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}
+  catch(e){uiAlert('マイクの使用が許可されませんでした。ブラウザの設定でマイクを許可してから、もう一度お試しください。');return;}
+  const AC=window.AudioContext||window.webkitAudioContext;
+  const ac=new AC();
+  try{if(ac.state==='suspended')await ac.resume();}catch(e){}
+  const src=ac.createMediaStreamSource(stream);
+  const an=ac.createAnalyser();an.fftSize=2048;src.connect(an);
+  enterPlay('vol');
+  const[aw,ah]=availSize($('vol-stage'));
+  const[W,H]=fitBox(2.0,aw,ah-90);
+  const ctx=setupCanvas($('vol-cv'),W,H);
+  VS={stream,ac,an,buf:new Float32Array(an.fftSize),W,H,ctx,phase:'amb',t0:performance.now(),rt0:0,
+      amb:[],series:[],peak:0,disp:VOL_LO,acc:[],lastS:performance.now(),raf:0,over:false,ambient:40};
+  $('vol-time').textContent=V.dur;$('vol-now').textContent='--';$('vol-max').textContent='--';
+  $('vol-msg').textContent='しばらく静かにしてください（まわりの音を測っています）';
+  volLoop();
+}
+function volLevel(){
+  VS.an.getFloatTimeDomainData(VS.buf);
+  let s=0;for(let i=0;i<VS.buf.length;i++)s+=VS.buf[i]*VS.buf[i];
+  const rms=Math.sqrt(s/VS.buf.length);
+  const db=20*Math.log10(Math.max(rms,1e-8))+94+V.corr;
+  return Math.max(20,Math.min(110,db));
+}
+function volLoop(){
+  if(!VS||VS.over)return;
+  VS.raf=requestAnimationFrame(volLoop);
+  const now=performance.now(),db=volLevel();
+  VS.disp=db>VS.disp?db:VS.disp*0.88+db*0.12;
+  VS.acc.push(db);
+  if(now-VS.lastS>=100){
+    const m=VS.acc.reduce((a,b)=>a+b,0)/VS.acc.length;VS.acc=[];VS.lastS=now;
+    if(VS.phase==='amb'){VS.amb.push(m);}
+    else{VS.series.push({t:(now-VS.rt0)/1000,db:m});if(m>VS.peak)VS.peak=m;}
+  }
+  if(VS.phase==='amb'&&now-VS.t0>=1500){
+    VS.ambient=VS.amb.length?VS.amb.reduce((a,b)=>a+b,0)/VS.amb.length:40;
+    VS.phase='run';VS.rt0=now;
+    $('vol-msg').textContent='「あー」と、緑の帯に入る大きさで声を出してください';
+  }
+  if(VS.phase==='run'){
+    const left=Math.max(0,V.dur-(now-VS.rt0)/1000);
+    $('vol-time').textContent=Math.ceil(left);
+    $('vol-max').textContent=VS.peak?'約 '+Math.round(VS.peak)+' dB':'--';
+    if(left<=0){volFinish('done');return;}
+  }
+  $('vol-now').textContent='約 '+Math.round(VS.disp)+' dB';
+  volDraw();
+}
+function volX(db,x0,w){return x0+(Math.min(VOL_HI,Math.max(VOL_LO,db))-VOL_LO)/(VOL_HI-VOL_LO)*w;}
+function volDraw(){
+  const{ctx:c,W,H}=VS;
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  const x0=W*0.04,w=W*0.92,by=H*0.12,bh=H*0.2;
+  c.fillStyle='#EEF1F4';c.fillRect(x0,by,w,bh);
+  const lo=V.target-V.tol,hi=V.target+V.tol;
+  c.fillStyle='rgba(46,158,91,.28)';c.fillRect(volX(lo,x0,w),by,volX(hi,x0,w)-volX(lo,x0,w),bh);
+  const d=VS.disp;
+  const col=d<lo?'#2A6EBB':(d>hi?'#C0392B':'#2E9E5B');
+  c.fillStyle=col;c.fillRect(x0,by+bh*0.25,volX(d,x0,w)-x0,bh*0.5);
+  if(VS.peak){const px=volX(VS.peak,x0,w);c.fillStyle='#1A2332';c.fillRect(px-1.5,by-4,3,bh+8);}
+  c.fillStyle='#5A6A7A';c.font='12px sans-serif';c.textAlign='center';c.textBaseline='top';
+  for(let v=VOL_LO;v<=VOL_HI;v+=10){const x=volX(v,x0,w);c.fillRect(x-0.5,by+bh,1,5);c.fillText(v,x,by+bh+7);}
+  c.textAlign='left';c.fillStyle='#2E7D5E';c.font='bold 13px sans-serif';c.fillText('目標 '+lo+'〜'+hi,volX(lo,x0,w),by-20);
+  c.fillStyle=col;c.font='bold '+Math.round(H*0.09)+'px sans-serif';c.textAlign='right';
+  const msg=VS.phase==='amb'?'':(d<lo?'小さい':(d>hi?'大きい':'ちょうどよい'));
+  c.fillText(msg,x0+w,by-6);
+  if(VS.phase==='run')volChart(c,x0,H*0.50,w,H*0.44,VS.series,Math.max(0,(performance.now()-VS.rt0)/1000-20),Math.max(20,(performance.now()-VS.rt0)/1000),true);
+}
+function volChart(c,x,y,w,h,series,t0,t1,live){
+  c.save();
+  c.fillStyle='#fff';c.fillRect(x,y,w,h);
+  c.strokeStyle='#DDE3EA';c.lineWidth=1;c.strokeRect(x,y,w,h);
+  const lo=V.target-V.tol,hi=V.target+V.tol;
+  const ym=db=>y+h-(Math.min(VOL_HI,Math.max(VOL_LO,db))-VOL_LO)/(VOL_HI-VOL_LO)*h;
+  c.fillStyle='rgba(46,158,91,.22)';c.fillRect(x,ym(hi),w,ym(lo)-ym(hi));
+  const thr=Math.max(VS_AMB(),40);
+  c.setLineDash([5,4]);c.strokeStyle='#8FA3B8';c.beginPath();c.moveTo(x,ym(thr));c.lineTo(x+w,ym(thr));c.stroke();c.setLineDash([]);
+  c.fillStyle='#5A6A7A';c.font='11px sans-serif';c.textAlign='left';c.textBaseline='middle';
+  c.font='13px sans-serif';[40,60,80,100].forEach(v=>c.fillText(v,x+4,ym(v)-1));
+  c.beginPath();let first=true;
+  series.forEach(p=>{
+    if(p.t<t0||p.t>t1)return;
+    const px=x+(p.t-t0)/(t1-t0)*w,py=ym(p.db);
+    if(first){c.moveTo(px,py);first=false;}else c.lineTo(px,py);
+  });
+  c.strokeStyle='#1A2332';c.lineWidth=2;c.stroke();
+  c.restore();
+}
+function VS_AMB(){return VS?VS.ambient+8:48;}
+function volCancel(){
+  uiConfirm('中止しますか？ここまでの結果が、途中経過として記録されます。',()=>volFinish('abort'),'中止する','続ける');
+}
+function volFinish(why){
+  if(!VS||VS.over)return;
+  VS.over=true;cancelAnimationFrame(VS.raf);
+  try{VS.stream.getTracks().forEach(t=>t.stop());}catch(e){}
+  try{VS.ac.close();}catch(e){}
+  const thr=Math.max(VS.ambient+8,40);
+  const ser=VS.series,voiced=ser.filter(p=>p.db>=thr);
+  const lo=V.target-V.tol,hi=V.target+V.tol;
+  const mean=voiced.length?voiced.reduce((a,p)=>a+p.db,0)/voiced.length:0;
+  const sd=voiced.length?Math.sqrt(voiced.reduce((a,p)=>a+(p.db-mean)*(p.db-mean),0)/voiced.length):0;
+  const inr=voiced.filter(p=>p.db>=lo&&p.db<=hi).length;
+  const maxv=voiced.length?Math.max.apply(null,voiced.map(p=>p.db)):0;
+  const tdur=ser.length?ser[ser.length-1].t:0;
+  const cv=document.createElement('canvas');cv.width=640;cv.height=300;
+  const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,640,300);
+  volChart(c,40,16,584,240,ser,0,Math.max(V.dur,tdur,1),false);
+  c.fillStyle='#5A6A7A';c.font='15px sans-serif';c.textAlign='center';c.textBaseline='top';
+  c.fillText('時間（秒）→',332,264);c.textAlign='left';c.fillText('0',40,264);c.textAlign='right';c.fillText(String(Math.round(Math.max(V.dur,tdur))),624,264);
+  c.textAlign='left';c.font='13px sans-serif';c.fillText('緑の帯＝目標の範囲　破線＝声が出ているとみなす境目（まわりの音＋8）',40,286);
+  const image=cv.toDataURL('image/png');
+  const diff=mean-V.target;
+  const metrics=[
+    ['課題','音量メーター（目安のdB）'],
+    ['終了のしかた',why==='done'?'最後まで完了':'途中で中止'],
+    ['目標','約 '+V.target+' dB（'+lo+'〜'+hi+'）'],
+    ['目標の範囲内だった割合（声が出ている間）',voiced.length?Math.round(inr/voiced.length*100)+' %':'声が検出されませんでした',true],
+    ['声の大きさの平均',voiced.length?'約 '+mean.toFixed(1)+' dB（目標との差 '+(diff>=0?'＋':'−')+Math.abs(diff).toFixed(1)+' dB）':'—'],
+    ['声の大きさの最大',voiced.length?'約 '+maxv.toFixed(1)+' dB':'—'],
+    ['声の大きさのばらつき',voiced.length?'±'+sd.toFixed(1)+' dB':'—'],
+    ['声が出ていた時間',(voiced.length/10).toFixed(1)+' 秒'],
+    ['まわりの音（測定時）','約 '+VS.ambient.toFixed(0)+' dB'],
+    ['補正',(V.corr>0?'＋':(V.corr<0?'−':''))+Math.abs(V.corr)+' dB']
+  ];
+  VS=null;
+  finishTask({title:'音量メーター'+(why==='abort'?'（途中で中止）':''),metrics,image,wide:true,legend:'※数値は目安です。iPad・スマホのマイクは騒音計と違い、機種によって数dB〜十数dBの差が出ます。変化（大きい・小さい）を見るために使い、正確な値が必要なときは騒音計で確認してください。目標との差の＋は、目標より大きい声だったことを表します。'},true);
+}
+
+// ================= 追加課題（第2弾）の共通部品 =================
+const S={};                 // 各課題の実行中の状態（S.cpt など）
+const TASKDEFS={};
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const sdev=a=>{if(a.length<2)return 0;const m=mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)*(v-m),0)/a.length);};
+const median=a=>{if(!a.length)return 0;const b=a.slice().sort((x,y)=>x-y),n=b.length;return n%2?b[(n-1)/2]:(b[n/2-1]+b[n/2])/2;};
+const sec2=ms=>(ms/1000).toFixed(2)+' 秒';
+const pct=(a,b)=>b?Math.round(a/b*100)+' %':'—';
+const STATUS={done:'最後まで完了',time:'時間切れ',abort:'途中で中止',manual:'終了ボタンで終了'};
+
+function addTags(card){
+  const t=document.createElement('div');t.className='tags';
+  t.innerHTML=card.dataset.cat.split(' ').map(k=>'<span>'+CATS[k]+'</span>').join('');
+  card.appendChild(t);
+}
+let HUE_I=0;
+function defTask(d){
+  const id=d.id;TASKDEFS[id]=d;
+  const cfg=d.cfg={};
+  d.rows.forEach(r=>cfg[r.k]=r.def);
+  const rows=d.rows.map(r=>'<div class="row"><label>'+r.label+'</label><div class="seg" id="'+id+'-'+r.k+'">'
+    +r.opts.map(o=>'<button data-v="'+o[0]+'"'+(String(o[0])===String(r.def)?' class="active"':'')+'>'+o[1]+(o[2]?'<small>'+o[2]+'</small>':'')+'</button>').join('')
+    +'</div></div>').join('');
+  const sec=document.createElement('section');sec.className='screen';sec.id='s-'+id;
+  sec.innerHTML='<div class="phead" data-home="s-'+id+'"><button class="back" onclick="show(\'s-menu\')">← メニューに戻る</button><h2>'+d.title+'</h2><p class="sub">'+d.sub+'</p></div>'
+    +'<div id="'+id+'-set" class="card setcard">'+rows+'<div class="set-foot"><p class="set-note">'+d.note+'</p><button class="btn btn-p big" id="'+id+'-go">開始</button></div></div>'
+    +'<div id="'+id+'-play" style="display:none"><div class="bar"><span class="stat">時間 <b id="'+id+'-time">0:00</b></span>'+(d.bar||'')
+    +'<button class="btn btn-g" style="margin-left:auto;" id="'+id+'-cancel">中止</button>'+(d.barBtn||'')+'</div>'
+    +'<div class="bigmsg" id="'+id+'-msg"></div><div class="stage" id="'+id+'-stage">'+d.area+'</div></div>';
+  $('s-result').before(sec);
+  d.rows.forEach(r=>bindSeg(id+'-'+r.k,v=>cfg[r.k]=(v!==''&&!isNaN(v))?+v:v));
+  $(id+'-go').onclick=()=>d.start();
+  $(id+'-cancel').onclick=()=>uiConfirm(d.cancelMsg||'中止しますか？ここまでの結果が、途中経過として記録されます。',()=>d.finish('abort'),'中止する','続ける');
+  const hue=(HUE_I++*47+10)%360;
+  const card=document.createElement('button');
+  card.className='mcard';card.dataset.cat=d.cat;card.onclick=()=>openTask(id);
+  card.style.cssText='background:hsl('+hue+',75%,94%);border-color:hsl('+hue+',55%,80%);border-bottom:6px solid hsl('+hue+',55%,58%);';
+  card.innerHTML='<div class="mi"><svg viewBox="0 0 32 32">'+d.icon+'</svg></div><div class="mt">'+d.name+'</div><div class="md">'+d.desc+'</div>';
+  document.querySelector('.menu-grid').appendChild(card);addTags(card);
+  if(d.init)d.init();
+}
+function startClock(id){S[id].t0=performance.now();clearInterval(S[id].tm);S[id].tm=setInterval(()=>{const e=$(id+'-time');if(e&&S[id])e.textContent=fmtMS(performance.now()-S[id].t0);},300);}
+function stopClock(id){if(S[id])clearInterval(S[id].tm);}
+function cvFor(id,ratio,reserve){
+  const[aw,ah]=availSize($(id+'-stage'));
+  const[W,H]=fitBox(ratio,aw,Math.max(200,ah-(reserve||0)));
+  return{W,H,c:setupCanvas($(id+'-cv'),W,H)};
+}
+function msg(id,t){const e=$(id+'-msg');if(e)e.textContent=t;}
+// 結果画面へ。record=false のとき（練習）は結果用紙に追加しない
+function endTask(id,why,metrics,o){
+  o=o||{};
+  const d=TASKDEFS[id];
+  const abort=why==='abort';
+  stopClock(id);if(S[id]){S[id].over=true;cancelAnimationFrame(S[id].raf);(S[id].timers||[]).forEach(clearTimeout);}
+  S[id]=null;
+  finishTask({title:(o.title||d.name)+(abort?'（途中で中止）':''),metrics,image:o.image||null,wide:!!o.wide,legend:o.legend||''},o.record!==false);
+}
+const OK_C='#2E7D5E',NG_C='#C0392B',WARN_C='#E67E22',GRAY_C='#C8D0D9';
+
+// ---------- 絵柄（12種類）。神経衰弱・絵の再認で使う ----------
+const PICT_N=12;
+function pict(c,k,x,y,r){
+  c.save();c.translate(x,y);c.scale(r/20,r/20);c.lineWidth=2.2;c.lineJoin='round';c.lineCap='round';c.strokeStyle='#1A2332';
+  const R=(a,b,w,h,f)=>{c.fillStyle=f;c.beginPath();c.rect(a,b,w,h);c.fill();c.stroke();};
+  const C=(a,b,rr,f)=>{c.fillStyle=f;c.beginPath();c.arc(a,b,rr,0,Math.PI*2);c.fill();c.stroke();};
+  const G=(pts,f)=>{c.fillStyle=f;c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.closePath();c.fill();c.stroke();};
+  switch(k){
+  case 0:R(-13,-2,26,19,'#F1D9A8');G([[-17,-2],[0,-18],[17,-2]],'#D64545');R(-3,6,7,11,'#8A5A2B');break;            // いえ
+  case 1:R(-3,4,6,14,'#8A5A2B');C(0,-5,13,'#4FAF6F');break;                                                        // き
+  case 2:C(0,3,13,'#D64545');c.beginPath();c.moveTo(0,-9);c.lineTo(2,-17);c.stroke();G([[2,-14],[10,-18],[8,-11]],'#4FAF6F');break; // りんご
+  case 3:R(-11,-8,20,22,'#fff');c.beginPath();c.arc(11,2,6,-1.2,1.2);c.stroke();R(-11,-8,20,6,'#6B4A2E');break;     // コップ
+  case 4:R(-17,-2,34,10,'#2F6FDB');G([[-10,-2],[-6,-10],[7,-10],[12,-2]],'#9CC3EE');C(-9,9,4.5,'#555');C(9,9,4.5,'#555');break; // くるま
+  case 5:c.fillStyle='#E8812B';c.beginPath();c.arc(0,-2,16,Math.PI,0);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(0,-2);c.lineTo(0,14);c.arc(-4,14,4,0,Math.PI);c.stroke();break; // かさ
+  case 6:for(let i=0;i<5;i++){const a=i*Math.PI*2/5-Math.PI/2;C(Math.cos(a)*9,Math.sin(a)*9-2,6.5,'#F28BB0');}C(0,-2,5,'#E3B31B');c.beginPath();c.moveTo(0,10);c.lineTo(0,19);c.stroke();break; // はな
+  case 7:c.fillStyle='#4A9BD8';c.beginPath();c.ellipse(-2,0,14,9,0,0,Math.PI*2);c.fill();c.stroke();G([[11,0],[19,-8],[19,8]],'#4A9BD8');C(-8,-2,1.6,'#1A2332');break; // さかな
+  case 8:C(-9,0,7,'#E3B31B');R(-2,-2,19,4.5,'#E3B31B');R(10,2,3.5,6,'#E3B31B');R(15,2,3.5,5,'#E3B31B');break;       // かぎ
+  case 9:c.fillStyle='#F2D04E';c.beginPath();c.arc(0,0,15,0.6,Math.PI*2-0.6);c.arc(7,0,12,Math.PI*2-1.0,1.0,true);c.closePath();c.fill();c.stroke();break; // つき
+  case 10:for(let i=0;i<8;i++){const a=i*Math.PI/4;c.beginPath();c.moveTo(Math.cos(a)*12,Math.sin(a)*12);c.lineTo(Math.cos(a)*18,Math.sin(a)*18);c.stroke();}C(0,0,9,'#F2B01E');break; // たいよう
+  default:G([[-16,4],[16,4],[11,14],[-11,14]],'#8A5A2B');c.beginPath();c.moveTo(0,4);c.lineTo(0,-16);c.stroke();G([[2,-16],[2,0],[14,0]],'#fff');   // ふね
+  }
+  c.restore();
+}
+const PICT_NAMES=['いえ','き','りんご','コップ','くるま','かさ','はな','さかな','かぎ','つき','たいよう','ふね'];
+// 記号（記号と数字の変換課題・9種類）
+function glyph(c,k,x,y,r){
+  c.save();c.lineWidth=3;c.strokeStyle='#1A2332';c.fillStyle='#1A2332';c.lineJoin='round';
+  c.beginPath();
+  const fill=k%2===1;
+  if(k<2)c.arc(x,y,r,0,Math.PI*2);
+  else if(k<4)c.rect(x-r*0.9,y-r*0.9,r*1.8,r*1.8);
+  else if(k<6){c.moveTo(x,y-r);c.lineTo(x+r,y+r*0.85);c.lineTo(x-r,y+r*0.85);c.closePath();}
+  else if(k<8){c.moveTo(x,y-r*1.1);c.lineTo(x+r,y);c.lineTo(x,y+r*1.1);c.lineTo(x-r,y);c.closePath();}
+  else{c.moveTo(x-r,y);c.lineTo(x+r,y);c.moveTo(x,y-r);c.lineTo(x,y+r);c.lineWidth=5;}
+  if(k<8){if(fill)c.fill();else c.stroke();}else c.stroke();
+  c.restore();
+}
+
+// ================= 注意・処理の速さ =================
+const CF=id=>TASKDEFS[id].cfg;
+
+// ---------- 持続的注意課題 ----------
+defTask({id:'cpt',name:'持続的注意課題',title:'持続的注意課題',cat:'att',
+  sub:'次々に出る数字のうち、決められた数字のときだけ画面をタップします。',
+  icon:'<circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="4"/><path d="M16 2v6M16 24v6M2 16h6M24 16h6"/>',
+  desc:'次々に出る数字のうち、決めた数字のときだけタップ。集中が続くかを見ます。',
+  rows:[
+    {k:'target',label:'タップする数字',def:3,opts:[[2,'2'],[3,'3'],[5,'5'],[7,'7']]},
+    {k:'iv',label:'数字の間隔',def:1.5,opts:[[1,'1秒','はやい'],[1.5,'1.5秒','ふつう'],[2,'2秒','ゆっくり']]},
+    {k:'dur',label:'時間',def:120,opts:[[60,'1分'],[120,'2分'],[180,'3分']]}],
+  note:'数字が1つずつ表示されます。目標の数字のときだけ、画面をタップしてもらいます（目標は全体の約2割です）。正誤は画面に表示しません。',
+  bar:'<span class="stat">のこり <b id="cpt-left">0</b> 秒</span>',
+  area:'<div class="cpt-box" id="cpt-box"><div class="cpt-digit" id="cpt-digit"></div></div>',
+  start:cptStart,finish:cptFinish,
+  init(){
+    $('cpt-box').addEventListener('pointerdown',e=>{
+      const s=S.cpt;if(!s||s.over)return;e.preventDefault();
+      const ivm=CF('cpt').iv*1000,el=performance.now()-s.t0,idx=Math.floor(el/ivm);
+      if(idx>=s.N||s.resp[idx]!==null)return;
+      s.resp[idx]=el-idx*ivm;
+    });
+  }});
+function cptStart(){
+  const cf=CF('cpt');enterPlay('cpt');
+  const N=Math.floor(cf.dur/cf.iv),nT=Math.max(3,Math.round(N*0.2));
+  const types=new Array(N).fill(false);
+  shuffle([...Array(N).keys()]).slice(0,nT).forEach(i=>types[i]=true);
+  const digs=types.map(t=>{if(t)return cf.target;let v;do{v=ri(1,9);}while(v===cf.target);return v;});
+  S.cpt={N,types,digs,resp:new Array(N).fill(null),upto:0,t0:performance.now(),over:false,raf:0};
+  $('cpt-digit').textContent='';
+  msg('cpt','「'+cf.target+'」が出たときだけ、画面をタップしてください');
+  cptLoop();
+}
+function cptLoop(){
+  const s=S.cpt;if(!s||s.over)return;
+  const cf=CF('cpt'),el=performance.now()-s.t0,ivm=cf.iv*1000,idx=Math.floor(el/ivm);
+  if(idx>=s.N){cptFinish('done');return;}
+  s.upto=idx;
+  const ph=(el-idx*ivm)/ivm;
+  $('cpt-digit').textContent=ph<0.6?s.digs[idx]:'';
+  $('cpt-left').textContent=Math.max(0,Math.ceil(cf.dur-el/1000));
+  $('cpt-time').textContent=fmtMS(el);
+  s.raf=requestAnimationFrame(cptLoop);
+}
+function cptFinish(why){
+  const s=S.cpt;if(!s||s.over)return;
+  const cf=CF('cpt'),n=why==='done'?s.N:s.upto;
+  let hit=0,miss=0,fa=0,rej=0;const rts=[];
+  for(let i=0;i<n;i++){
+    if(s.types[i]){if(s.resp[i]!==null){hit++;rts.push(s.resp[i]);}else miss++;}
+    else{if(s.resp[i]!==null)fa++;else rej++;}
+  }
+  const nT=hit+miss;
+  const parts=[0,1,2].map(t=>{
+    const a=Math.floor(n*t/3),b=Math.floor(n*(t+1)/3);let th=0,tt=0;
+    for(let i=a;i<b;i++)if(s.types[i]){tt++;if(s.resp[i]!==null)th++;}
+    return tt?Math.round(th/tt*100)+'%':'—';
+  });
+  // 図：刺激ごとの結果
+  const per=50,cw=12,rows=Math.max(1,Math.ceil(n/per));
+  const cv=document.createElement('canvas');cv.width=640;cv.height=rows*24+70;
+  const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,640,cv.height);
+  for(let i=0;i<n;i++){
+    const x=20+(i%per)*cw,y=14+Math.floor(i/per)*24;
+    let col=GRAY_C;
+    if(s.types[i])col=s.resp[i]!==null?OK_C:WARN_C;else if(s.resp[i]!==null)col=NG_C;
+    c.fillStyle=col;c.fillRect(x,y,cw-2,18);
+  }
+  const ly=rows*24+28;c.font='13px sans-serif';c.textBaseline='middle';c.textAlign='left';
+  [[OK_C,'目標に反応できた'],[WARN_C,'見逃し'],[NG_C,'目標でないのに反応'],[GRAY_C,'目標でなく、反応もしなかった']].forEach((p,i)=>{
+    c.fillStyle=p[0];c.fillRect(20+(i%2)*300,ly+Math.floor(i/2)*22,14,14);c.fillStyle='#5A6A7A';c.fillText(p[1],40+(i%2)*300,ly+7+Math.floor(i/2)*22);
+  });
+  const metrics=[
+    ['課題','持続的注意課題（目標「'+cf.target+'」・'+cf.iv+'秒間隔・'+Math.round(cf.dur/60*10)/10+'分）'],
+    ['終了のしかた',STATUS[why]],
+    ['目標に反応できた',hit+' / '+nT+'（'+pct(hit,nT)+'）',true],
+    ['見逃し（目標に反応しなかった）',miss+' 回'],
+    ['誤反応（目標でないのに反応）',fa+' 回'],
+    ['反応時間の平均（目標のとき）',rts.length?sec2(mean(rts)):'—'],
+    ['反応時間のばらつき',rts.length>1?'±'+(sdev(rts)/1000).toFixed(2)+' 秒':'—'],
+    ['前半・中盤・後半の反応率',parts.join(' → ')]
+  ];
+  endTask('cpt',why,metrics,{image:cv.toDataURL('image/png'),wide:true,legend:'前半・中盤・後半の反応率が下がっていくときは、集中が途切れやすい可能性があります。誤反応＝目標でない数字が出たときにタップしてしまった回数。'});
+}
+
+// ---------- 記号と数字の変換課題 ----------
+defTask({id:'sdmt',name:'記号と数字の変換課題',title:'記号と数字の変換課題',cat:'att',
+  sub:'上の対応表を見ながら、記号に合う数字をタップします。',
+  icon:'<rect x="3" y="4" width="26" height="9" rx="2"/><path d="M11.7 4v9M20.3 4v9"/><circle cx="7.3" cy="20" r="2.4"/><path d="M15 18l2.6 4.6h-5.2z"/><rect x="22" y="17.8" width="5" height="5" rx="1"/>',
+  desc:'対応表を見て、記号に合う数字をタップ。処理の速さを見ます。',
+  rows:[
+    {k:'dur',label:'時間',def:90,opts:[[60,'60秒'],[90,'90秒'],[120,'120秒']]},
+    {k:'mode',label:'実施モード',def:'exam',opts:[['exam','本番','結果を記録'],['prac','練習','正誤を表示・8問で終了・記録しない']]}],
+  note:'対応表は、数字と記号の組み合わせが毎回変わります。制限時間のあいだに、できるだけ多く答えてもらいます。',
+  area:'<div style="width:100%;max-width:1000px"><canvas id="sdmt-cv"></canvas><div class="sdmt-pad" id="sdmt-pad"></div></div>',
+  start:sdmtStart,finish:sdmtFinish,
+  init(){
+    $('sdmt-pad').innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>'<button data-v="'+n+'">'+n+'</button>').join('');
+    $('sdmt-pad').addEventListener('click',e=>{const b=e.target.closest('button');if(b)sdmtAnswer(+b.dataset.v);});
+  }});
+function sdmtStart(){
+  const cf=CF('sdmt');enterPlay('sdmt');
+  $('sdmt-cv').parentNode.style.width='900px';
+  const perm=shuffle([0,1,2,3,4,5,6,7,8]);
+  const[aw,ah]=availSize($('sdmt-stage'));const[W,H]=fitBox(3.2,Math.min(aw,980),Math.max(200,ah-110));const c=setupCanvas($('sdmt-cv'),W,H);$('sdmt-cv').parentNode.style.width=W+'px';
+  S.sdmt={perm,W,H,c,rec:[],cur:-1,prev:-1,lock:false,over:false,prac:cf.mode==='prac',t0:0,qt0:0,fb:''};
+  startClock('sdmt');
+  S.sdmt.tm=setInterval(()=>{
+    const s=S.sdmt;if(!s)return;const e=performance.now()-s.t0;
+    $('sdmt-time').textContent=fmtMS(e)+(s.prac?'':' / '+fmtMS(cf.dur*1000));
+    if(!s.prac&&e>=cf.dur*1000)sdmtFinish('time');
+  },250);
+  msg('sdmt',s_msg());
+  sdmtNext();
+}
+function s_msg(){return CF('sdmt').mode==='prac'?'練習です（正誤が表示されます）':'上の表を見て、記号に合う数字をタップしてください';}
+function sdmtNext(){
+  const s=S.sdmt;if(!s||s.over)return;
+  let k;do{k=ri(0,8);}while(k===s.prev);
+  s.cur=k;s.prev=k;s.lock=false;s.qt0=performance.now();sdmtDraw();
+}
+function sdmtDraw(){
+  const s=S.sdmt,{c,W,H,perm}=s;
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  const x0=W*0.03,cw=(W*0.94)/9,top=H*0.04,kh=H*0.5;
+  c.strokeStyle='#1A2332';c.lineWidth=2;c.strokeRect(x0,top,cw*9,kh);
+  c.beginPath();c.moveTo(x0,top+kh/2);c.lineTo(x0+cw*9,top+kh/2);for(let i=1;i<9;i++){c.moveTo(x0+cw*i,top);c.lineTo(x0+cw*i,top+kh);}c.stroke();
+  for(let d=0;d<9;d++){
+    glyph(c,perm[d],x0+cw*(d+0.5),top+kh*0.25,Math.min(cw,kh/2)*0.28);
+    c.fillStyle='#1A2332';c.font='bold '+Math.round(kh*0.3)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';
+    c.fillText(d+1,x0+cw*(d+0.5),top+kh*0.77);
+  }
+  c.strokeStyle='#8FA3B8';c.lineWidth=2;c.setLineDash([6,5]);
+  const bx=W/2-H*0.2,by=top+kh+H*0.06,bs=H*0.34;c.strokeRect(bx,by,H*0.4,bs);c.setLineDash([]);
+  glyph(c,s.cur,W/2,by+bs/2,bs*0.3);
+  if(s.fb){c.fillStyle=s.fb==='○'?OK_C:NG_C;c.font='bold '+Math.round(H*0.2)+'px sans-serif';c.textAlign='left';c.fillText(s.fb,W/2+H*0.3,by+bs/2);}
+}
+function sdmtAnswer(v){
+  const s=S.sdmt;if(!s||s.over||s.lock)return;
+  s.lock=true;
+  const right=s.perm.indexOf(s.cur)+1,ok=v===right;
+  s.rec.push({ok,ms:performance.now()-s.qt0,t:performance.now()-s.t0});
+  if(s.prac){
+    s.fb=ok?'○':'×';sdmtDraw();
+    setTimeout(()=>{const q=S.sdmt;if(!q)return;q.fb='';if(q.rec.length>=8)sdmtFinish('done');else sdmtNext();},ok?450:900);
+  }else setTimeout(sdmtNext,120);
+}
+function sdmtFinish(why){
+  const s=S.sdmt;if(!s||s.over)return;
+  const cf=CF('sdmt'),rec=s.rec,ok=rec.filter(r=>r.ok).length;
+  const el=performance.now()-s.t0,half=(why==='time'?cf.dur*1000:el)/2;
+  const h1=rec.filter(r=>r.ok&&r.t<half).length,h2=ok-h1;
+  const prac=s.prac;
+  const metrics=[
+    ['課題','記号と数字の変換課題（'+(prac?'練習':cf.dur+'秒')+'）'],
+    ['終了のしかた',STATUS[why]],
+    ['正答数',ok+' 個',true],
+    ['答えた数',rec.length+' 個'],
+    ['まちがい',(rec.length-ok)+' 個'],
+    ['前半・後半の正答数',h1+' → '+h2],
+    ['1つあたりの平均時間',rec.length?sec2(mean(rec.map(r=>r.ms))):'—']
+  ];
+  endTask('sdmt',why,metrics,{record:!prac,legend:'前半・後半の正答数＝制限時間（または実施した時間）を半分に分けた、それぞれの正答数。'});
+}
+
+// ---------- ストループ課題 ----------
+const STR_COLS=[['あか','#D64545'],['あお','#2F6FDB'],['みどり','#2E9E5B'],['きいろ','#D9A400']];
+defTask({id:'stroop',name:'ストループ課題',title:'ストループ課題',cat:'att exe',
+  sub:'文字の「色」と同じ色を、下のボタンからタップします（文字の意味ではありません）。',
+  icon:'<circle cx="12" cy="16" r="8"/><circle cx="20" cy="16" r="8"/>',
+  desc:'文字の意味ではなく、文字の色を答える。惑わされずに答える力を見ます。',
+  rows:[
+    {k:'n',label:'問題数',def:20,opts:[[12,'12問'],[20,'20問'],[30,'30問']]},
+    {k:'cond',label:'出し方',def:'mix',opts:[['mix','一致と不一致をまぜる','「あか」が赤色の文字など'],['incong','不一致のみ','「あか」が青色の文字など']]},
+    {k:'mode',label:'実施モード',def:'exam',opts:[['exam','本番','正誤は表示せず、結果を記録'],['prac','練習','正誤を表示・記録しない']]}],
+  note:'「あか」「あお」「みどり」「きいろ」の文字が、色つきで表示されます。文字の色と同じ色のボタンをタップしてもらいます。',
+  area:'<div class="calc-box" style="width:100%;max-width:820px"><div class="stroop-word" id="stroop-w"></div><div class="calc-fb" id="stroop-fb"></div><div class="stroop-btns" id="stroop-b"></div></div>',
+  start:stroopStart,finish:stroopFinish,
+  init(){
+    $('stroop-b').innerHTML=STR_COLS.map((c,i)=>'<button data-v="'+i+'" style="background:'+c[1]+'"></button>').join('');
+    $('stroop-b').addEventListener('click',e=>{const b=e.target.closest('button');if(b)stroopAnswer(+b.dataset.v);});
+  }});
+function stroopStart(){
+  const cf=CF('stroop');enterPlay('stroop');
+  const items=[];let prev='';
+  for(let i=0;i<cf.n;i++){
+    let w,ink,cong;
+    do{
+      cong=cf.cond==='mix'?Math.random()<0.5:false;
+      w=ri(0,3);ink=cong?w:(w+ri(1,3))%4;
+    }while((w+'-'+ink)===prev);
+    prev=w+'-'+ink;items.push({w,ink,cong});
+  }
+  S.stroop={items,i:0,rec:[],lock:false,over:false,qt0:0,prac:cf.mode==='prac'};
+  startClock('stroop');
+  msg('stroop','文字の「色」と同じ色のボタンをタップしてください');
+  stroopShow();
+}
+function stroopShow(){
+  const s=S.stroop;if(!s||s.over)return;
+  const it=s.items[s.i];
+  $('stroop-w').textContent=STR_COLS[it.w][0];$('stroop-w').style.color=STR_COLS[it.ink][1];
+  $('stroop-fb').textContent='';
+  s.lock=true;s.qt0=performance.now();setTimeout(()=>{if(S.stroop)S.stroop.lock=false;},250);
+}
+function stroopAnswer(v){
+  const s=S.stroop;if(!s||s.over||s.lock)return;
+  s.lock=true;
+  const it=s.items[s.i],ok=v===it.ink;
+  s.rec.push({ok,cong:it.cong,ms:performance.now()-s.qt0});
+  const go=()=>{const q=S.stroop;if(!q)return;q.i++;if(q.i>=q.items.length)stroopFinish('done');else stroopShow();};
+  if(s.prac){
+    $('stroop-fb').textContent=ok?'せいかい！':'ざんねん';$('stroop-fb').style.color=ok?OK_C:NG_C;
+    setTimeout(go,ok?600:1000);
+  }else setTimeout(go,150);
+}
+function stroopFinish(why){
+  const s=S.stroop;if(!s||s.over)return;
+  const cf=CF('stroop'),rec=s.rec,ok=rec.filter(r=>r.ok).length,el=performance.now()-s.t0;
+  const cg=rec.filter(r=>r.cong&&r.ok).map(r=>r.ms),ic=rec.filter(r=>!r.cong&&r.ok).map(r=>r.ms);
+  const metrics=[
+    ['課題','ストループ課題（'+(cf.cond==='mix'?'一致と不一致をまぜる':'不一致のみ')+'）'],
+    ['終了のしかた',STATUS[why]],
+    ['正答数',ok+' / '+cf.n,true],
+    ['答えた数',rec.length+' / '+cf.n],
+    ['所要時間',sec2(el)],
+    ['平均時間（文字と色が一致のとき）',cg.length?sec2(mean(cg)):'—'],
+    ['平均時間（文字と色が不一致のとき）',ic.length?sec2(mean(ic)):'—'],
+    ['ストループ干渉（不一致−一致）',(cg.length&&ic.length)?((mean(ic)-mean(cg))/1000).toFixed(2)+' 秒':'—']
+  ];
+  const prac=s.prac;
+  endTask('stroop',why,metrics,{record:!prac,legend:'ストループ干渉＝文字と色が違うとき（不一致）に、答えるまでに余計にかかった時間。大きいほど、文字に惑わされやすいことを表します。'});
+}
+
+// ---------- 反応課題 ----------
+defTask({id:'rt',name:'反応課題',title:'反応課題',cat:'att',
+  sub:'まるが出たら、できるだけ早くタップします。',
+  icon:'<path d="M18 3 8 18h7l-2 11 11-16h-7z"/>',
+  desc:'合図が出たらすぐにタップ。反応までの時間とばらつきを測ります。',
+  rows:[
+    {k:'type',label:'しゅるい',def:'simple',opts:[['simple','単純反応','まるが出たらタップ'],['choice','選択反応','まるが出た側（左・右）をタップ']]},
+    {k:'n',label:'回数',def:10,opts:[[10,'10回'],[15,'15回'],[20,'20回']]}],
+  note:'まるが出るまでの待ち時間は、毎回ランダムです。早すぎるタップ（フライング）は、数えて、やり直しになります。選択反応では、左右の反応時間の差も見られます。',
+  area:'<div class="rt-wrap"><div class="rt-pane" id="rt-L"><div class="rt-dot" id="rt-dotL"></div></div><div class="rt-pane" id="rt-R"><div class="rt-dot" id="rt-dotR"></div></div></div>',
+  start:rtStart,finish:rtFinish,
+  init(){
+    ['L','R'].forEach(sd=>$('rt-'+sd).addEventListener('pointerdown',e=>{e.preventDefault();rtTap(sd);}));
+  }});
+function rtStart(){
+  const cf=CF('rt');enterPlay('rt');
+  S.rt={trials:[],state:'idle',timers:[],fly:0,over:false,side:'L',onset:0};
+  $('rt-R').style.display=cf.type==='choice'?'':'none';
+  $('rt-dotL').style.display=$('rt-dotR').style.display='none';
+  startClock('rt');rtNext();
+}
+function rtNext(){
+  const s=S.rt;if(!s||s.over)return;
+  if(s.trials.length>=CF('rt').n){rtFinish('done');return;}
+  s.state='wait';
+  $('rt-dotL').style.display=$('rt-dotR').style.display='none';
+  msg('rt',CF('rt').type==='choice'?'まるが出た側をタップします。まだ押さないでください':'まるが出たらタップします。まだ押さないでください');
+  s.timers.push(setTimeout(rtShow,rnd(1200,3500)));
+}
+function rtShow(){
+  const s=S.rt;if(!s||s.over)return;
+  const cf=CF('rt');
+  s.side=cf.type==='choice'&&Math.random()<0.5?'R':'L';
+  $('rt-dot'+s.side).style.display='block';
+  s.state='go';s.onset=performance.now();msg('rt','いま！');
+  s.timers.push(setTimeout(()=>{
+    if(s.state!=='go')return;
+    s.trials.push({side:s.side,rt:null,ok:false,miss:true});
+    s.state='gap';rtNext2();
+  },3000));
+}
+function rtNext2(){const s=S.rt;if(!s)return;$('rt-dotL').style.display=$('rt-dotR').style.display='none';s.timers.push(setTimeout(rtNext,700));}
+function rtTap(sd){
+  const s=S.rt;if(!s||s.over)return;
+  if(s.state==='wait'){
+    s.fly++;s.timers.forEach(clearTimeout);s.timers=[];
+    msg('rt','はやすぎます。もう一度、待ってください');
+    s.timers.push(setTimeout(rtNext,900));s.state='gap';
+  }else if(s.state==='go'){
+    const rt=performance.now()-s.onset,ok=CF('rt').type!=='choice'||sd===s.side;
+    s.timers.forEach(clearTimeout);s.timers=[];
+    s.trials.push({side:s.side,rt,ok,miss:false});
+    s.state='gap';rtNext2();
+  }
+}
+function rtFinish(why){
+  const s=S.rt;if(!s||s.over)return;
+  const cf=CF('rt'),tr=s.trials,good=tr.filter(t=>t.ok&&!t.miss),rts=good.map(t=>t.rt);
+  const miss=tr.filter(t=>t.miss).length,wrong=tr.filter(t=>!t.ok&&!t.miss).length;
+  const cv=document.createElement('canvas');cv.width=640;cv.height=250;
+  const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,640,250);
+  const mx=Math.max(1000,...rts),bw=Math.min(28,560/Math.max(1,tr.length));
+  c.strokeStyle='#DDE3EA';c.fillStyle='#5A6A7A';c.font='12px sans-serif';c.textAlign='right';c.textBaseline='middle';
+  [0,500,1000].forEach(v=>{const y=200-v/mx*170;c.beginPath();c.moveTo(48,y);c.lineTo(630,y);c.stroke();c.fillText(v/1000+'秒',44,y);});
+  tr.forEach((t,i)=>{
+    const x=56+i*(bw+3);
+    if(t.miss){c.fillStyle=GRAY_C;c.fillRect(x,30,bw,170);}
+    else{c.fillStyle=!t.ok?NG_C:(cf.type==='choice'&&t.side==='R'?WARN_C:'#2A6EBB');c.fillRect(x,200-t.rt/mx*170,bw,t.rt/mx*170);}
+  });
+  c.textAlign='left';c.fillStyle='#5A6A7A';c.font='13px sans-serif';
+  c.fillText(cf.type==='choice'?'青＝左　オレンジ＝右　赤＝反対側をタップ　灰色＝反応なし':'青＝反応時間　灰色＝反応なし（3秒以内に押さなかった）',48,232);
+  const l=good.filter(t=>t.side==='L').map(t=>t.rt),r=good.filter(t=>t.side==='R').map(t=>t.rt);
+  const metrics=[
+    ['課題','反応課題（'+(cf.type==='choice'?'選択反応':'単純反応')+'）'],
+    ['終了のしかた',STATUS[why]],
+    ['反応時間の平均',rts.length?sec2(mean(rts)):'—',true],
+    ['反応時間の中央値',rts.length?sec2(median(rts)):'—'],
+    ['いちばん早い／遅い',rts.length?sec2(Math.min.apply(null,rts))+' ／ '+sec2(Math.max.apply(null,rts)):'—'],
+    ['反応時間のばらつき',rts.length>1?'±'+(sdev(rts)/1000).toFixed(2)+' 秒':'—'],
+    ['フライング（早すぎるタップ）',s.fly+' 回'],
+    ['反応なし（3秒以内に押さなかった）',miss+' 回']
+  ];
+  if(cf.type==='choice'){
+    metrics.push(['反対側をタップした回数',wrong+' 回']);
+    metrics.push(['左・右の平均時間',(l.length?sec2(mean(l)):'—')+' ／ '+(r.length?sec2(mean(r)):'—')]);
+  }
+  endTask('rt',why,metrics,{image:cv.toDataURL('image/png'),wide:true,legend:'反応時間のばらつきが大きいときは、注意の波があることを表します。選択反応では、左右で平均時間に大きな差があるとき、片側への注意の偏りが疑われます。'});
+}
+
+// ================= 記憶 =================
+function pictCv(k,size){
+  const cv=document.createElement('canvas');cv.width=cv.height=size;
+  const c=cv.getContext('2d');pict(c,k,size/2,size/2,size*0.42);return cv;
+}
+
+// ---------- 神経衰弱 ----------
+defTask({id:'pairs',name:'神経衰弱',title:'神経衰弱',cat:'mem',
+  sub:'カードを2枚めくって、同じ絵のペアを見つけます。',
+  icon:'<rect x="3" y="6" width="11" height="15" rx="2"/><rect x="18" y="11" width="11" height="15" rx="2"/><path d="M8.5 11.5v5M6 14h5"/>',
+  desc:'同じ絵のカードを探す。絵の位置を覚えておく力を見ます。',
+  rows:[{k:'n',label:'ペアの数',def:6,opts:[[4,'4組','8枚'],[6,'6組','12枚'],[8,'8組','16枚'],[10,'10組','20枚']]}],
+  note:'カードを2枚ずつめくります。同じ絵ならそのまま残り、ちがう絵なら1秒後に伏せます。めくった回数が少ないほど、位置を覚えられていることを表します。',
+  bar:'<span class="stat">めくった回数 <b id="pairs-tries">0</b></span><span class="stat">見つけた <b id="pairs-found">0</b></span>',
+  area:'<div class="pairs-grid" id="pairs-grid"></div>',
+  start:pairsStart,finish:pairsFinish});
+function pairsStart(){
+  const cf=CF('pairs');enterPlay('pairs');
+  const ks=shuffle([...Array(PICT_N).keys()]).slice(0,cf.n);
+  const deck=shuffle(ks.concat(ks));
+  const cols=cf.n<=4?4:cf.n<=6?4:cf.n<=8?4:5;
+  const g=$('pairs-grid');g.innerHTML='';g.style.gridTemplateColumns='repeat('+cols+',120px)';
+  S.pairs={deck,up:[],done:new Array(deck.length).fill(false),seen:new Array(deck.length).fill(false),lock:false,tries:0,found:0,bad:0,memErr:0,timers:[],over:false};
+  deck.forEach((k,i)=>{
+    const b=document.createElement('button');b.className='pcard';b.dataset.i=i;
+    b.innerHTML='<span class="pback">？</span>';
+    b.onclick=()=>pairsFlip(i);g.appendChild(b);
+  });
+  $('pairs-tries').textContent='0';$('pairs-found').textContent='0';
+  startClock('pairs');msg('pairs','カードを2枚ずつめくってください');
+}
+function pairsCard(i){return $('pairs-grid').children[i];}
+function pairsFlip(i){
+  const s=S.pairs;if(!s||s.over||s.lock||s.done[i]||s.up.includes(i))return;
+  const b=pairsCard(i);b.classList.add('open');b.innerHTML='';b.appendChild(pictCv(s.deck[i],110));
+  s.up.push(i);
+  if(s.up.length<2)return;
+  s.tries++;$('pairs-tries').textContent=s.tries;
+  const[a,c]=s.up;
+  if(s.deck[a]===s.deck[c]){
+    s.done[a]=s.done[c]=true;s.found++;s.up=[];
+    pairsCard(a).classList.add('ok');pairsCard(c).classList.add('ok');
+    $('pairs-found').textContent=s.found;
+    if(s.found>=CF('pairs').n)setTimeout(()=>pairsFinish('done'),600);
+  }else{
+    s.bad++;
+    // すでに見たことのある札を、取り違えた回数
+    if(s.seen[a]||s.seen[c])s.memErr++;
+    s.seen[a]=s.seen[c]=true;
+    s.lock=true;
+    s.timers.push(setTimeout(()=>{
+      [a,c].forEach(j=>{const e=pairsCard(j);e.classList.remove('open');e.innerHTML='<span class="pback">？</span>';});
+      s.up=[];s.lock=false;
+    },1000));
+  }
+}
+function pairsFinish(why){
+  const s=S.pairs;if(!s||s.over)return;
+  const n=CF('pairs').n,el=performance.now()-s.t0;
+  endTask('pairs',why,[
+    ['課題','神経衰弱（'+n+'組）'],['終了のしかた',STATUS[why]],
+    ['見つけたペア',s.found+' / '+n,true],
+    ['めくった回数（2枚で1回）',s.tries+' 回'],
+    ['ちがう絵だった回数',s.bad+' 回'],
+    ['見たことのある札のまちがい',s.memErr+' 回'],
+    ['所要時間',sec2(el)]
+  ],{legend:'見たことのある札のまちがい＝すでに一度めくった札を含むのに、ペアにならなかった回数。位置を覚えられていない可能性を表します。最少のめくった回数は、運が良くてもペア数と同じです。'});
+}
+
+// ---------- 絵の再認 ----------
+defTask({id:'recog',name:'絵の再認',title:'絵の再認',cat:'mem',
+  sub:'いくつかの絵を覚えて、あとで4つの中から選びます。',
+  icon:'<circle cx="16" cy="16" r="5"/><path d="M2 16s5-9 14-9 14 9 14 9-5 9-14 9S2 16 2 16z"/>',
+  desc:'見た絵を覚えて、あとで同じ絵を選ぶ。見たものを覚える力を見ます。',
+  rows:[
+    {k:'k',label:'覚える絵の数',def:6,opts:[[4,'4つ'],[6,'6つ'],[8,'8つ']]},
+    {k:'delay',label:'待ち時間',def:30,opts:[[0,'なし'],[30,'30秒'],[60,'60秒']]}],
+  note:'絵を1つずつ3秒間見せます。待ち時間のあと、4つの絵の中から見たものを選んでもらいます。正誤は画面に出しません。',
+  area:'<div class="calc-box" style="width:100%;max-width:820px"><div id="recog-st" style="min-height:260px;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;"></div><div class="recog-ch" id="recog-ch"></div></div>',
+  start:recogStart,finish:recogFinish});
+function recogStart(){
+  const cf=CF('recog');enterPlay('recog');
+  const all=shuffle([...Array(PICT_N).keys()]),T=all.slice(0,cf.k),F=all.slice(cf.k);
+  S.recog={T,F,i:0,rec:[],timers:[],phase:'study',over:false};
+  startClock('recog');$('recog-ch').innerHTML='';
+  msg('recog','絵をよく見て、覚えてください');recogStudy();
+}
+function recogStudy(){
+  const s=S.recog;if(!s||s.over)return;
+  if(s.i>=s.T.length){recogDelay();return;}
+  const st=$('recog-st');st.innerHTML='';
+  const cv=pictCv(s.T[s.i],220);st.appendChild(cv);
+  s.timers.push(setTimeout(()=>{st.innerHTML='';s.timers.push(setTimeout(()=>{s.i++;recogStudy();},400));},3000));
+}
+function recogDelay(){
+  const s=S.recog,d=CF('recog').delay;
+  if(!d){recogTest();return;}
+  s.phase='delay';let left=d;
+  const upd=()=>{$('recog-st').textContent='しばらくお待ちください（のこり '+left+' 秒）';};
+  msg('recog','');upd();
+  const iv=setInterval(()=>{left--;if(left<=0){clearInterval(iv);recogTest();}else upd();},1000);
+  s.timers.push(iv);
+}
+function recogTest(){
+  const s=S.recog;if(!s||s.over)return;
+  s.phase='test';s.i=0;s.order=shuffle(s.T.slice());recogQ();
+}
+function recogQ(){
+  const s=S.recog;if(!s||s.over)return;
+  if(s.i>=s.order.length){recogFinish('done');return;}
+  const tgt=s.order[s.i],ch=shuffle([tgt].concat(shuffle(s.F.slice()).slice(0,3)));
+  msg('recog','さきほど見た絵は、どれですか？');
+  $('recog-st').innerHTML='';
+  const box=$('recog-ch');box.innerHTML='';
+  $('recog-st').style.minHeight='0';s.lock=true;s.qt0=performance.now();setTimeout(()=>{if(S.recog)S.recog.lock=false;},250);
+  ch.forEach(k=>{const b=document.createElement('button');b.appendChild(pictCv(k,130));
+    b.onclick=()=>{if(s.lock)return;s.lock=true;s.rec.push({ok:k===tgt,ms:performance.now()-s.qt0});s.i++;setTimeout(recogQ,200);};box.appendChild(b);});
+}
+function recogFinish(why){
+  const s=S.recog;if(!s||s.over)return;
+  const ok=s.rec.filter(r=>r.ok).length,cf=CF('recog');
+  endTask('recog',why,[
+    ['課題','絵の再認（'+cf.k+'個・待ち時間'+(cf.delay?cf.delay+'秒':'なし')+'）'],['終了のしかた',STATUS[why]],
+    ['正答',ok+' / '+cf.k,true],['答えた数',s.rec.length+' / '+cf.k],
+    ['答えるまでの平均時間',s.rec.length?sec2(mean(s.rec.map(r=>r.ms))):'—'],
+    ['所要時間',sec2(performance.now()-s.t0)]
+  ],{legend:'4つの中から選ぶ形なので、でたらめに答えても約25％は正解します。'});
+}
+
+// ---------- 3単語の遅延再生 ----------
+const W3_SETS={
+  A:[['さくら',['うめ','もも']],['ねこ',['いぬ','うさぎ']],['でんしゃ',['バス','ひこうき']]],
+  B:[['つばき',['ばら','すみれ']],['うま',['ひつじ','くま']],['ひこうき',['ふね','じどうしゃ']]],
+  C:[['ひまわり',['ゆり','たんぽぽ']],['さる',['たぬき','きつね']],['じてんしゃ',['バイク','トラック']]]};
+defTask({id:'words3',name:'3単語の遅延再生',title:'3単語の遅延再生',cat:'mem lang staff',
+  sub:'3つの言葉を覚えて、しばらくしてから思い出します。',
+  icon:'<path d="M4 6h24v15H15l-6 6v-6H4z"/><path d="M9 12h14M9 16h8"/>',
+  desc:'3つの言葉を覚え、時間をおいて思い出す。ヒントがあれば思い出せるかも見ます。',
+  rows:[
+    {k:'wset',label:'言葉のセット',def:'A',opts:[['A','A','さくら・ねこ・でんしゃ'],['B','B','つばき・うま・ひこうき'],['C','C','ひまわり・さる・じてんしゃ']]},
+    {k:'delay',label:'待ち時間',def:60,opts:[[30,'30秒'],[60,'1分'],[120,'2分'],[180,'3分']]},
+    {k:'dis',label:'待つあいだ',def:1,opts:[[1,'引き算をする','注意をそらす'],[0,'ただ待つ']]},
+    {k:'tts',label:'言葉の読み上げ',def:0,opts:[[0,'なし','文字だけ'],[1,'あり','この端末の音声で読み上げ']]}],
+  note:'MMSEの3単語記銘と同じ流れです。思い出せた言葉は、スタッフが画面のボタンで記録します。思い出せなかった言葉は、3つの中から選んでもらいます。読み上げは端末に入っている音声機能を使います（機種により使えないことがあります）。',
+  area:'<div class="calc-box" style="width:100%;max-width:820px"><div id="w3-main" style="min-height:340px"></div></div>',
+  start:w3Start,finish:w3Finish});
+function w3Say(t){try{if(!CF('words3').tts||!window.speechSynthesis)return;const u=new SpeechSynthesisUtterance(t);u.lang='ja-JP';u.rate=0.8;speechSynthesis.speak(u);}catch(e){}}
+function w3Start(){
+  const cf=CF('words3');enterPlay('words3');
+  const set=W3_SETS[cf.wset];
+  S.words3={set,phase:'reg',recalled:[false,false,false],cue:[null,null,null],dis:{ok:0,n:0},timers:[],over:false};
+  startClock('words3');
+  msg('words3','これから3つの言葉を見せます。あとで聞きますので、覚えてください');
+  $('w3-main').innerHTML='<div class="w3-words">'+set.map(w=>'<span>'+w[0]+'</span>').join('')+'</div><p class="w3-sub">10秒間、表示します</p><button class="btn btn-p big" id="w3-next">覚えた</button>';
+  w3Say(set.map(w=>w[0]).join('、'));
+  const s=S.words3;let done=false;
+  const go=()=>{if(done||!S.words3)return;done=true;w3Delay();};
+  $('w3-next').onclick=go;s.timers.push(setTimeout(go,10000));
+}
+function w3Delay(){
+  const s=S.words3;if(!s||s.over)return;
+  s.phase='delay';const cf=CF('words3');let left=cf.delay;
+  s.timers.forEach(clearTimeout);s.timers=[];
+  const m=$('w3-main');
+  if(cf.dis){
+    msg('words3','少しのあいだ、引き算をしてください');
+    m.innerHTML='<div class="w3-sub" id="w3-left"></div><div class="calc-q" id="w3-q"></div><div class="stroop-btns" id="w3-ans"></div>';
+    const nq=()=>{
+      const a=ri(30,99),b=ri(3,9),ans=a-b;let ch=[ans];while(ch.length<4){const v=ans+ri(-9,9);if(v>0&&!ch.includes(v))ch.push(v);}
+      ch=shuffle(ch);$('w3-q').textContent=a+' − '+b+' ＝ ？';
+      $('w3-ans').innerHTML=ch.map(v=>'<button class="plain" data-v="'+v+'">'+v+'</button>').join('');
+      $('w3-ans').onclick=e=>{const t=e.target.closest('button');if(!t||!S.words3)return;s.dis.n++;if(+t.dataset.v===ans)s.dis.ok++;nq();};
+    };nq();
+  }else{
+    msg('words3','しばらくお待ちください');
+    m.innerHTML='<div class="w3-sub" id="w3-left"></div>';
+  }
+  const upd=()=>{$('w3-left').textContent='のこり '+left+' 秒';};upd();
+  const iv=setInterval(()=>{left--;if(left<=0){clearInterval(iv);w3Recall();}else upd();},1000);
+  s.timers.push(iv);
+}
+function w3Recall(){
+  const s=S.words3;if(!s||s.over)return;
+  s.phase='recall';s.timers.forEach(clearTimeout);s.timers=[];
+  msg('words3','さきほどの3つの言葉を、声に出して言ってください');
+  $('w3-main').innerHTML='<p class="w3-sub">【スタッフの方】言えた言葉をタップして記録してください</p><div class="w3-recall">'
+    +s.set.map((w,i)=>'<button data-i="'+i+'"><b>'+(i+1)+'つ目</b><small>'+w[0]+'</small></button>').join('')
+    +'</div><button class="btn btn-p big" id="w3-next">記録して、つぎへ</button>';
+  $('w3-main').querySelector('.w3-recall').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;s.recalled[i]=!s.recalled[i];b.classList.toggle('on',s.recalled[i]);};
+  $('w3-next').onclick=w3Cue;
+}
+function w3Cue(){
+  const s=S.words3;if(!s||s.over)return;
+  s.phase='cue';
+  s.queue=[0,1,2].filter(i=>!s.recalled[i]);w3CueQ();
+}
+function w3CueQ(){
+  const s=S.words3;if(!s||s.over)return;
+  if(!s.queue.length){w3Finish('done');return;}
+  const i=s.queue[0],w=s.set[i];
+  msg('words3','言えなかった言葉があります。見た言葉は、どれですか？');
+  const ch=shuffle([w[0]].concat(w[1]));
+  $('w3-main').innerHTML='<div class="stroop-btns" style="grid-template-columns:repeat(3,1fr);margin-top:60px">'+ch.map(t=>'<button class="plain big3" data-v="'+t+'">'+t+'</button>').join('')+'</div>';
+  const lock=performance.now();
+  $('w3-main').querySelector('.stroop-btns').onclick=e=>{const b=e.target.closest('button');if(!b||performance.now()-lock<250)return;s.cue[i]=b.dataset.v===w[0];s.queue.shift();w3CueQ();};
+}
+function w3Finish(why){
+  const s=S.words3;if(!s||s.over)return;
+  const rc=s.recalled.filter(Boolean).length;
+  const asked=s.cue.filter(v=>v!==null).length,cok=s.cue.filter(v=>v===true).length;
+  const reached=['recall','cue'].includes(s.phase)||why==='done';
+  const cf=CF('words3');
+  const m=[['課題','3単語の遅延再生（セット'+cf.wset+'・待ち時間'+cf.delay+'秒）'],['終了のしかた',STATUS[why]],
+    ['言葉',s.set.map(w=>w[0]).join('・')]];
+  if(reached){
+    m.push(['自分で思い出せた数',rc+' / 3',true]);
+    m.push(['思い出せた言葉',s.set.filter((w,i)=>s.recalled[i]).map(w=>w[0]).join('・')||'なし']);
+    m.push(['ヒントで選べた数（3択）',asked?cok+' / '+asked:'（全部言えたため実施なし）']);
+  }else m.push(['進んだところ','思い出す段階の前に終了']);
+  if(cf.dis)m.push(['待つあいだの引き算',s.dis.n?s.dis.ok+' / '+s.dis.n+' 問 正解':'実施なし']);
+  endTask('words3',why,m,{legend:'自分で思い出せなくても、3択で選べる場合は、「覚えてはいるが取り出しにくい」状態の可能性があります。選べない場合は、そもそも覚えられていない可能性があります。'});
+}
+
+// ================= 視空間・構成 =================
+function ptr(cv,onDown,onMove,onUp){
+  let on=false;
+  cv.style.touchAction='none';
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();on=true;try{cv.setPointerCapture(e.pointerId);}catch(_){}onDown(...pos(e,cv),e);});
+  cv.addEventListener('pointermove',e=>{if(on){e.preventDefault();onMove(...pos(e,cv),e);}});
+  const up=e=>{if(!on)return;on=false;onUp(...pos(e,cv),e);};
+  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+}
+
+// ---------- 時計描画 ----------
+const CLOCK_ITEMS=['円（文字盤）がほぼ閉じている','数字が12個そろっている','数字の順番が正しい','数字が円の内側にほぼ等間隔','針が2本ある','短い針と長い針を区別している','針が数字の位置を正しく指している','指定した時刻になっている'];
+defTask({id:'clock',name:'時計描画',title:'時計描画',cat:'vis exe staff',
+  sub:'まるい時計の絵を描き、指定された時刻を針で示します。',
+  icon:'<circle cx="16" cy="16" r="12"/><path d="M16 8v8l5 3"/>',
+  desc:'時計の絵を自分で描く。空間の把握や段取りの力を見ます（採点はスタッフ）。',
+  rows:[{k:'tm',label:'指定する時刻',def:'11:10',opts:[['11:10','11時10分','よく使われる'],['10:10','10時10分'],['8:20','8時20分'],['2:45','2時45分'],['rand','ランダム']]}],
+  note:'描く場所は白い四角です。数字・針は自由に描いてもらいます。終わったら「描けた」を押し、スタッフが8項目をチェックします（1項目1点・8点満点）。',
+  barBtn:'<button class="btn btn-g" id="clock-clear">消す</button><button class="btn btn-p" id="clock-done">描けた</button>',
+  area:'<div style="width:100%;display:flex;flex-direction:column;align-items:center"><canvas id="clock-cv"></canvas><div id="clock-chk" style="display:none;width:100%;max-width:900px;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;text-align:center"></div></div>',
+  start:clockStart,finish:clockFinish,
+  init(){
+    const cv=$('clock-cv');
+    ptr(cv,(x,y)=>{const s=S.clock;if(!s||s.phase!=='draw')return;s.cur=[[x,y]];s.strokes.push(s.cur);},
+      (x,y)=>{const s=S.clock;if(!s||!s.cur)return;const p=s.cur[s.cur.length-1];s.cur.push([x,y]);const c=s.c;c.strokeStyle='#1A2332';c.lineWidth=3;c.lineCap='round';c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(x,y);c.stroke();},
+      ()=>{const s=S.clock;if(s)s.cur=null;});
+    $('clock-clear').onclick=()=>{const s=S.clock;if(!s||s.phase!=='draw')return;uiConfirm('描いたものをすべて消しますか？',()=>{s.strokes=[];clockBlank();},'消す','やめる');};
+    $('clock-done').onclick=()=>{const s=S.clock;if(!s||s.phase!=='draw')return;clockCheck();};
+  }});
+function clockBlank(){const s=S.clock;s.c.fillStyle='#fff';s.c.fillRect(0,0,s.W,s.H);}
+function clockStart(){
+  const cf=CF('clock');enterPlay('clock');
+  const tm=cf.tm==='rand'?pick(['11:10','10:10','8:20','2:45','4:50','1:35']):cf.tm;
+  const[aw,ah]=availSize($('clock-stage'));const[W,H]=fitBox(1.25,Math.min(aw,900),ah-10);
+  const c=setupCanvas($('clock-cv'),W,H);
+  S.clock={tstr:tm,W,H,c,strokes:[],cur:null,phase:'draw',chk:new Array(8).fill(false),timers:[]};
+  $('clock-cv').style.display='block';$('clock-chk').style.display='none';
+  $('clock-clear').style.display=$('clock-done').style.display='';
+  clockBlank();startClock('clock');
+  const[h,m]=tm.split(':');
+  msg('clock','時計の絵を描いてください。数字を書いて、針で「'+h+'時'+(+m?m+'分':'')+'」を示してください');
+}
+function clockCheck(){
+  const s=S.clock;s.phase='chk';stopClock('clock');s.el=performance.now()-s.t0;
+  s.img=$('clock-cv').toDataURL('image/png');
+  $('clock-clear').style.display=$('clock-done').style.display='none';
+  msg('clock','【スタッフの方】できていた項目をタップしてください');
+  const box=$('clock-chk');box.style.display='block';$('clock-cv').style.display='none';
+  box.innerHTML='<div class="chk-list">'+CLOCK_ITEMS.map((t,i)=>'<button data-i="'+i+'">'+t+'</button>').join('')+'</div><button class="btn btn-p big" id="clock-fin">結果をまとめる</button>';
+  box.querySelector('.chk-list').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;s.chk[i]=!s.chk[i];b.classList.toggle('on',s.chk[i]);};
+  $('clock-fin').onclick=()=>clockFinish('done');
+}
+function clockFinish(why){
+  const s=S.clock;if(!s||s.over)return;
+  const img=s.img||$('clock-cv').toDataURL('image/png');
+  const sc=s.chk.filter(Boolean).length,[h,m]=s.tstr.split(':');
+  const m2=[['課題','時計描画（'+h+'時'+(+m?m+'分':'')+'）'],['終了のしかた',STATUS[why]],['所要時間（描くまで）',sec2(s.el||performance.now()-s.t0)]];
+  if(s.phase==='chk'&&why==='done'){m2.push(['スタッフの採点',sc+' / 8 点',true]);m2.push(['できていなかった項目',CLOCK_ITEMS.filter((t,i)=>!s.chk[i]).join('、')||'なし']);}
+  else m2.push(['スタッフの採点','未実施']);
+  endTask('clock',why,m2,{image:img,wide:false,legend:'採点は、スタッフが画面の描画を見て8項目をチェックしたものです。自動判定ではありません。'});
+}
+
+// ---------- 図形の回転 ----------
+function polyKey(cells){
+  const mx=Math.min(...cells.map(c=>c[0])),my=Math.min(...cells.map(c=>c[1]));
+  return cells.map(c=>(c[0]-mx)+','+(c[1]-my)).sort().join(';');
+}
+const rot90=cs=>cs.map(c=>[-c[1],c[0]]),mir=cs=>cs.map(c=>[-c[0],c[1]]);
+function randPoly(n){
+  for(let t=0;t<500;t++){
+    const set=new Map([['0,0',[0,0]]]);
+    while(set.size<n){
+      const arr=[...set.values()],b=pick(arr),d=pick([[1,0],[-1,0],[0,1],[0,-1]]),q=[b[0]+d[0],b[1]+d[1]];
+      set.set(q.join(','),q);
+    }
+    const cs=[...set.values()];
+    // 細すぎる（一直線）は除く
+    const xs=new Set(cs.map(c=>c[0])),ys=new Set(cs.map(c=>c[1]));
+    if(xs.size<2||ys.size<2)continue;
+    const keys=[];let r=cs;for(let i=0;i<4;i++){keys.push(polyKey(r));r=rot90(r);}
+    if(!keys.includes(polyKey(mir(cs))))return cs;   // 鏡像が回転では一致しない（左右の区別が必要）
+  }
+  return [[0,0],[1,0],[2,0],[2,1],[3,1]];
+}
+function drawPoly(cv,cs,size,ang,col){
+  cv.width=cv.height=size;const c=cv.getContext('2d');
+  const cx=mean(cs.map(p=>p[0])),cy=mean(cs.map(p=>p[1]));
+  const ext=Math.max(...cs.map(p=>Math.hypot(p[0]-cx,p[1]-cy)))+0.9,u=size*0.46/ext;
+  c.translate(size/2,size/2);c.rotate(ang||0);
+  c.fillStyle=col||'#2A6EBB';c.strokeStyle='#fff';c.lineWidth=2;
+  cs.forEach(p=>{c.fillRect((p[0]-cx-0.5)*u,(p[1]-cy-0.5)*u,u,u);c.strokeRect((p[0]-cx-0.5)*u,(p[1]-cy-0.5)*u,u,u);});
+}
+defTask({id:'rot',name:'図形の回転',title:'図形の回転',cat:'vis',
+  sub:'左の図形を回転させたものを、右の4つから選びます（裏返したものは違います）。',
+  icon:'<path d="M26 12a10 10 0 1 0 1 6"/><path d="M27 5v7h-7"/>',
+  desc:'図形を頭の中で回して、同じ形を選ぶ。空間をイメージする力を見ます。',
+  rows:[
+    {k:'cells',label:'図形の大きさ',def:6,opts:[[5,'ふつう','5ブロック'],[7,'むずかしい','7ブロック']]},
+    {k:'free',label:'回転の角度',def:0,opts:[[0,'90度ずつ','90・180・270度'],[1,'自由な角度','まっすぐでない傾きも出る']]},
+    {k:'n',label:'問題数',def:8,opts:[[6,'6問'],[8,'8問'],[12,'12問']]},
+    {k:'mode',label:'実施モード',def:'exam',opts:[['exam','本番','結果を記録'],['prac','練習','正誤を表示・記録しない']]}],
+  note:'見本は回転させたもの、まちがいの選択肢は「裏返し（鏡に映した形）」を回転したものです。かならず1つだけ正解があります。',
+  area:'<div class="calc-box" style="width:100%;max-width:960px"><div class="rot-row"><div><div class="w3-sub" style="margin:0 0 6px">見本</div><div class="rot-tg" id="rot-tg"></div></div><div><div class="w3-sub" style="margin:0 0 6px">同じ形は？</div><div class="rot-ch" id="rot-ch"></div></div></div><div class="calc-fb" id="rot-fb" style="margin-top:14px"></div></div>',
+  start:rotStart,finish:rotFinish});
+function rotStart(){
+  const cf=CF('rot');enterPlay('rot');
+  S.rot={i:0,rec:[],timers:[],lock:false,prac:cf.mode==='prac'};startClock('rot');
+  msg('rot','左の見本と同じ形（回転しただけ）を選んでください');rotQ();
+}
+function rotQ(){
+  const s=S.rot,cf=CF('rot');if(!s||s.over)return;
+  if(s.i>=cf.n){rotFinish('done');return;}
+  const base=randPoly(cf.cells),ang=()=>cf.free?rnd(0.4,5.9):pick([1,2,3])*Math.PI/2;
+  const tgAng=cf.free?rnd(0,6.28):0;
+  const opts=[{cs:base,ang:ang(),ok:true}];
+  for(let k=0;k<3;k++)opts.push({cs:mir(base),ang:ang(),ok:false});
+  const ch=shuffle(opts);
+  const tg=$('rot-tg');tg.innerHTML='';const tc=document.createElement('canvas');drawPoly(tc,base,200,tgAng,'#E67E22');tg.appendChild(tc);
+  const box=$('rot-ch');box.innerHTML='';$('rot-fb').textContent='';
+  s.lock=true;s.qt0=performance.now();setTimeout(()=>{if(S.rot)S.rot.lock=false;},250);
+  ch.forEach(o=>{const b=document.createElement('button');const c=document.createElement('canvas');drawPoly(c,o.cs,140,o.ang);b.appendChild(c);
+    b.onclick=()=>{
+      if(s.lock)return;s.lock=true;s.rec.push({ok:o.ok,ms:performance.now()-s.qt0});
+      const go=()=>{if(!S.rot)return;s.i++;rotQ();};
+      if(s.prac){$('rot-fb').textContent=o.ok?'せいかい！':'ざんねん（正解は、回転しただけの形です）';$('rot-fb').style.color=o.ok?OK_C:NG_C;setTimeout(go,o.ok?700:1500);}
+      else setTimeout(go,150);
+    };box.appendChild(b);});
+}
+function rotFinish(why){
+  const s=S.rot;if(!s||s.over)return;
+  const cf=CF('rot'),ok=s.rec.filter(r=>r.ok).length,okt=s.rec.filter(r=>r.ok).map(r=>r.ms);
+  endTask('rot',why,[
+    ['課題','図形の回転（'+cf.cells+'ブロック・'+(cf.free?'自由な角度':'90度ずつ')+'）'],['終了のしかた',STATUS[why]],
+    ['正答',ok+' / '+cf.n,true],['答えた数',s.rec.length+' / '+cf.n],
+    ['正解したときの平均時間',okt.length?sec2(mean(okt)):'—'],
+    ['所要時間',sec2(performance.now()-s.t0)]
+  ],{record:!s.prac,legend:'4つから選ぶ形なので、でたらめに答えても約25％は正解します。まちがいの選択肢は、見本を裏返した（鏡に映した）形です。'});
+}
+
+// ---------- 迷路・点つなぎ ----------
+function makeMaze(cols,rows){
+  const open={};const vis=new Set(),k=(x,y)=>x+','+y;
+  const st=[[0,0]];vis.add('0,0');
+  while(st.length){
+    const[x,y]=st[st.length-1];
+    const nb=shuffle([[1,0],[-1,0],[0,1],[0,-1]]).map(d=>[x+d[0],y+d[1]]).filter(p=>p[0]>=0&&p[1]>=0&&p[0]<cols&&p[1]<rows&&!vis.has(k(p[0],p[1])));
+    if(!nb.length){st.pop();continue;}
+    const p=nb[0];vis.add(k(p[0],p[1]));open[k(x,y)+'|'+k(p[0],p[1])]=open[k(p[0],p[1])+'|'+k(x,y)]=1;st.push(p);
+  }
+  // 最短経路（BFS）
+  const prev={},q=[[0,0]];prev['0,0']=null;
+  while(q.length){const[x,y]=q.shift();[[1,0],[-1,0],[0,1],[0,-1]].forEach(d=>{const nx=x+d[0],ny=y+d[1];if(open[k(x,y)+'|'+k(nx,ny)]&&!(k(nx,ny) in prev)){prev[k(nx,ny)]=k(x,y);q.push([nx,ny]);}});}
+  let n=0,cur=k(cols-1,rows-1);while(prev[cur]){n++;cur=prev[cur];}
+  return{open,short:n};
+}
+const DOT_SHAPES={
+  star:[[.5,.04],[.62,.36],[.96,.38],[.69,.59],[.79,.93],[.5,.73],[.21,.93],[.31,.59],[.04,.38],[.38,.36]],
+  house:[[.5,.05],[.95,.45],[.82,.45],[.82,.95],[.18,.95],[.18,.45],[.05,.45]],
+  cross:[[.36,.04],[.64,.04],[.64,.36],[.96,.36],[.96,.64],[.64,.64],[.64,.96],[.36,.96],[.36,.64],[.04,.64],[.04,.36],[.36,.36]]};
+defTask({id:'maze',name:'迷路・点つなぎ',title:'迷路・点つなぎ',cat:'vis exe',
+  sub:'指で線を引いて、迷路を進む／番号の順に点をつなぎます。',
+  icon:'<path d="M3 3h26v26H3z"/><path d="M3 11h14M11 3v8M17 11v10M9 21h8M23 3v14M23 25v4M11 21v8"/>',
+  desc:'迷路のゴールまで線を引く／番号順に点をつなぐ。先を見通して手を動かす力を見ます。',
+  rows:[
+    {k:'kind',label:'課題',def:'maze',opts:[['maze','迷路','スタートからゴールまで線を引く'],['dots','点つなぎ','1から順に、点を線でつなぐ']]},
+    {k:'lv',label:'むずかしさ',def:1,opts:[[0,'やさしい','迷路は小さめ・点は7個ほど'],[1,'ふつう','迷路は中くらい・点は10個ほど'],[2,'むずかしい','迷路は大きめ・点は12個']]}],
+  note:'迷路は、指を離さずに、かべにふれないようにゴールまで進みます（かべをこえた回数・指を離した回数・遠回りの割合を記録します）。点つなぎは、番号の点に指を置いて、次の点まで線を引きます。',
+  area:'<canvas id="maze-cv"></canvas>',
+  start:mazeStart,finish:mazeFinish,
+  init(){
+    ptr($('maze-cv'),(x,y)=>mazeDown(x,y),(x,y)=>mazeMove(x,y),(x,y)=>mazeUp(x,y));
+  }});
+function mazeStart(){
+  const cf=CF('maze');enterPlay('maze');
+  const[aw,ah]=availSize($('maze-stage'));
+  const dim=[[7,5],[10,7],[13,9]][cf.lv];
+  const ratio=cf.kind==='maze'?dim[0]/dim[1]:1.1;
+  const[W,H]=fitBox(ratio,Math.min(aw,980),ah-10);
+  const c=setupCanvas($('maze-cv'),W,H);
+  const s=S.maze={kind:cf.kind,W,H,c,path:[],lifts:0,cross:0,len:0,last:null,down:false,timers:[],over:false,errs:0,cur:0,started:false,reached:false};
+  startClock('maze');
+  if(cf.kind==='maze'){
+    const[cols,rows]=dim;s.cols=cols;s.rows=rows;s.cell=Math.min((W-16)/cols,(H-16)/rows);s.ox=(W-s.cell*cols)/2;s.oy=(H-s.cell*rows)/2;
+    const mz=makeMaze(cols,rows);s.open=mz.open;s.short=mz.short;
+    msg('maze','緑の「スタート」から、赤の「ゴール」まで、かべにふれずに線を引いてください');
+  }else{
+    const sh=pick(Object.keys(DOT_SHAPES));let pts=DOT_SHAPES[sh];
+    const want=[7,10,12][cf.lv];
+    const cand=Object.keys(DOT_SHAPES).filter(k=>DOT_SHAPES[k].length>=want-1&&DOT_SHAPES[k].length<=want+1);
+    pts=DOT_SHAPES[cand.length?pick(cand):'house'];
+    const m=0.1;s.pts=pts.map(p=>[W*(m+p[0]*(1-2*m)),H*(m+p[1]*(1-2*m))]);
+    s.lines=[];msg('maze','1の点から、2、3…の順に、線を引いてつなぎます。最後は1にもどります');
+  }
+  mazeDraw();
+}
+function mazeDraw(){
+  const s=S.maze,c=s.c,W=s.W,H=s.H;
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  if(s.kind==='maze'){
+    const{cell:u,ox,oy,cols,rows}=s;
+    c.fillStyle='#DDF3E6';c.fillRect(ox,oy,u,u);c.fillStyle='#F9DADA';c.fillRect(ox+(cols-1)*u,oy+(rows-1)*u,u,u);
+    c.fillStyle='#2E7D5E';c.font='bold '+Math.round(u*0.19)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('スタート',ox+u/2,oy+u/2);
+    c.fillStyle='#C0392B';c.fillText('ゴール',ox+(cols-0.5)*u,oy+(rows-0.5)*u);
+    c.strokeStyle='#1A2332';c.lineWidth=4;c.lineCap='round';c.beginPath();
+    for(let x=0;x<=cols;x++)for(let y=0;y<rows;y++){ // 縦線（左の壁）
+      const open=x>0&&x<cols&&s.open[(x-1)+','+y+'|'+x+','+y];
+      if(!open){c.moveTo(ox+x*u,oy+y*u);c.lineTo(ox+x*u,oy+(y+1)*u);}}
+    for(let y=0;y<=rows;y++)for(let x=0;x<cols;x++){
+      const open=y>0&&y<rows&&s.open[x+','+(y-1)+'|'+x+','+y];
+      if(!open){c.moveTo(ox+x*u,oy+y*u);c.lineTo(ox+(x+1)*u,oy+y*u);}}
+    c.stroke();
+    if(s.path.length){c.strokeStyle='#E04B4B';c.lineWidth=4;c.lineJoin='round';c.beginPath();s.path.forEach((p,i)=>{if(p===null){return;}const q=s.path[i-1];(i===0||q===null)?c.moveTo(p[0],p[1]):c.lineTo(p[0],p[1]);});c.stroke();}
+  }else{
+    c.strokeStyle='#E04B4B';c.lineWidth=5;c.lineCap='round';
+    s.lines.forEach(l=>{c.beginPath();c.moveTo(l[0][0],l[0][1]);c.lineTo(l[1][0],l[1][1]);c.stroke();});
+    if(s.drag){c.beginPath();c.moveTo(s.pts[s.cur][0],s.pts[s.cur][1]);c.lineTo(s.drag[0],s.drag[1]);c.stroke();}
+    s.pts.forEach((p,i)=>{
+      c.fillStyle=i===s.cur?'#E67E22':'#1A2332';c.beginPath();c.arc(p[0],p[1],10,0,7);c.fill();
+      c.fillStyle='#1A2332';c.font='bold 22px sans-serif';c.textAlign='center';c.textBaseline='middle';
+      const cx=s.W/2,cy=s.H/2,dx=p[0]-cx,dy=p[1]-cy,d=Math.hypot(dx,dy)||1;
+      c.fillText(i+1,p[0]+dx/d*26,p[1]+dy/d*26);});
+  }
+}
+function mazeCell(s,x,y){const cx=Math.floor((x-s.ox)/s.cell),cy=Math.floor((y-s.oy)/s.cell);return(cx<0||cy<0||cx>=s.cols||cy>=s.rows)?null:[cx,cy];}
+function mazeDown(x,y){
+  const s=S.maze;if(!s||s.over)return;s.down=true;
+  if(s.kind==='maze'){
+    if(s.started)s.lifts++;
+    s.started=true;s.path.push(null);s.path.push([x,y]);s.last=[x,y];s.lastCell=mazeCell(s,x,y);
+    const sc=s.lastCell;if(sc&&sc[0]===s.cols-1&&sc[1]===s.rows-1)mazeFinish('done');
+    mazeDraw();
+  }else{
+    const p=s.pts[s.cur];if(Math.hypot(x-p[0],y-p[1])<=34){s.drag=[x,y];}else{s.drag=null;}
+    mazeDraw();
+  }
+}
+function mazeMove(x,y){
+  const s=S.maze;if(!s||s.over||!s.down)return;
+  if(s.kind==='maze'){
+    const[lx,ly]=s.last,d=Math.hypot(x-lx,y-ly),n=Math.max(1,Math.ceil(d/3));
+    for(let i=1;i<=n;i++){
+      const px=lx+(x-lx)*i/n,py=ly+(y-ly)*i/n,cc=mazeCell(s,px,py),pc=s.lastCell;
+      if(cc&&pc&&(cc[0]!==pc[0]||cc[1]!==pc[1])){
+        const adj=Math.abs(cc[0]-pc[0])+Math.abs(cc[1]-pc[1])===1;
+        if(!adj||!s.open[pc[0]+','+pc[1]+'|'+cc[0]+','+cc[1]])s.cross++;
+      }
+      if(cc)s.lastCell=cc;
+    }
+    s.len+=d;s.last=[x,y];s.path.push([x,y]);
+    const cc=s.lastCell;if(cc&&cc[0]===s.cols-1&&cc[1]===s.rows-1){mazeDraw();mazeFinish('done');return;}
+    mazeDraw();
+  }else{if(s.drag){s.drag=[x,y];mazeDraw();}}
+}
+function mazeUp(x,y){
+  const s=S.maze;if(!s||s.over)return;s.down=false;
+  if(s.kind==='dots'&&s.drag){
+    const nx=(s.cur+1)%s.pts.length,t=s.pts[nx];
+    if(Math.hypot(x-t[0],y-t[1])<=34){
+      s.lines.push([s.pts[s.cur],t]);s.cur++;s.drag=null;
+      if(s.cur>=s.pts.length){mazeDraw();mazeFinish('done');return;}
+    }else{s.errs++;s.drag=null;}
+    mazeDraw();
+  }else if(s.kind==='dots'){/* 点以外から始めた線は数えない */}
+}
+function mazeFinish(why){
+  const s=S.maze;if(!s||s.over)return;
+  const el=performance.now()-s.t0;mazeDraw();
+  const img=$('maze-cv').toDataURL('image/png');
+  let m;
+  if(s.kind==='maze'){
+    const cc=s.lastCell,reach=why==='done'&&cc&&cc[0]===s.cols-1&&cc[1]===s.rows-1;
+    const ideal=s.short*s.cell;
+    m=[['課題','迷路（'+s.cols+'×'+s.rows+'）'],['終了のしかた',STATUS[why]],
+      ['ゴール到達',reach?'到達した':'到達しなかった',true],['所要時間',sec2(el)],
+      ['かべをこえた回数',s.cross+' 回'],['指を離した回数',s.lifts+' 回'],
+      ['遠回りの割合（線の長さ ÷ 最短の道のり）',s.len&&ideal?(s.len/ideal).toFixed(2)+' 倍':'—']];
+  }else{
+    const total=s.pts.length,done=Math.min(s.cur,total);
+    m=[['課題','点つなぎ（'+total+'点）'],['終了のしかた',STATUS[why]],
+      ['つないだ線',done+' / '+total+' 本',true],['所要時間',sec2(el)],['まちがい（ちがう場所で指を離した回数）',s.errs+' 回']];
+  }
+  endTask('maze',why,m,{image:img,wide:false,legend:s.kind==='maze'?'遠回りの割合＝1.0に近いほど、まっすぐ近道を進めたことを表します。かべをこえた回数が多いときは、空間の見通しや手の動きの調整が難しい可能性があります。':'点つなぎの線は、指で引いた線を、目で確認するためのものです。'});
+}
+
+// ---------- ハノイの塔 ----------
+defTask({id:'hanoi',name:'ハノイの塔',title:'ハノイの塔',cat:'exe vis',
+  sub:'円盤を1枚ずつ動かして、すべて右の棒に移します。',
+  icon:'<path d="M3 28h26"/><path d="M8 28V9M16 28V9M24 28V9"/><rect x="5" y="22" width="22" height="3" rx="1"/><rect x="7" y="18" width="14" height="3" rx="1"/><rect x="9" y="14" width="8" height="3" rx="1"/>',
+  desc:'ルールを守りながら円盤を動かす。先を考えて手順を組み立てる力を見ます。',
+  rows:[{k:'n',label:'円盤の数',def:3,opts:[[3,'3枚','最短7手'],[4,'4枚','最短15手'],[5,'5枚','最短31手']]}],
+  note:'ルール：①1回に動かせるのは1枚 ②大きい円盤を小さい円盤の上に置かない。動かしたい円盤のある棒をタップし、次に移す先の棒をタップします。ルール違反は、動かさずに回数を数えます。',
+  bar:'<span class="stat">手数 <b id="hanoi-mv">0</b></span>',
+  area:'<canvas id="hanoi-cv"></canvas>',
+  start:hanoiStart,finish:hanoiFinish,
+  init(){
+    const cv=$('hanoi-cv');cv.addEventListener('pointerdown',e=>{e.preventDefault();const s=S.hanoi;if(!s||s.over)return;const[x]=pos(e,cv);hanoiTap(Math.min(2,Math.max(0,Math.floor(x/(s.W/3)))));});
+  }});
+function hanoiStart(){
+  const cf=CF('hanoi');enterPlay('hanoi');
+  const[aw,ah]=availSize($('hanoi-stage'));const[W,H]=fitBox(2,Math.min(aw,980),ah-10);
+  const c=setupCanvas($('hanoi-cv'),W,H);
+  S.hanoi={W,H,c,pegs:[Array.from({length:cf.n},(_,i)=>cf.n-i),[],[]],sel:-1,mv:0,viol:0,timers:[],over:false,fbt:0};
+  startClock('hanoi');$('hanoi-mv').textContent='0';
+  msg('hanoi','動かす円盤のある棒をタップ → 移す先の棒をタップ');hanoiDraw();
+}
+function hanoiDraw(){
+  const s=S.hanoi,c=s.c,W=s.W,H=s.H,n=CF('hanoi').n;
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  const base=H*0.88,ph=H*0.7,dh=Math.min(H*0.09,ph/(n+1.5)),maxw=W/3*0.88;
+  c.fillStyle='#8A97A6';c.fillRect(W*0.04,base,W*0.92,8);
+  const cols=['#E04B4B','#E67E22','#E3B31B','#4FAF6F','#2F6FDB'];
+  for(let p=0;p<3;p++){
+    const cx=W/3*(p+0.5);
+    if(s.sel===p){c.fillStyle='#EAF1FB';c.fillRect(W/3*p+4,H*0.05,W/3-8,base-H*0.05);}
+    c.fillStyle='#6B7A8A';c.fillRect(cx-5,base-ph,10,ph);
+    s.pegs[p].forEach((d,i)=>{
+      const w=maxw*(0.28+0.72*d/n),y=base-(i+1)*dh;
+      c.fillStyle=cols[d-1];c.strokeStyle='#1A2332';c.lineWidth=2;
+      c.beginPath();c.roundRect(cx-w/2,y,w,dh-2,6);c.fill();c.stroke();});
+  }
+}
+function hanoiTap(p){
+  const s=S.hanoi;if(!s)return;
+  if(s.sel<0){if(!s.pegs[p].length)return;s.sel=p;hanoiDraw();return;}
+  const f=s.sel;s.sel=-1;
+  if(f===p){hanoiDraw();return;}
+  const d=s.pegs[f][s.pegs[f].length-1],top=s.pegs[p][s.pegs[p].length-1];
+  if(top&&top<d){
+    s.viol++;msg('hanoi','だめです。大きい円盤は、小さい円盤の上に置けません');
+    clearTimeout(s.fbt);s.fbt=setTimeout(()=>{if(S.hanoi)msg('hanoi','動かす円盤のある棒をタップ → 移す先の棒をタップ');},1800);
+  }else{
+    s.pegs[f].pop();s.pegs[p].push(d);s.mv++;$('hanoi-mv').textContent=s.mv;
+    if(s.pegs[2].length===CF('hanoi').n){hanoiDraw();setTimeout(()=>hanoiFinish('done'),500);return;}
+  }
+  hanoiDraw();
+}
+function hanoiFinish(why){
+  const s=S.hanoi;if(!s||s.over)return;
+  const n=CF('hanoi').n,min=Math.pow(2,n)-1,solved=s.pegs[2].length===n;
+  hanoiDraw();
+  endTask('hanoi',why,[
+    ['課題','ハノイの塔（'+n+'枚）'],['終了のしかた',STATUS[why]],
+    ['完成',solved?'できた':'できなかった',true],
+    ['手数',s.mv+' 手（最短 '+min+' 手）'],
+    ['最短との差',solved?(s.mv-min)+' 手':'—'],
+    ['ルール違反',s.viol+' 回'],
+    ['所要時間',sec2(performance.now()-s.t0)]
+  ],{image:$('hanoi-cv').toDataURL('image/png'),wide:true,legend:'最短の手数に近いほど、先を見通して手順を組み立てられていることを表します。ルール違反が多いときは、ルールを守り続けることが難しい可能性があります。'});
+}
+
+// ================= 遂行機能 =================
+function shp(c,t,x,y,r,col){
+  c.save();c.fillStyle=col;c.strokeStyle='#1A2332';c.lineWidth=2;c.beginPath();
+  if(t===0)c.arc(x,y,r,0,Math.PI*2);
+  else if(t===1){c.moveTo(x,y-r);c.lineTo(x+r*1.05,y+r*0.85);c.lineTo(x-r*1.05,y+r*0.85);c.closePath();}
+  else if(t===2)c.rect(x-r*0.9,y-r*0.9,r*1.8,r*1.8);
+  else if(t===3){for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*0.45:r*1.1;i?c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr):c.moveTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);}c.closePath();}
+  else if(t===4){c.moveTo(x,y-r*1.15);c.lineTo(x+r*0.8,y);c.lineTo(x,y+r*1.15);c.lineTo(x-r*0.8,y);c.closePath();}
+  else{for(let i=0;i<6;i++){const a=i*Math.PI/3;i?c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r):c.moveTo(x+Math.cos(a)*r,y+Math.sin(a)*r);}c.closePath();}
+  c.fill();c.stroke();c.restore();
+}
+
+// ---------- カード分類課題 ----------
+const SORT_COLS=['#D64545','#2E9E5B','#2F6FDB','#E3B31B'],SORT_SHP=[0,1,2,3],SORT_RULES=['色','形','数'];
+function sortCard(a,size){ // a={col,sh,num}
+  const cv=document.createElement('canvas');cv.width=size*0.8;cv.height=size;
+  const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);
+  const n=a.num,r=size*0.1,pos=[];
+  const cols=n>2?2:1,rowsN=Math.ceil(n/cols);
+  for(let i=0;i<n;i++){const cc=i%cols,rr=Math.floor(i/cols);pos.push([cv.width/2+(cols===1?0:(cc?1:-1)*r*1.3),size/2+(rr-(rowsN-1)/2)*r*2.6]);}
+  pos.forEach(p=>shp(c,a.sh,p[0],p[1],r,SORT_COLS[a.col]));
+  return cv;
+}
+defTask({id:'sort',name:'カード分類課題',title:'カード分類課題',cat:'exe',
+  sub:'下のカードを、上の4枚のどれかの下に置きます。正解のルールは、正誤の表示から見つけます。',
+  icon:'<rect x="3" y="4" width="11" height="15" rx="2"/><rect x="18" y="4" width="11" height="15" rx="2"/><circle cx="8.5" cy="11.5" r="3"/><path d="M23.5 8l3 7h-6z"/><path d="M16 22v6M12 25l4 4 4-4"/>',
+  desc:'ルールを見つけて、途中で変わったことに気づいて切りかえる。柔軟に考える力を見ます。',
+  rows:[
+    {k:'n',label:'最大の枚数',def:48,opts:[[24,'24枚','短め'],[36,'36枚'],[48,'48枚','標準']]},
+    {k:'streak',label:'ルールが変わる条件',def:6,opts:[[5,'5回連続正解'],[6,'6回連続正解'],[8,'8回連続正解']]}],
+  note:'「色」「形」「数」のどれか1つがルールです。ルールは教えません。○×の表示から見つけてもらいます。連続して正解すると、だまってルールが変わります。3つのルールを2巡（6回）か、最大枚数で終了します。',
+  bar:'<span class="stat">枚数 <b id="sort-no">0</b></span>',
+  area:'<div class="calc-box" style="width:100%;max-width:820px;padding:16px"><div class="sort-keys" id="sort-keys"></div><div class="sort-resp" id="sort-resp"></div><div class="calc-fb" id="sort-fb" style="margin-top:8px"></div></div>',
+  start:sortStart,finish:sortFinish,
+  init(){
+    const KEYS=[{col:0,sh:0,num:1},{col:1,sh:1,num:2},{col:2,sh:2,num:3},{col:3,sh:3,num:4}];
+    const k=$('sort-keys');KEYS.forEach((a,i)=>{const b=document.createElement('button');b.appendChild(sortCard(a,190));b.onclick=()=>sortAnswer(i);k.appendChild(b);});
+  }});
+function sortStart(){
+  const cf=CF('sort');enterPlay('sort');
+  S.sort={i:0,rule:0,run:0,rules:0,cats:0,err:0,pers:0,firstCat:null,firstErr:0,rec:[],lock:false,timers:[],prevRule:-1,errSince:0};
+  startClock('sort');msg('sort','下のカードを、上の4枚のどれかの下に置いてください');sortNext();
+}
+function sortNext(){
+  const s=S.sort;if(!s||s.over)return;
+  if(s.i>=CF('sort').n||s.cats>=6){sortFinish('done');return;}
+  const p=shuffle([0,1,2,3]);const a={col:p[0],sh:p[1],num:p[2]+1};
+  s.card=a;$('sort-resp').innerHTML='';$('sort-resp').appendChild(sortCard(a,190));$('sort-fb').textContent='';
+  $('sort-no').textContent=s.i+1;
+  s.lock=true;setTimeout(()=>{if(S.sort)S.sort.lock=false;},350);
+}
+function sortAnswer(k){
+  const s=S.sort;if(!s||s.over||s.lock)return;
+  s.lock=true;const a=s.card,attr=[a.col,a.sh,a.num-1];
+  const ok=attr[s.rule]===k;
+  let pers=false;
+  if(!ok){s.err++;if(s.prevRule>=0&&attr[s.prevRule]===k&&s.run===0)pers=true;if(pers)s.pers++;}
+  s.rec.push({ok,rule:s.rule,pers});
+  $('sort-fb').textContent=ok?'○ あたり':'× ちがいます';$('sort-fb').style.color=ok?OK_C:NG_C;
+  s.i++;
+  if(ok){s.run++;if(s.run>=CF('sort').streak){s.cats++;if(s.firstCat===null)s.firstCat=s.i;s.prevRule=s.rule;s.rule=(s.rule+1)%3;s.run=0;}}
+  else s.run=0;
+  setTimeout(sortNext,700);
+}
+function sortFinish(why){
+  const s=S.sort;if(!s||s.over)return;
+  const tot=s.rec.length,ok=s.rec.filter(r=>r.ok).length;
+  endTask('sort',why,[
+    ['課題','カード分類課題'],['終了のしかた',STATUS[why]],
+    ['ルールを見つけた回数（連続正解の達成）',s.cats+' 回（最大6回）',true],
+    ['使った枚数',tot+' 枚'],['正解',ok+' / '+tot],['まちがい',s.err+' 回'],
+    ['前のルールにこだわったまちがい',s.pers+' 回'],
+    ['最初のルールを見つけるまでの枚数',s.firstCat!==null?s.firstCat+' 枚':'見つからなかった'],
+    ['所要時間',sec2(performance.now()-s.t0)]
+  ],{legend:'前のルールにこだわったまちがい＝ルールが変わったあと、前のルールで答え続けてしまった回数。多いときは、考えを切りかえにくい可能性があります。'});
+}
+
+// ---------- 手順の並べ替え ----------
+const SEQ_SCENES=[
+ ['お茶をいれる',['やかんでお湯をわかす','きゅうすに茶葉を入れる','お湯をきゅうすに注ぐ','少し待つ','湯のみに注ぐ']],
+ ['朝の身じたく',['ふとんから起きる','顔をあらう','服をきがえる','朝ごはんを食べる','歯をみがく']],
+ ['手紙を出す',['便せんに文章を書く','ふうとうに入れる','のりで封をする','切手をはる','ポストに入れる']],
+ ['カレーをつくる',['野菜をきる','野菜と肉をいためる','水を入れて煮る','ルーを入れる','ごはんにかけて食べる']],
+ ['電話をかける',['受話器（スマホ）を手にとる','電話番号を入れる','呼び出し音をきく','相手と話す','電話を切る']],
+ ['せんたくする',['せんたくものを機械に入れる','洗剤を入れる','スイッチを押す','ほす','たたんでしまう']]];
+defTask({id:'seq',name:'手順の並べ替え',title:'手順の並べ替え',cat:'exe',
+  sub:'日常の動作のカードを、ふつうの順番になるようにタップして並べます。',
+  icon:'<path d="M5 7h8M5 16h8M5 25h8"/><path d="M18 7h9M18 16h9M18 25h9"/><path d="M15 9v5M15 18v5"/><path d="M13 12l2 3 2-3M13 21l2 3 2-3"/>',
+  desc:'日常の動作を正しい順番に並べる。段取りを考える力を見ます。',
+  rows:[{k:'n',label:'場面の数',def:3,opts:[[1,'1場面'],[3,'3場面'],[5,'5場面']]}],
+  note:'1つの場面につき、5枚のカードが出ます。最初にすることから順にタップします。まちがえたときは「ひとつ戻す」を使えます。全部置くと「決定」が押せます。',
+  bar:'<span class="stat">場面 <b id="seq-no">1</b></span>',
+  area:'<div class="calc-box" style="width:100%;max-width:820px"><div class="w3-sub" id="seq-title" style="font-size:28px;font-weight:800;color:#1A2332;margin:0 0 10px"></div><div class="seq-slots" id="seq-slots"></div><div class="seq-pool" id="seq-pool"></div><div class="miniacts"><button class="btn btn-g" id="seq-undo">ひとつ戻す</button><button class="btn btn-p" id="seq-ok" disabled>決定</button></div></div>',
+  start:seqStart,finish:seqFinish,
+  init(){$('seq-undo').onclick=()=>{const s=S.seq;if(s&&s.pick.length){s.pick.pop();seqDraw();}};$('seq-ok').onclick=seqDecide;}});
+function seqStart(){
+  const cf=CF('seq');enterPlay('seq');
+  S.seq={order:shuffle([...Array(SEQ_SCENES.length).keys()]).slice(0,cf.n),i:0,res:[],timers:[],pick:[]};
+  startClock('seq');msg('seq','最初にすることから順に、カードをタップしてください');seqLoad();
+}
+function seqLoad(){
+  const s=S.seq;if(!s||s.over)return;
+  if(s.i>=s.order.length){seqFinish('done');return;}
+  const sc=SEQ_SCENES[s.order[s.i]];s.cards=shuffle(sc[1].map((t,k)=>({t,k})));s.pick=[];s.qt0=performance.now();
+  $('seq-title').textContent='「'+sc[0]+'」';$('seq-no').textContent=(s.i+1)+' / '+s.order.length;seqDraw();
+}
+function seqDraw(){
+  const s=S.seq,n=s.cards.length;
+  $('seq-slots').innerHTML=Array.from({length:n},(_,i)=>{const c=s.pick[i];return '<div class="seq-slot'+(c?' f':'')+'"><b>'+(i+1)+'</b>'+(c?c.t:'')+'</div>';}).join('');
+  const pool=$('seq-pool');pool.innerHTML='';
+  s.cards.forEach(c=>{const b=document.createElement('button');b.textContent=c.t;b.disabled=s.pick.includes(c);b.onclick=()=>{if(s.pick.length<n&&!s.pick.includes(c)){s.pick.push(c);seqDraw();}};pool.appendChild(b);});
+  $('seq-ok').disabled=s.pick.length<n;$('seq-undo').disabled=!s.pick.length;
+}
+function seqDecide(){
+  const s=S.seq;if(!s||s.pick.length<s.cards.length)return;
+  const right=s.pick.filter((c,i)=>c.k===i).length;
+  s.res.push({name:SEQ_SCENES[s.order[s.i]][0],right,n:s.pick.length,ms:performance.now()-s.qt0,exact:right===s.pick.length});
+  s.i++;seqLoad();
+}
+function seqFinish(why){
+  const s=S.seq;if(!s||s.over)return;
+  const r=s.res,ex=r.filter(x=>x.exact).length,tr=r.reduce((a,x)=>a+x.right,0),tn=r.reduce((a,x)=>a+x.n,0);
+  const m=[['課題','手順の並べ替え'],['終了のしかた',STATUS[why]],
+    ['完全に正しい場面',ex+' / '+CF('seq').n+' 場面',true],
+    ['正しい位置に置けたカード',tn?tr+' / '+tn+' 枚':'—']];
+  r.forEach(x=>m.push(['　'+x.name,x.right+' / '+x.n+' 枚（'+sec2(x.ms)+'）']));
+  m.push(['所要時間',sec2(performance.now()-s.t0)]);
+  endTask('seq',why,m,{legend:'正しい位置に置けたカード＝正解の順番と、置いた位置が同じカードの数。'});
+}
+
+// ---------- 買い物・お金の課題 ----------
+const MONEY=[[1,'coin','#E8C9A0'],[5,'coin','#E3B85B'],[10,'coin','#D9895B'],[50,'coin','#D8DDE3'],[100,'coin','#E4E7EB'],[500,'coin','#E3C24A'],[1000,'bill','#B9D7F2'],[5000,'bill','#E3C9E6']];
+const GOODS=['パン','牛乳','たまご','トマト','ノート','お茶','せんざい','くつした','電池','みかん','おにぎり','はみがき粉'];
+defTask({id:'shop',name:'買い物・お金の課題',title:'買い物・お金の課題',cat:'exe',
+  sub:'品物の値段をお金で支払う／おつりを考えます。',
+  icon:'<circle cx="16" cy="16" r="12"/><path d="M12 9l4 6 4-6M11 16h10M11 20h10M16 15v10"/>',
+  desc:'お金を出す・おつりを計算する。生活に近い計算と判断の力を見ます。',
+  rows:[
+    {k:'mode',label:'課題',def:'pay',opts:[['pay','ちょうど支払う','お金をタップして出す'],['chg','おつりを選ぶ','1000円札で払ったときのおつり']]},
+    {k:'lv',label:'値段',def:0,opts:[[0,'やさしい','10円単位・500円まで'],[1,'ふつう','10円単位・900円まで'],[2,'むずかしい','1円単位・900円まで']]},
+    {k:'n',label:'問題数',def:5,opts:[[3,'3問'],[5,'5問'],[8,'8問']]},
+    {k:'show',label:'出した金額の表示',def:0,opts:[[0,'表示しない','頭の中で数える'],[1,'表示する','合計が見える']]}],
+  note:'「ちょうど支払う」では、紙幣・硬貨をタップしてトレーに出し、「これでよい」を押します。「おつりを選ぶ」では、4つの金額から選びます。',
+  bar:'<span class="stat">問題 <b id="shop-no">1</b></span>',
+  area:'<div class="calc-box" style="width:100%;max-width:860px"><div class="calc-q" id="shop-q" style="font-size:38px"></div><div id="shop-body"></div></div>',
+  start:shopStart,finish:shopFinish});
+function shopStart(){
+  const cf=CF('shop');enterPlay('shop');
+  S.shop={i:0,rec:[],tray:[],timers:[]};startClock('shop');shopQ();
+}
+function shopQ(){
+  const s=S.shop,cf=CF('shop');if(!s||s.over)return;
+  if(s.i>=cf.n){shopFinish('done');return;}
+  const mx=cf.lv===0?500:900;
+  let price=cf.lv===2?ri(11,mx):ri(2,Math.floor(mx/10))*10;
+  s.price=price;s.item=pick(GOODS);s.tray=[];s.qt0=performance.now();$('shop-no').textContent=(s.i+1)+' / '+cf.n;
+  const b=$('shop-body');
+  if(cf.mode==='pay'){
+    msg('shop','お金をタップして出し、「これでよい」を押してください');
+    $('shop-q').textContent=s.item+'　'+price+'円';
+    b.innerHTML='<div class="tray" id="shop-tray"></div><div class="calc-fb" id="shop-sum" style="min-height:26px"></div><div class="money" id="shop-money"></div><div class="miniacts"><button class="btn btn-g" id="shop-undo">ひとつ戻す</button><button class="btn btn-g" id="shop-clr">ぜんぶ戻す</button><button class="btn btn-p" id="shop-ok">これでよい</button></div>';
+    $('shop-money').innerHTML=MONEY.map(m=>'<button class="'+m[1]+'" style="background:'+m[2]+'" data-v="'+m[0]+'">'+m[0]+'円</button>').join('');
+    $('shop-money').onclick=e=>{const t=e.target.closest('button');if(!t)return;s.tray.push(+t.dataset.v);shopTray();};
+    $('shop-undo').onclick=()=>{s.tray.pop();shopTray();};$('shop-clr').onclick=()=>{s.tray=[];shopTray();};$('shop-ok').onclick=shopPay;
+    shopTray();
+  }else{
+    msg('shop','おつりは、いくらですか？');
+    $('shop-q').textContent=s.item+'　'+price+'円を、1000円札で買いました';
+    const ans=1000-price;let ch=[ans];while(ch.length<4){const d=pick([10,-10,100,-100,20,-20,1,-1,50,-50]);const v=ans+(cf.lv===2?d:(Math.abs(d)>=10?d:10));if(v>0&&v<1000&&!ch.includes(v))ch.push(v);}
+    ch=shuffle(ch);
+    b.innerHTML='<div class="stroop-btns" style="grid-template-columns:repeat(2,1fr);margin-top:20px">'+ch.map(v=>'<button class="plain" data-v="'+v+'">'+v+'円</button>').join('')+'</div>';
+    const lock=performance.now();
+    b.querySelector('.stroop-btns').onclick=e=>{const t=e.target.closest('button');if(!t||performance.now()-lock<300)return;
+      s.rec.push({ok:+t.dataset.v===ans,ms:performance.now()-s.qt0,paid:+t.dataset.v,price});s.i++;shopQ();};
+  }
+}
+function shopTray(){
+  const s=S.shop,sum=s.tray.reduce((a,b)=>a+b,0);
+  $('shop-tray').innerHTML=s.tray.length?s.tray.map(v=>'<span>'+v+'円</span>').join(''):'<span style="background:none;color:#8A97A6;font-weight:400">ここにお金が並びます</span>';
+  $('shop-sum').textContent=CF('shop').show?'いま出した金額：'+sum+'円':'';
+}
+function shopPay(){
+  const s=S.shop,sum=s.tray.reduce((a,b)=>a+b,0);
+  if(!s.tray.length)return;
+  s.rec.push({ok:sum===s.price,ms:performance.now()-s.qt0,paid:sum,price:s.price});s.i++;shopQ();
+}
+function shopFinish(why){
+  const s=S.shop;if(!s||s.over)return;
+  const cf=CF('shop'),ok=s.rec.filter(r=>r.ok).length;
+  const m=[['課題','買い物・お金の課題（'+(cf.mode==='pay'?'ちょうど支払う':'おつりを選ぶ')+'）'],['終了のしかた',STATUS[why]],
+    ['正答',ok+' / '+cf.n,true],['答えた数',s.rec.length+' / '+cf.n],
+    ['1問あたりの平均時間',s.rec.length?sec2(mean(s.rec.map(r=>r.ms))):'—']];
+  s.rec.filter(r=>!r.ok).forEach(r=>m.push(['　まちがい',cf.mode==='pay'?r.price+'円のところ、'+r.paid+'円を出した':'おつり '+(1000-r.price)+'円のところ、'+r.paid+'円を選んだ']));
+  endTask('shop',why,m,{legend:'「ちょうど支払う」は、金額に合う組み合わせであれば、何通りでも正解です。'});
+}
+
+// ---------- 仲間はずれ探し・分類 ----------
+const ODD_G={
+ 'どうぶつ':['いぬ','ねこ','うま','さる','うさぎ','ぞう'],'くだもの':['りんご','みかん','もも','ぶどう','バナナ','すいか'],
+ 'やさい':['だいこん','にんじん','きゅうり','なす','たまねぎ','キャベツ'],'のりもの':['でんしゃ','バス','ひこうき','ふね','じてんしゃ','くるま'],
+ 'どうぐ':['かなづち','のこぎり','はさみ','ドライバー','ペンチ','スコップ'],'がっき':['ピアノ','ギター','たいこ','ふえ','バイオリン','ハーモニカ'],
+ 'ふく':['シャツ','ズボン','くつした','ぼうし','コート','スカート'],'かぐ':['つくえ','いす','たんす','ソファ','ベッド','かがみ'],
+ 'とり':['すずめ','からす','つる','ニワトリ','ハト','ペンギン'],'さかな':['まぐろ','さば','たい','いわし','さんま','あじ']};
+const ODD_NEAR={'くだもの':'やさい','やさい':'くだもの','どうぶつ':'とり','とり':'どうぶつ','さかな':'どうぶつ','のりもの':'どうぐ','どうぐ':'のりもの','がっき':'どうぐ','ふく':'かぐ','かぐ':'ふく'};
+defTask({id:'odd',name:'仲間はずれ探し',title:'仲間はずれ探し・分類',cat:'exe lang',
+  sub:'4つのうち、1つだけ仲間はずれのものを選びます。',
+  icon:'<circle cx="8" cy="9" r="4.5"/><circle cx="21" cy="9" r="4.5"/><circle cx="8" cy="23" r="4.5"/><rect x="17" y="19" width="9" height="9" rx="1.5"/>',
+  desc:'4つのなかから、仲間はずれを見つける。ものごとを分けて考える力を見ます。',
+  rows:[
+    {k:'kind',label:'しゅるい',def:'word',opts:[['word','ことば'],['shape','かたち'],['mix','ことば＋かたち']]},
+    {k:'lv',label:'むずかしさ',def:0,opts:[[0,'ふつう','ちがいがはっきり'],[1,'むずかしい','似た仲間・小さな違い']]},
+    {k:'n',label:'問題数',def:10,opts:[[6,'6問'],[10,'10問'],[15,'15問']]}],
+  note:'ことばは、「どうぶつ」「くだもの」などの仲間わけです。むずかしい設定では、近い仲間（例：くだものと、やさい）から選ばれます。かたちは、色・形・大きさの違いを見ます。正誤は画面に出しません。',
+  area:'<div class="calc-box" style="width:100%;max-width:880px"><div class="w3-sub" style="font-size:24px;margin:0">仲間はずれは、どれですか？</div><div class="odd-ch" id="odd-ch"></div></div>',
+  start:oddStart,finish:oddFinish});
+function oddStart(){
+  const cf=CF('odd');enterPlay('odd');
+  S.odd={i:0,rec:[],timers:[]};startClock('odd');msg('odd','1つだけ、仲間はずれのものを選んでください');oddQ();
+}
+function oddQ(){
+  const s=S.odd,cf=CF('odd');if(!s||s.over)return;
+  if(s.i>=cf.n){oddFinish('done');return;}
+  const kind=cf.kind==='mix'?(s.i%2?'shape':'word'):cf.kind;
+  const box=$('odd-ch');box.innerHTML='';let items=[];
+  if(kind==='word'){
+    const gs=Object.keys(ODD_G),g=pick(gs);
+    const og=cf.lv&&ODD_NEAR[g]?ODD_NEAR[g]:pick(gs.filter(x=>x!==g&&x!==ODD_NEAR[g]));
+    const same=shuffle(ODD_G[g].slice()).slice(0,3),odd=pick(ODD_G[og]);
+    items=shuffle([{ok:true,t:odd},...same.map(t=>({ok:false,t}))]);
+    items.forEach(o=>{const b=document.createElement('button');b.textContent=o.t;b.dataset.ok=o.ok?1:0;box.appendChild(b);});
+    s.cat=g+'／'+og;
+  }else{
+    const t0=pick([0,1,2,3,4,5]),c0=pick(SORT_COLS);
+    let odd={t:t0,col:c0,r:44};const kindOdd=pick(cf.lv?['size','shape','color']:['shape','color']);
+    if(kindOdd==='shape')odd.t=(t0+ri(1,5))%6;
+    else if(kindOdd==='color')odd.col=pick(SORT_COLS.filter(x=>x!==c0));
+    else odd.r=cf.lv?30:26;
+    items=shuffle([{ok:true,...odd},...[0,1,2].map(()=>({ok:false,t:t0,col:c0,r:44}))]);
+    items.forEach(o=>{const b=document.createElement('button');const cv=document.createElement('canvas');cv.width=cv.height=120;shp(cv.getContext('2d'),o.t,60,60,o.r,o.col);b.appendChild(cv);b.dataset.ok=o.ok?1:0;box.appendChild(b);});
+    s.cat='かたち（'+kindOdd+'）';
+  }
+  s.kind=kind;s.qt0=performance.now();
+  const lock=performance.now();
+  box.onclick=e=>{const t=e.target.closest('button');if(!t||performance.now()-lock<300)return;
+    s.rec.push({ok:t.dataset.ok==='1',kind,ms:performance.now()-s.qt0});s.i++;oddQ();};
+}
+function oddFinish(why){
+  const s=S.odd;if(!s||s.over)return;
+  const cf=CF('odd'),ok=s.rec.filter(r=>r.ok).length;
+  const w=s.rec.filter(r=>r.kind==='word'),sh=s.rec.filter(r=>r.kind==='shape');
+  const m=[['課題','仲間はずれ探し・分類（'+({word:'ことば',shape:'かたち',mix:'ことば＋かたち'})[cf.kind]+'・'+(cf.lv?'むずかしい':'ふつう')+'）'],['終了のしかた',STATUS[why]],
+    ['正答',ok+' / '+cf.n,true],['答えた数',s.rec.length+' / '+cf.n],
+    ['1問あたりの平均時間',s.rec.length?sec2(mean(s.rec.map(r=>r.ms))):'—']];
+  if(w.length&&sh.length){m.push(['ことばの正答',w.filter(r=>r.ok).length+' / '+w.length]);m.push(['かたちの正答',sh.filter(r=>r.ok).length+' / '+sh.length]);}
+  endTask('odd',why,m,{legend:'4つから選ぶ形なので、でたらめに答えても約25％は正解します。'});
+}
+
+// スタッフ採点が必要な課題は、メニューの末尾に並べる
+(function(){const g=document.querySelector('.menu-grid');document.querySelectorAll('.mcard[data-cat~="staff"]').forEach(c=>g.appendChild(c));})();
+
 
 setToday();
 show('s-menu');
