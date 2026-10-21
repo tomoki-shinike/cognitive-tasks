@@ -1,0 +1,15 @@
+{
+  "name": "高次脳機能 課題ツール",
+  "short_name": "課題ツール",
+  "description": "認知機能・高次脳機能の課題をタブレットで行うツール（データは保存されません）",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#171C26",
+  "theme_color": "#171C26",
+  "lang": "ja",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
