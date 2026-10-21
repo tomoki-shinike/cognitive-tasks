@@ -212,6 +212,19 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
 .chip.staffchip{border-color:#FFD08A;}
 .chip.staffchip.active{background:#FFD08A;color:#1A2332;}
 #hdesc{min-height:130px;}
+.clk-chk{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start;}
+.clk-img img{width:100%;border:2px solid var(--border);border-radius:12px;background:#fff;display:block;}
+.clk-list .chk-list{grid-template-columns:1fr;margin-top:0;}
+.clk-list .chk-list button{padding:12px 14px;}
+.tm-box{text-align:center;}
+.tm-target{font-size:26px;font-weight:700;margin:6px 0 14px;color:#1A2332;}
+.tm-btn{width:min(80%,460px);height:200px;border-radius:24px;border:0;font-size:46px;font-weight:800;color:#fff;font-family:inherit;box-shadow:0 6px 0 rgba(0,0,0,.18);}
+.tm-btn.go{background:#2E9E5B;}.tm-btn.stop{background:#D64545;}.tm-btn.off{background:#B8C2CE;box-shadow:none;}
+.tm-btn:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.18);}
+.tm-el{font-size:54px;font-weight:700;min-height:70px;margin-top:10px;font-variant-numeric:tabular-nums;}
+.ori-ch{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+.ori-ch button{min-width:170px;min-height:96px;padding:10px 20px;border-radius:16px;border:2px solid var(--border);background:#fff;font-size:30px;font-weight:700;font-family:inherit;color:var(--tx1);}
+.ori-ch button:active{background:#E3ECF7;}
 </style>
 <link rel="manifest" href="pwa/manifest.webmanifest">
 <link rel="apple-touch-icon" href="pwa/icon-180.png">
@@ -240,7 +253,7 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
   <p class="sub">タブレットやパソコンの画面で行う課題です。実施後の結果は「結果用紙」にまとめて印刷・PDF保存できます。</p>
   </div>
   <div class="filters" id="menu-filters">
-    <button class="chip active" data-v="all">すべて</button><button class="chip" data-v="att">注意</button><button class="chip" data-v="mem">記憶</button><button class="chip" data-v="vis">視空間・構成</button><button class="chip" data-v="exe">遂行・計算</button><button class="chip" data-v="lang">言語・声</button><button class="chip staffchip" data-v="staff">スタッフ採点あり</button>
+    <button class="chip active" data-v="all">すべて</button><button class="chip" data-v="att">注意</button><button class="chip" data-v="mem">記憶</button><button class="chip" data-v="vis">視空間・構成</button><button class="chip" data-v="exe">遂行・計算</button><button class="chip" data-v="lang">言語・声</button><button class="chip" data-v="ori">見当識</button><button class="chip staffchip" data-v="staff">スタッフ採点あり</button>
   </div>
   <div class="menu-grid">
     <button class="mcard th-cp" data-cat="vis" onclick="openTask('cp')"><div class="mi"><svg viewBox="0 0 32 32"><rect x="2.5" y="6.5" width="12" height="19" rx="2.5"/><rect x="17.5" y="6.5" width="12" height="19" rx="2.5"/><path d="M8.5 11 12 20.5H5Z"/><path d="M23.5 13.5 26.5 21H20.5Z" stroke-dasharray="2 2"/></svg></div><div class="mt">図形模写</div><div class="md">見本を見ながら別の枠に描く。大きさが違っても、形の一致度を判定します（重なる五角形など）。</div></button>
@@ -1122,7 +1135,7 @@ function lbCancel(){
 }
 
 // ---------- メニューの領域別絞り込み ----------
-const CATS={att:'注意',mem:'記憶',vis:'視空間・構成',exe:'遂行・計算',lang:'言語・声',staff:'スタッフ採点'};
+const CATS={att:'注意',mem:'記憶',vis:'視空間・構成',exe:'遂行・計算',lang:'言語・声',staff:'スタッフ採点',ori:'見当識'};
 document.querySelectorAll('.mcard[data-cat]').forEach(card=>{
   const t=document.createElement('div');t.className='tags';
   t.innerHTML=card.dataset.cat.split(' ').map(k=>'<span>'+CATS[k]+'</span>').join('');
@@ -1809,7 +1822,7 @@ function sdmtStart(){
   const perm=shuffle([0,1,2,3,4,5,6,7,8]);
   const[aw,ah]=availSize($('sdmt-stage'));const[W,H]=fitBox(3.2,Math.min(aw,980),Math.max(200,ah-110));const c=setupCanvas($('sdmt-cv'),W,H);$('sdmt-cv').parentNode.style.width=W+'px';
   S.sdmt={perm,W,H,c,rec:[],cur:-1,prev:-1,lock:false,over:false,prac:cf.mode==='prac',t0:0,qt0:0,fb:''};
-  startClock('sdmt');
+  startClock('sdmt');clearInterval(S.sdmt.tm);   // 時計の表示は、下の1本だけで更新する（2本あると数字がちらつく）
   S.sdmt.tm=setInterval(()=>{
     const s=S.sdmt;if(!s)return;const e=performance.now()-s.t0;
     $('sdmt-time').textContent=fmtMS(e)+(s.prac?'':' / '+fmtMS(cf.dur*1000));
@@ -2102,7 +2115,7 @@ defTask({id:'recog',name:'絵の再認',title:'絵の再認',cat:'mem',
   desc:'見た絵を覚えて、あとで同じ絵を選ぶ。見たものを覚える力を見ます。',
   rows:[
     {k:'k',label:'覚える絵の数',def:6,opts:[[4,'4つ'],[6,'6つ'],[8,'8つ']]},
-    {k:'delay',label:'待ち時間',def:30,opts:[[0,'なし'],[30,'30秒'],[60,'60秒']]}],
+    {k:'delay',label:'待ち時間',def:0,opts:[[0,'なし'],[5,'5秒'],[10,'10秒'],[30,'30秒'],[60,'60秒']]}],
   note:'絵を1つずつ3秒間見せます。待ち時間のあと、4つの絵の中から見たものを選んでもらいます。正誤は画面に出しません。',
   area:'<div class="calc-box" style="width:100%;max-width:820px"><div id="recog-st" style="min-height:260px;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;"></div><div class="recog-ch" id="recog-ch"></div></div>',
   start:recogStart,finish:recogFinish});
@@ -2297,7 +2310,10 @@ function clockCheck(){
   $('clock-clear').style.display=$('clock-done').style.display='none';
   msg('clock','【スタッフの方】できていた項目をタップしてください');
   const box=$('clock-chk');box.style.display='block';$('clock-cv').style.display='none';
-  box.innerHTML='<div class="chk-list">'+CLOCK_ITEMS.map((t,i)=>'<button data-i="'+i+'">'+t+'</button>').join('')+'</div><button class="btn btn-p big" id="clock-fin">結果をまとめる</button>';
+  const[h,m]=s.tstr.split(':');
+  box.style.maxWidth='1080px';
+  box.innerHTML='<div class="clk-chk"><div class="clk-img"><div class="w3-sub" style="margin:0 0 6px">描いた絵（指定：'+h+'時'+(+m?m+'分':'')+'）</div><img src="'+s.img+'" alt="描いた時計"></div>'
+    +'<div class="clk-list"><div class="chk-list">'+CLOCK_ITEMS.map((t,i)=>'<button data-i="'+i+'">'+t+'</button>').join('')+'</div><button class="btn btn-p big" id="clock-fin">結果をまとめる</button></div></div>';
   box.querySelector('.chk-list').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;s.chk[i]=!s.chk[i];b.classList.toggle('on',s.chk[i]);};
   $('clock-fin').onclick=()=>clockFinish('done');
 }
@@ -2854,6 +2870,575 @@ function oddFinish(why){
     ['1問あたりの平均時間',s.rec.length?sec2(mean(s.rec.map(r=>r.ms))):'—']];
   if(w.length&&sh.length){m.push(['ことばの正答',w.filter(r=>r.ok).length+' / '+w.length]);m.push(['かたちの正答',sh.filter(r=>r.ok).length+' / '+sh.length]);}
   endTask('odd',why,m,{legend:'4つから選ぶ形なので、でたらめに答えても約25％は正解します。'});
+}
+
+
+// ================= 声でジャンプ（障害物よけ） =================
+async function micOpen(){
+  if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){
+    uiAlert('この開き方では、マイクを使えません。ブラウザの設定、またはファイルの開き方（https で公開したページから開く）を確認してください。');return null;
+  }
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});}
+  catch(e){uiAlert('マイクの使用が許可されませんでした。ブラウザの設定でマイクを許可してから、もう一度お試しください。');return null;}
+  const AC=window.AudioContext||window.webkitAudioContext,ac=new AC();
+  try{if(ac.state==='suspended')await ac.resume();}catch(e){}
+  const an=ac.createAnalyser();an.fftSize=2048;ac.createMediaStreamSource(stream).connect(an);
+  return{stream,ac,an,buf:new Float32Array(an.fftSize)};
+}
+function micClose(m){try{m.stream.getTracks().forEach(t=>t.stop());}catch(e){}try{m.ac.close();}catch(e){}}
+function micDb(m){
+  m.an.getFloatTimeDomainData(m.buf);let s=0;for(let i=0;i<m.buf.length;i++)s+=m.buf[i]*m.buf[i];
+  return Math.max(20,Math.min(110,20*Math.log10(Math.max(Math.sqrt(s/m.buf.length),1e-8))+94));
+}
+function vjLevel(){return S.vjump?micDb(S.vjump.mic):30;}   // いまの声の大きさ（目安のdB）
+
+defTask({id:'vjump',name:'声でジャンプ',title:'声でジャンプ（障害物よけ）',cat:'lang att',
+  sub:'声の大きさで、キャラクターが跳びます。右から来る障害物を、声でよけます。',
+  icon:'<path d="M3 27h26"/><rect x="13" y="20" width="6" height="7" rx="1"/><path d="M5 20C8 6 24 6 27 20"/><path d="M23 15l4 5-5 1"/>',
+  desc:'声の大きさで、キャラクターを跳ばせる。大きな声を続ける練習になります。',
+  rows:[
+    {k:'len',label:'コースの長さ',def:60,opts:[[30,'短い','約30秒'],[60,'ふつう','約1分'],[90,'長い','約1分30秒']]},
+    {k:'need',label:'いちばん高く跳ぶ声',def:65,opts:[[58,'小さめ','約58dB'],[65,'ふつう','約65dB'],[72,'大きめ','約72dB'],[80,'とても大きい','約80dB']]},
+    {k:'dens',label:'障害物の数',def:1,opts:[[0,'少なめ'],[1,'ふつう'],[2,'多め','つづけて出ることが多い']]}],
+  note:'「あー」と声を出している間、キャラクターが高く跳びます。障害物が連続で来ても、声を出し続ければ、そのまま越えられます。ぶつかっても続けられます（回数を記録）。数字は目安のdBで、マイクの許可が必要です。最初の約1.5秒は、まわりの音を測るので静かにしてください。',
+  bar:'<span class="stat">避けた <b id="vjump-ok">0</b></span><span class="stat">ぶつかった <b id="vjump-ng">0</b></span><span class="stat">いまの声 <b id="vjump-now">--</b></span>',
+  area:'<canvas id="vjump-cv"></canvas>',
+  start:vjStart,finish:vjFinish});
+async function vjStart(){
+  const cf=CF('vjump');
+  const mic=await micOpen();if(!mic)return;
+  enterPlay('vjump');
+  const[aw,ah]=availSize($('vjump-stage'));const[W,H]=fitBox(2.1,Math.min(aw,980),Math.max(240,ah-70));
+  const c=setupCanvas($('vjump-cv'),W,H);
+  const spd=W*0.30,gap=[[1.6,4.8],[0.9,3.4],[0.5,2.2]][cf.dens],obs=[];
+  let T=5.0;
+  for(;;){const w=W*rnd(0.04,0.09),d=w/spd;if(T+d>cf.len-1.5)break;obs.push({T,w,h:Math.random()<0.5?0.38:0.64,state:0});T+=d+rnd(gap[0],gap[1]);}
+  S.vjump={mic,W,H,c,spd,obs,phase:'amb',amb:[],pt0:performance.now(),rt0:0,series:[],h:0,disp:30,last:performance.now(),over:false,raf:0,lo:0,hi:cf.need,ok:0,ng:0,maxdb:0,timers:[]};
+  $('vjump-ok').textContent='0';$('vjump-ng').textContent='0';$('vjump-now').textContent='--';$('vjump-time').textContent='0:00';
+  msg('vjump','しばらく静かにしてください（まわりの音を測っています）');
+  vjLoop();
+}
+function vjLoop(){
+  const s=S.vjump;if(!s||s.over)return;
+  s.raf=requestAnimationFrame(vjLoop);
+  const cf=CF('vjump'),now=performance.now(),dt=Math.min(0.05,(now-s.last)/1000);s.last=now;
+  const db=vjLevel();
+  s.disp=db>s.disp?db:s.disp*0.85+db*0.15;
+  if(s.phase==='amb'){
+    s.amb.push(db);
+    if(now-s.pt0>=1500){const amb=mean(s.amb);s.hi=cf.need;s.lo=Math.min(amb+6,s.hi-10);s.phase='run';s.rt0=now;msg('vjump','「あー」と声を出して、障害物をとびこえよう！');}
+    vjDraw(0);return;
+  }
+  const t=(now-s.rt0)/1000;
+  const target=Math.max(0,Math.min(1,(s.disp-s.lo)/(s.hi-s.lo)));
+  if(target>s.h)s.h+=(target-s.h)*Math.min(1,dt*14);else s.h=Math.max(target,s.h-dt*1.8);
+  s.series.push([t,db]);if(db>s.maxdb)s.maxdb=db;
+  // 当たり判定
+  const charX=s.W*0.2,cr=s.H*0.07;
+  s.obs.forEach(o=>{
+    if(o.state)return;
+    const xl=charX+(o.T-t)*s.spd,xr=xl+o.w;
+    if(xl<charX+cr*0.8&&xr>charX-cr*0.8){if(s.h<o.h)o.state=2,s.ng++;}
+    else if(xr<=charX-cr*0.8){o.state=1;s.ok++;}
+  });
+  $('vjump-ok').textContent=s.ok;$('vjump-ng').textContent=s.ng;$('vjump-now').textContent='約 '+Math.round(s.disp)+' dB';
+  $('vjump-time').textContent=fmtMS(t*1000);
+  vjDraw(t);
+  if(t>=cf.len)vjFinish('done');
+}
+function vjDraw(t){
+  const s=S.vjump,c=s.c,W=s.W,H=s.H,gy=H*0.82,maxRise=H*0.55,cr=H*0.07,charX=W*0.2;
+  const g=c.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#CFE9FF');g.addColorStop(1,'#F4FAFF');c.fillStyle=g;c.fillRect(0,0,W,gy);
+  c.fillStyle='#8FCB7E';c.fillRect(0,gy,W,H-gy);c.fillStyle='#6DB35F';c.fillRect(0,gy,W,6);
+  c.strokeStyle='#7DBE6E';c.lineWidth=3;
+  for(let x=-((t*s.spd)%60);x<W;x+=60){c.beginPath();c.moveTo(x,gy+H*0.1);c.lineTo(x+22,gy+H*0.1);c.stroke();}
+  // 進み具合
+  c.fillStyle='rgba(0,0,0,.12)';c.fillRect(W*0.1,H*0.04,W*0.8,6);c.fillStyle='#2A6EBB';c.fillRect(W*0.1,H*0.04,W*0.8*Math.min(1,t/CF('vjump').len),6);
+  // 障害物
+  s.obs.forEach(o=>{
+    const xl=charX+(o.T-t)*s.spd;if(xl>W||xl+o.w<0)return;
+    const oh=o.h*maxRise;
+    c.fillStyle=o.state===2?'#D9776B':'#8A6B4A';c.strokeStyle='#4A3826';c.lineWidth=3;
+    c.beginPath();c.roundRect(xl,gy-oh,o.w,oh,[10,10,2,2]);c.fill();c.stroke();
+    c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=3;c.beginPath();c.moveTo(xl+o.w*0.25,gy-oh+8);c.lineTo(xl+o.w*0.25,gy-6);c.stroke();
+  });
+  // キャラクター（ひよこ）
+  const rise=s.h*maxRise,cy=gy-rise-cr;
+  c.fillStyle='rgba(0,0,0,.15)';c.beginPath();c.ellipse(charX,gy+4,cr*(1-0.4*s.h),cr*0.25,0,0,7);c.fill();
+  c.fillStyle='#FFD54F';c.strokeStyle='#8A6A00';c.lineWidth=3;c.beginPath();c.arc(charX,cy,cr,0,7);c.fill();c.stroke();
+  c.fillStyle='#FFC107';c.beginPath();c.ellipse(charX-cr*0.35,cy+cr*0.15,cr*0.4,cr*0.28,-0.5+(s.h>0.05?-0.6:0),0,7);c.fill();c.stroke();
+  c.fillStyle='#FF8A3D';c.beginPath();c.moveTo(charX+cr*0.85,cy-cr*0.1);c.lineTo(charX+cr*1.5,cy+cr*0.1);c.lineTo(charX+cr*0.85,cy+cr*0.3);c.closePath();c.fill();c.stroke();
+  c.fillStyle='#1A2332';c.beginPath();c.arc(charX+cr*0.35,cy-cr*0.3,cr*0.13,0,7);c.fill();
+  c.strokeStyle='#FF8A3D';c.lineWidth=3;[-0.25,0.25].forEach(d=>{c.beginPath();c.moveTo(charX+cr*d,cy+cr);c.lineTo(charX+cr*d,cy+cr*1.35);c.stroke();});
+  // 声のメーター（左）
+  const mx=W*0.03,mw=H*0.07,mt=H*0.12,mh=gy-mt-4;
+  c.fillStyle='rgba(255,255,255,.85)';c.strokeStyle='#8FA3B8';c.lineWidth=2;c.beginPath();c.roundRect(mx,mt,mw,mh,8);c.fill();c.stroke();
+  const f=s.phase==='run'?Math.max(0,Math.min(1,(s.disp-s.lo)/(s.hi-s.lo))):0;
+  c.fillStyle=f>=0.64?'#2E9E5B':f>=0.38?'#E3B31B':'#7FA7D6';c.fillRect(mx+3,mt+mh-3-(mh-6)*f,mw-6,(mh-6)*f);
+  c.strokeStyle='#C0392B';c.lineWidth=2;c.setLineDash([4,3]);[0.38,0.64].forEach(r=>{const y=mt+mh-3-(mh-6)*r;c.beginPath();c.moveTo(mx-4,y);c.lineTo(mx+mw+4,y);c.stroke();});c.setLineDash([]);
+  if(s.phase==='amb'){c.fillStyle='rgba(23,28,38,.55)';c.fillRect(0,0,W,H);c.fillStyle='#fff';c.font='bold '+Math.round(H*0.07)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('まわりの音を測っています…',W/2,H/2);}
+}
+function vjFinish(why){
+  const s=S.vjump;if(!s||s.over)return;
+  const cf=CF('vjump');
+  cancelAnimationFrame(s.raf);micClose(s.mic);
+  const done=s.obs.filter(o=>o.state),ok=done.filter(o=>o.state===1).length,ng=done.filter(o=>o.state===2).length;
+  const ser=s.series,tmax=ser.length?ser[ser.length-1][0]:0;
+  const inVoice=ser.length?ser.filter(p=>p[1]>=s.lo+0.38*(s.hi-s.lo)).length/ser.length:0;
+  const m=[['課題','声でジャンプ（コース約'+cf.len+'秒・'+cf.need+'dBで最高）'],['終了のしかた',STATUS[why]]];
+  let image=null;
+  if(s.phase==='run'&&ser.length){
+    m.push(['障害物を避けた数',ok+' / '+done.length,true]);
+    m.push(['ぶつかった回数',ng+' 回']);
+    m.push(['低い障害物に必要な声／高い障害物に必要な声',Math.round(s.lo+0.38*(s.hi-s.lo))+' dB ／ '+Math.round(s.lo+0.64*(s.hi-s.lo))+' dB']);
+    m.push(['声の最大（目安）','約 '+Math.round(s.maxdb)+' dB']);
+    m.push(['必要な大きさの声が出ていた時間の割合',Math.round(inVoice*100)+' %']);
+    m.push(['走った時間',sec2(tmax*1000)]);
+    // 結果の図：声の大きさの記録と障害物
+    const cv=document.createElement('canvas');cv.width=640;cv.height=230;const c=cv.getContext('2d');
+    c.fillStyle='#fff';c.fillRect(0,0,640,230);
+    const x0=44,x1=630,y0=200,y1=14,yl=s.lo-8,yh=Math.max(s.hi+12,s.maxdb+3),X=t=>x0+(x1-x0)*t/Math.max(1,cf.len),Y=d=>y0-(y0-y1)*(Math.max(yl,Math.min(yh,d))-yl)/(yh-yl);
+    c.strokeStyle='#DDE3EA';c.lineWidth=1;c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y0);c.stroke();
+    done.forEach(o=>{const xa=X(o.T),xb=X(o.T+o.w/s.spd),yt=Y(s.lo+o.h*(s.hi-s.lo));c.fillStyle=o.state===1?'rgba(46,125,94,.30)':'rgba(192,57,43,.35)';c.fillRect(xa,yt,Math.max(6,xb-xa),y0-yt);});
+    c.setLineDash([5,4]);c.strokeStyle='#8FA3B8';[s.lo,s.hi].forEach(d=>{c.beginPath();c.moveTo(x0,Y(d));c.lineTo(x1,Y(d));c.stroke();});c.setLineDash([]);
+    c.strokeStyle='#2A6EBB';c.lineWidth=2;c.beginPath();ser.forEach((p,i)=>{i?c.lineTo(X(p[0]),Y(p[1])):c.moveTo(X(p[0]),Y(p[1]));});c.stroke();
+    c.fillStyle='#5A6A7A';c.font='12px sans-serif';c.textAlign='right';c.textBaseline='middle';c.fillText('約'+Math.round(s.hi)+'dB',x0-4,Y(s.hi));c.fillText('約'+Math.round(s.lo)+'dB',x0-4,Y(s.lo));
+    c.textAlign='left';c.fillText('青線＝声の大きさ／緑の帯＝避けた障害物／赤の帯＝ぶつかった障害物',x0,224);
+    image=cv.toDataURL('image/png');
+  }else m.push(['進んだところ','走り出す前に終了']);
+  endTask('vjump',why,m,{image,wide:true,legend:'声の大きさ（dB）は、iPadやパソコンのマイクで測った目安です。正確な騒音計の値ではありません。周りの音が大きい場所では、結果が変わります。'});
+}
+
+// ================= 記憶描画（消える見本） =================
+defTask({id:'memdraw',name:'記憶描画',title:'記憶描画（消える見本を思い出して描く）',cat:'mem vis',
+  sub:'見本がだんだん薄くなって消えます。そのあと、思い出して同じ図形を描きます。',
+  icon:'<rect x="3" y="5" width="14" height="14" rx="2" stroke-dasharray="3 3"/><path d="M13 27l1-5 11-11 4 4-11 11z"/>',
+  desc:'薄くなって消える見本を覚えて、思い出して描く。形を覚えておく力を見ます。',
+  rows:[
+    {k:'shape',label:'見本の図形',def:'pent2',opts:[['pent2','重なる五角形'],['sqpent','四角形と五角形'],['cube','立方体'],['star','星形'],['tri','三角形']]},
+    {k:'secs',label:'見本が消えるまで',def:10,opts:[[5,'5秒'],[10,'10秒'],[20,'20秒']]},
+    {k:'tol',label:'判定の厳しさ',def:'normal',opts:[['loose','ゆるい'],['normal','ふつう'],['strict','きびしい']]}],
+  note:'見本は、指定した時間をかけて、少しずつ薄くなり、最後に消えます。消えたあと、白い枠に思い出して描いてもらいます。判定は図形模写と同じで、大きさの違いや小さな傾きは許して、形の一致度を出します。',
+  barBtn:'<button class="btn btn-g" id="memdraw-clear" style="display:none">消す</button><button class="btn btn-p" id="memdraw-done" style="display:none">描けた</button>',
+  area:'<canvas id="memdraw-cv"></canvas>',
+  start:mdStart,finish:mdFinish,
+  init(){
+    ptr($('memdraw-cv'),(x,y)=>{const s=S.memdraw;if(!s||s.phase!=='draw')return;if(!s.dt0)s.dt0=performance.now();s.cur=[[x,y]];s.strokes.push(s.cur);mdRedraw();},
+      (x,y)=>{const s=S.memdraw;if(!s||!s.cur)return;const p=s.cur[s.cur.length-1];s.cur.push([x,y]);const c=s.c;c.strokeStyle='#2A6EBB';c.lineWidth=4;c.lineCap='round';c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(x,y);c.stroke();},
+      ()=>{const s=S.memdraw;if(s)s.cur=null;});
+    $('memdraw-clear').onclick=()=>{const s=S.memdraw;if(!s||s.phase!=='draw')return;s.strokes=[];s.cur=null;mdRedraw();};
+    $('memdraw-done').onclick=()=>mdFinish('done');
+  }});
+function mdTpl(S0){const k=S0*0.40,c=S0/2;return SHAPES[CF('memdraw').shape].s.map(st=>st.map(p=>[c+p[0]*k,c+p[1]*k]));}
+function mdRedraw(){const s=S.memdraw;s.c.fillStyle='#fff';s.c.fillRect(0,0,s.S,s.S);drawStrokes(s.c,s.strokes,'#2A6EBB',4);}
+function mdStart(){
+  const cf=CF('memdraw');enterPlay('memdraw');
+  const[aw,ah]=availSize($('memdraw-stage'));const Sz=Math.floor(Math.min(aw,ah-70,640));
+  const c=setupCanvas($('memdraw-cv'),Sz,Sz);
+  S.memdraw={S:Sz,c,tpx:mdTpl(Sz),strokes:[],cur:null,phase:'view',timers:[],over:false,raf:0,dt0:0,vt0:performance.now()};
+  $('memdraw-clear').style.display=$('memdraw-done').style.display='none';
+  startClock('memdraw');
+  msg('memdraw','図形をよく見て、覚えてください。だんだん薄くなって消えます');
+  mdView();
+}
+function mdView(){
+  const s=S.memdraw;if(!s||s.over)return;
+  const T=CF('memdraw').secs*1000,el=performance.now()-s.vt0;
+  const a=Math.max(0,Math.min(1,1-(el/T-0.15)/0.85));   // 最初の15%はそのまま見せ、そのあと少しずつ薄く
+  s.c.fillStyle='#fff';s.c.fillRect(0,0,s.S,s.S);s.c.globalAlpha=a;drawStrokes(s.c,s.tpx,'#333',5);s.c.globalAlpha=1;
+  if(el>=T){mdDraw();return;}
+  s.raf=requestAnimationFrame(mdView);
+}
+function mdDraw(){
+  const s=S.memdraw;if(!s||s.over)return;
+  s.phase='draw';s.drawStart=performance.now();mdRedraw();
+  $('memdraw-clear').style.display=$('memdraw-done').style.display='';
+  msg('memdraw','見本は消えました。思い出して、同じ図形を描いてください');
+}
+function mdFinish(why){
+  const s=S.memdraw;if(!s||s.over)return;
+  const cf=CF('memdraw'),Sz=s.S,name=SHAPES[cf.shape].n;
+  const strokes=s.strokes.filter(x=>pathLen(x)>=8);
+  const m=[['課題','記憶描画（'+name+'・'+cf.secs+'秒で消える）'],['終了のしかた',STATUS[why]]];
+  let image=null,wide=false;
+  if(strokes.length){
+    const tpts=resample(s.tpx,3),tol=({loose:0.045,normal:0.028,strict:0.018})[cf.tol]*Sz;
+    let upts=resample(strokes,3);
+    const rb=bbox(upts),tb=bbox(tpts),ratio=(rb.w+rb.h)/(tb.w+tb.h);
+    upts=alignBest(tpts,upts,tol);const sc=scoreDrawing(tpts,upts,tol);
+    const oc=document.createElement('canvas');oc.width=Sz*2;oc.height=Sz;const c=oc.getContext('2d');
+    c.fillStyle='#fff';c.fillRect(0,0,Sz*2,Sz);drawStrokes(c,strokes,'#1A2332',4);
+    c.fillStyle='#5A6A7A';c.font=Math.round(Sz*0.04)+'px sans-serif';c.textAlign='left';c.fillText('描いた図',10,Sz*0.06);
+    c.strokeStyle='#DDE3EA';c.lineWidth=2;c.beginPath();c.moveTo(Sz,0);c.lineTo(Sz,Sz);c.stroke();
+    c.fillStyle='#5A6A7A';c.fillText('見本と重ねた図（大きさ・傾きを補正）',Sz+10,Sz*0.06);
+    c.save();c.translate(Sz,0);
+    const dot=(p,col,r)=>{c.fillStyle=col;c.beginPath();c.arc(p[0],p[1],r,0,Math.PI*2);c.fill();};
+    tpts.forEach((p,i)=>dot(p,sc.cov[i]?'#2E7D5E':'#C0392B',4));upts.forEach((p,i)=>dot(p,sc.pre[i]?'#2A6EBB':'#E67E22',2));c.restore();
+    image=oc.toDataURL('image/png');wide=true;
+    const pc=v=>(v*100).toFixed(1)+' %';
+    m.push(['一致度',pc(sc.F),true],['見本の形を思い出せた割合',pc(sc.R)],['余分な線・ずれのない割合',pc(sc.P)],
+      ['描いた大きさ（見本との比）','約 '+ratio.toFixed(2)+' 倍（判定には影響しません）'],
+      ['描いた線の数（ペンを離した回数）',strokes.length+' 本'],
+      ['描くのにかかった時間',s.dt0?sec2(performance.now()-s.dt0):'—'],
+      ['判定の厳しさ',{loose:'ゆるい',normal:'ふつう',strict:'きびしい'}[cf.tol]]);
+  }else m.push(['一致度','描く前に終了']);
+  endTask('memdraw',why,m,{image,wide,legend:'一致度＝描いた図形を見本に重ねたとき（拡大・縮小、小さな傾き・位置のずれを補正）の、形の一致の割合。見本は途中で消えるため、記憶に頼って描いた結果です。図の見かた：緑の点＝思い出せた部分、赤の点＝思い出せていない部分、青の点＝見本に沿って描けた線、オレンジの点＝見本から外れた線。'});
+}
+
+
+// ================= 声でビルのぼり =================
+function bldgLevel(){return S.bldg?micDb(S.bldg.mic):30;}
+function voiceChart(ser,lines,bands,marks,len,lo,hi,maxdb,legend){
+  // 声の大きさの記録の図。bands=[[t0,t1,dbLow,dbHigh,color]] lines=[[db,label]] marks=[t]
+  const cv=document.createElement('canvas');cv.width=640;cv.height=230;const c=cv.getContext('2d');
+  c.fillStyle='#fff';c.fillRect(0,0,640,230);
+  const x0=50,x1=630,y0=198,y1=12,yl=Math.min(lo,...lines.map(l=>l[0]))-6,yh=Math.max(hi+8,maxdb+2,...lines.map(l=>l[0]+4)),
+    X=t=>x0+(x1-x0)*t/Math.max(1,len),Y=d=>y0-(y0-y1)*(Math.max(yl,Math.min(yh,d))-yl)/(yh-yl);
+  c.strokeStyle='#DDE3EA';c.lineWidth=1;c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y0);c.stroke();
+  bands.forEach(b=>{const ya=Y(b[3]),yb=Y(b[2]);c.fillStyle=b[4];c.fillRect(X(b[0]),ya,Math.max(3,X(b[1])-X(b[0])),yb-ya);});
+  c.setLineDash([5,4]);c.strokeStyle='#8FA3B8';c.fillStyle='#5A6A7A';c.font='12px sans-serif';c.textAlign='right';c.textBaseline='middle';
+  lines.forEach(l=>{c.beginPath();c.moveTo(x0,Y(l[0]));c.lineTo(x1,Y(l[0]));c.stroke();c.fillText(l[1],x0-4,Y(l[0]));});c.setLineDash([]);
+  marks.forEach(t=>{c.strokeStyle='#2E7D5E';c.lineWidth=2;c.beginPath();c.moveTo(X(t),y1);c.lineTo(X(t),y0);c.stroke();});
+  c.strokeStyle='#2A6EBB';c.lineWidth=2;c.beginPath();ser.forEach((p,i)=>{i?c.lineTo(X(p[0]),Y(p[1])):c.moveTo(X(p[0]),Y(p[1]));});c.stroke();
+  c.fillStyle='#5A6A7A';c.textAlign='left';c.fillText(legend,x0,220);
+  return cv.toDataURL('image/png');
+}
+defTask({id:'bldg',name:'声でビルのぼり',title:'声でビルのぼり（声の大きさをキープ）',cat:'lang att',
+  sub:'声の大きさで、キャラクターが上がります。色のついた階で声をキープして、ドアを開けます。',
+  icon:'<rect x="9" y="3" width="14" height="26" rx="1"/><path d="M13 8h2M17 8h2M13 13h2M17 13h2M13 18h2M17 18h2"/><path d="M14 29v-5h4v5"/>',
+  desc:'声の大きさを一定に保つ。ビルの狙った階まで上がり、ドアを開けます。',
+  rows:[
+    {k:'floors',label:'ビルの階数',def:5,opts:[[3,'3階','声の差が大きい'],[5,'5階'],[7,'7階','細かく調整']]},
+    {k:'hold',label:'キープする時間',def:3,opts:[[2,'2秒'],[3,'3秒'],[5,'5秒']]},
+    {k:'top',label:'最上階の声',def:72,opts:[[65,'小さめ','約65dB'],[72,'ふつう','約72dB'],[80,'大きめ','約80dB']]},
+    {k:'goal',label:'終わり',def:1,opts:[[1,'1回入る'],[3,'3回入る'],[5,'5回入る'],[60,'1分間']]}],
+  note:'「あー」と声を出すと、声の大きさに合わせて、キャラクターが上がります。色のついた階の高さで、声を保つとゲージがたまり、ドアが開きます。外れるとゲージは少しずつ減ります。数字は目安のdBです。マイクの許可が必要で、最初の約1.5秒は静かにします。',
+  bar:'<span class="stat">入れた <b id="bldg-ok">0</b></span><span class="stat">いまの声 <b id="bldg-now">--</b></span>',
+  area:'<canvas id="bldg-cv"></canvas>',
+  start:bldgStart,finish:bldgFinish});
+async function bldgStart(){
+  const cf=CF('bldg');const mic=await micOpen();if(!mic)return;
+  enterPlay('bldg');
+  const[aw,ah]=availSize($('bldg-stage'));const[W,H]=fitBox(1.5,Math.min(aw,980),Math.max(260,ah-70));
+  const c=setupCanvas($('bldg-cv'),W,H);
+  S.bldg={mic,W,H,c,phase:'amb',amb:[],pt0:performance.now(),rt0:0,last:performance.now(),disp:30,h:0,lo:0,hi:cf.top,
+    tf:0,prev:0,g:0,tstart:0,inb:0,trials:[],series:[],maxdb:0,enter:0,over:false,raf:0,timers:[]};
+  $('bldg-ok').textContent='0';$('bldg-now').textContent='--';$('bldg-time').textContent='0:00';
+  msg('bldg','しばらく静かにしてください（まわりの音を測っています）');bldgLoop();
+}
+function bldgTarget(s){const N=CF('bldg').floors;let f;do{f=ri(1,N);}while(f===s.prev&&N>1);s.tf=f;s.prev=f;s.g=0;s.tstart=performance.now();s.inb=0;
+  msg('bldg',f+'階の高さで、声をキープしてください');}
+function bldgLoop(){
+  const s=S.bldg;if(!s||s.over)return;
+  s.raf=requestAnimationFrame(bldgLoop);
+  const cf=CF('bldg'),N=cf.floors,now=performance.now(),dt=Math.min(0.05,(now-s.last)/1000);s.last=now;
+  const db=bldgLevel();s.disp=db>s.disp?db:s.disp*0.85+db*0.15;
+  if(s.phase==='amb'){
+    s.amb.push(db);
+    if(now-s.pt0>=1500){s.lo=Math.min(mean(s.amb)+6,s.hi-12);s.phase='run';s.rt0=now;bldgTarget(s);}
+    bldgDraw(0);return;
+  }
+  const t=(now-s.rt0)/1000;
+  const f0=(s.disp-s.lo)/(s.hi-s.lo);
+  if(f0>s.h)s.h+=(f0-s.h)*Math.min(1,dt*14);else s.h=Math.max(f0,s.h-dt*1.8);
+  s.h=Math.max(0,Math.min(1,s.h));
+  s.series.push([t,db]);if(db>s.maxdb)s.maxdb=db;
+  const fp=Math.max(0,Math.min(N,f0*N));
+  if(s.phase==='run'){
+    const inb=fp>0.05&&fp>=s.tf-1-0.1&&fp<=s.tf+0.1;
+    if(inb){s.g+=dt/cf.hold;s.inb+=dt;}else s.g=Math.max(0,s.g-dt/cf.hold*0.6);
+    if(s.g>=1){s.trials.push({floor:s.tf,ms:now-s.tstart,t0:(s.tstart-s.rt0)/1000,t1:t,inb:s.inb});s.phase='enter';s.enter=now;$('bldg-ok').textContent=s.trials.length;msg('bldg','やった！ドアが開きました');}
+  }else if(s.phase==='enter'&&now-s.enter>=1000){
+    if(cf.goal<=5&&s.trials.length>=cf.goal){bldgFinish('done');return;}
+    s.phase='run';bldgTarget(s);
+  }
+  $('bldg-now').textContent='約 '+Math.round(s.disp)+' dB';$('bldg-time').textContent=fmtMS(t*1000);
+  bldgDraw(t);
+  if(cf.goal>5&&t>=cf.goal)bldgFinish('done');
+}
+function bldgDraw(t){
+  const s=S.bldg,c=s.c,W=s.W,H=s.H,N=CF('bldg').floors,ytop=H*0.05,gy=H*0.9,fh=(gy-ytop)/N,bx0=W*0.40,bx1=W*0.90,cr=Math.min(H*0.05,fh*0.4);
+  const g=c.createLinearGradient(0,0,0,gy);g.addColorStop(0,'#CFE9FF');g.addColorStop(1,'#F4FAFF');c.fillStyle=g;c.fillRect(0,0,W,H);
+  c.fillStyle='#8FCB7E';c.fillRect(0,gy,W,H-gy);
+  // 狙いの階の帯
+  if(s.phase!=='amb'&&s.tf){c.fillStyle='rgba(255,170,60,.22)';c.fillRect(0,gy-s.tf*fh,bx0,fh);}
+  // ビル
+  c.fillStyle='#CBD3DE';c.strokeStyle='#5A6A7A';c.lineWidth=3;c.fillRect(bx0,ytop,bx1-bx0,gy-ytop);c.strokeRect(bx0,ytop,bx1-bx0,gy-ytop);
+  for(let i=1;i<=N;i++){
+    const yb=gy-i*fh,yt=yb,target=(i===s.tf&&s.phase!=='amb'),open=target&&s.phase==='enter';
+    c.strokeStyle='#8FA0B3';c.lineWidth=2;c.beginPath();c.moveTo(bx0,yb);c.lineTo(bx1,yb);c.stroke();
+    // 窓
+    c.fillStyle='#EAF4FF';for(let k=0;k<3;k++){c.fillRect(bx0+(bx1-bx0)*(0.28+k*0.24),yb+fh*0.2,(bx1-bx0)*0.14,fh*0.38);}
+    // ドア
+    const dw=Math.min(W*0.06,fh*0.7),dh=fh*0.7,dx=bx0+W*0.012,dy=yb+fh-dh;
+    c.fillStyle=open?'#2B2118':target?'#FF9F2E':'#9AA7B6';c.strokeStyle='#4A5868';c.lineWidth=2;c.fillRect(dx,dy,dw,dh);c.strokeRect(dx,dy,dw,dh);
+    if(target&&!open){c.fillStyle='#fff';c.beginPath();c.arc(dx+dw*0.8,dy+dh*0.5,3,0,7);c.fill();}
+    c.fillStyle='#1A2332';c.font='bold '+Math.round(Math.min(fh*0.4,H*0.04))+'px sans-serif';c.textAlign='left';c.textBaseline='middle';c.fillText(i+'F',bx1+6,yb+fh/2);
+  }
+  // 声のメーター（左）
+  const mx=W*0.03,mw=H*0.06,mt=ytop,mh=gy-ytop;
+  c.fillStyle='rgba(255,255,255,.9)';c.strokeStyle='#8FA3B8';c.lineWidth=2;c.beginPath();c.roundRect(mx,mt,mw,mh,8);c.fill();c.stroke();
+  const f=s.phase==='amb'?0:Math.max(0,Math.min(1,(s.disp-s.lo)/(s.hi-s.lo)));
+  c.fillStyle='#4C8FD6';c.fillRect(mx+3,mt+mh-3-(mh-6)*f,mw-6,(mh-6)*f);
+  c.strokeStyle='#8FA3B8';c.lineWidth=1;for(let i=1;i<N;i++){const y=gy-i*fh;c.beginPath();c.moveTo(mx,y);c.lineTo(mx+mw,y);c.stroke();}
+  // キャラクター
+  let cx=W*0.24,cy=gy-s.h*N*fh-cr;
+  let sc=1;
+  if(s.phase==='enter'){const k=Math.min(1,(performance.now()-s.enter)/700);const dx=bx0+W*0.012+Math.min(W*0.06,fh*0.7)/2,dy=gy-s.tf*fh+fh*0.65;cx=cx+(dx-cx)*k;cy=cy+(dy-cy)*k;sc=1-0.55*k;}
+  if(s.phase!=='amb'){
+    if(s.phase==='run'&&s.g>0){c.strokeStyle='#2E9E5B';c.lineWidth=7;c.lineCap='round';c.beginPath();c.arc(cx,cy,cr*1.45,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,s.g));c.stroke();}
+    const r=cr*sc;
+    c.fillStyle='#FFD54F';c.strokeStyle='#8A6A00';c.lineWidth=3;c.beginPath();c.arc(cx,cy,r,0,7);c.fill();c.stroke();
+    c.fillStyle='#FF8A3D';c.beginPath();c.moveTo(cx+r*0.85,cy-r*0.1);c.lineTo(cx+r*1.5,cy+r*0.1);c.lineTo(cx+r*0.85,cy+r*0.3);c.closePath();c.fill();
+    c.fillStyle='#1A2332';c.beginPath();c.arc(cx+r*0.35,cy-r*0.3,r*0.13,0,7);c.fill();
+  }
+  if(s.phase==='amb'){c.fillStyle='rgba(23,28,38,.55)';c.fillRect(0,0,W,H);c.fillStyle='#fff';c.font='bold '+Math.round(H*0.06)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('まわりの音を測っています…',W/2,H/2);}
+}
+function bldgFinish(why){
+  const s=S.bldg;if(!s||s.over)return;
+  const cf=CF('bldg');cancelAnimationFrame(s.raf);micClose(s.mic);
+  const tr=s.trials,m=[['課題','声でビルのぼり（'+cf.floors+'階・'+cf.hold+'秒キープ・最上階'+cf.top+'dB）'],['終了のしかた',STATUS[why]]];
+  let image=null;
+  if(s.phase!=='amb'&&s.series.length){
+    const run=s.series[s.series.length-1][0];
+    m.push(['ドアを開けられた回数',tr.length+(cf.goal<=5?' / '+cf.goal:' 回（1分間）'),true]);
+    m.push(['1回あたりの平均時間',tr.length?sec2(mean(tr.map(x=>x.ms))):'—']);
+    m.push(['狙った階にいられた時間の割合（入れた回の間）',tr.length?Math.round(mean(tr.map(x=>x.inb/(x.ms/1000)))*100)+' %':'—']);
+    tr.forEach((x,i)=>m.push(['　'+(i+1)+'回目：'+x.floor+'階',sec2(x.ms)]));
+    m.push(['声の最大（目安）','約 '+Math.round(s.maxdb)+' dB'],['走った時間',sec2(run*1000)]);
+    const N=cf.floors,band=(f)=>[s.lo+(f-1)/N*(s.hi-s.lo),s.lo+f/N*(s.hi-s.lo)];
+    image=voiceChart(s.series,[[s.lo,'約'+Math.round(s.lo)+'dB'],[s.hi,'約'+Math.round(s.hi)+'dB']],
+      tr.map(x=>{const b=band(x.floor);return[x.t0,x.t1,b[0],b[1],'rgba(255,159,46,.30)'];}),tr.map(x=>x.t1),Math.max(run,5),s.lo,s.hi,s.maxdb,'青線＝声の大きさ／オレンジの帯＝狙った階の声の範囲／緑の線＝ドアが開いた時');
+  }else m.push(['進んだところ','始める前に終了']);
+  endTask('bldg',why,m,{image,wide:true,legend:'声の大きさ（dB）は、iPadやパソコンのマイクで測った目安です。階の高さは、最初に測ったまわりの音を基準にしています。まわりが騒がしいと、結果が変わります。'});
+}
+
+// ================= 風船われ =================
+function balLevel(){return S.balloon?micDb(S.balloon.mic):30;}
+defTask({id:'balloon',name:'風船をわる',title:'風船をわる（大きな声を続ける）',cat:'lang',
+  sub:'大きな声を出し続けて、風船をふくらませて、割ります。',
+  icon:'<ellipse cx="16" cy="12" rx="8" ry="9"/><path d="M16 21l-2 3h4z"/><path d="M16 24c0 3-2 3-2 6"/>',
+  desc:'大きな声を続けて、風船を割る。大きな声を出し続ける練習になります。',
+  rows:[
+    {k:'thr',label:'ふくらむ声の大きさ',def:70,opts:[[60,'小さめ','約60dB'],[65,'やや小さめ','約65dB'],[70,'ふつう','約70dB'],[75,'大きめ','約75dB'],[80,'とても大きい','約80dB']]},
+    {k:'need',label:'割れるまでの声の長さ',def:5,opts:[[3,'3秒','短い'],[5,'5秒'],[8,'8秒','長い']]},
+    {k:'goal',label:'終わり',def:1,opts:[[1,'1個割る'],[3,'3個割る'],[5,'5個割る'],[60,'1分間']]}],
+  note:'声が目安より大きいあいだ、風船がふくらみ、いっぱいになると割れます。声が小さいと、ふくらまず、そのまま続けないと、少しずつしぼみます。数字は目安のdBです。マイクの許可が必要で、最初の約1.5秒は静かにします。',
+  bar:'<span class="stat">割った <b id="balloon-ok">0</b></span><span class="stat">いまの声 <b id="balloon-now">--</b></span>',
+  area:'<canvas id="balloon-cv"></canvas>',
+  start:balStart,finish:balFinish});
+async function balStart(){
+  const cf=CF('balloon');const mic=await micOpen();if(!mic)return;
+  enterPlay('balloon');
+  const[aw,ah]=availSize($('balloon-stage'));const[W,H]=fitBox(1.7,Math.min(aw,980),Math.max(260,ah-70));
+  const c=setupCanvas($('balloon-cv'),W,H);
+  S.balloon={mic,W,H,c,phase:'amb',amb:[],pt0:performance.now(),rt0:0,last:performance.now(),disp:30,f:0,col:0,pop:0,
+    pops:[],lastPop:0,series:[],maxdb:0,loud:0,sag:0,tot:0,over:false,raf:0,timers:[]};
+  $('balloon-ok').textContent='0';$('balloon-now').textContent='--';$('balloon-time').textContent='0:00';
+  msg('balloon','しばらく静かにしてください（まわりの音を測っています）');balLoop();
+}
+const BAL_COLS=['#E8554E','#F2A33A','#4C9BE0','#5CBF7A','#C57BDB'];
+function balLoop(){
+  const s=S.balloon;if(!s||s.over)return;
+  s.raf=requestAnimationFrame(balLoop);
+  const cf=CF('balloon'),now=performance.now(),dt=Math.min(0.05,(now-s.last)/1000);s.last=now;
+  const db=balLevel();s.disp=db>s.disp?db:s.disp*0.85+db*0.15;
+  if(s.phase==='amb'){s.amb.push(db);if(now-s.pt0>=1500){s.amb0=mean(s.amb);s.phase='run';s.rt0=now;s.lastPop=0;msg('balloon','「あー」と大きな声を続けて、風船を割ろう！');}balDraw(0);return;}
+  const t=(now-s.rt0)/1000;s.series.push([t,db]);if(db>s.maxdb)s.maxdb=db;
+  if(s.phase==='run'){
+    const rate=Math.max(0,Math.min(1,(s.disp-(cf.thr-8))/8));
+    s.tot+=dt;if(db>=cf.thr)s.loud+=dt;
+    if(rate>0)s.f+=rate*dt/cf.need;else if(s.f>0){s.f=Math.max(0,s.f-0.5*dt/cf.need);s.sag+=dt;}
+    if(s.f>=1){s.f=1;s.phase='pop';s.pop=now;s.pops.push({t,ms:(t-s.lastPop)*1000});s.lastPop=t;$('balloon-ok').textContent=s.pops.length;msg('balloon','パン！ 割れました');}
+  }else if(s.phase==='pop'&&now-s.pop>=900){
+    if(cf.goal<=5&&s.pops.length>=cf.goal){balFinish('done');return;}
+    s.phase='run';s.f=0;s.col=(s.col+1)%BAL_COLS.length;s.lastPop=(now-s.rt0)/1000;msg('balloon','つぎの風船です。大きな声を続けましょう');
+  }
+  $('balloon-now').textContent='約 '+Math.round(s.disp)+' dB';$('balloon-time').textContent=fmtMS(t*1000);
+  balDraw(t);
+  if(cf.goal>5&&t>=cf.goal)balFinish('done');
+}
+function balDraw(t){
+  const s=S.balloon,c=s.c,W=s.W,H=s.H,cf=CF('balloon');
+  const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#DDF0FF');g.addColorStop(1,'#F7FBFF');c.fillStyle=g;c.fillRect(0,0,W,H);
+  // メーター
+  const mx=W*0.04,mw=H*0.07,mt=H*0.08,mh=H*0.84,lo=Math.min(s.amb0||40,cf.thr-20),hi=cf.thr+10;
+  c.fillStyle='rgba(255,255,255,.9)';c.strokeStyle='#8FA3B8';c.lineWidth=2;c.beginPath();c.roundRect(mx,mt,mw,mh,8);c.fill();c.stroke();
+  const fr=s.phase==='amb'?0:Math.max(0,Math.min(1,(s.disp-lo)/(hi-lo)));
+  c.fillStyle=s.disp>=cf.thr-8?'#2E9E5B':'#7FA7D6';c.fillRect(mx+3,mt+mh-3-(mh-6)*fr,mw-6,(mh-6)*fr);
+  [[cf.thr,'#C0392B'],[cf.thr-8,'#8A97A6']].forEach(a=>{const y=mt+mh-3-(mh-6)*Math.max(0,Math.min(1,(a[0]-lo)/(hi-lo)));c.strokeStyle=a[1];c.lineWidth=2;c.setLineDash([4,3]);c.beginPath();c.moveTo(mx-4,y);c.lineTo(mx+mw+4,y);c.stroke();c.setLineDash([]);});
+  // 風船
+  const cx=W*0.55,cy=H*0.5,col=BAL_COLS[s.col%BAL_COLS.length];
+  if(s.phase!=='pop'&&s.phase!=='amb'){
+    const r=H*(0.07+0.27*s.f),wob=s.f>0&&s.disp>=cf.thr-8?Math.sin(t*40)*H*0.004*(1+s.f*3):0;
+    c.strokeStyle='#8A97A6';c.lineWidth=2;c.beginPath();c.moveTo(cx+wob,cy+r*1.15);c.quadraticCurveTo(cx+10,cy+r*1.15+H*0.15,cx-6,H*0.97);c.stroke();
+    c.fillStyle=col;c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=3;c.beginPath();c.ellipse(cx+wob,cy,r*0.86,r,0,0,7);c.fill();c.stroke();
+    c.beginPath();c.moveTo(cx+wob,cy+r);c.lineTo(cx+wob-8,cy+r+12);c.lineTo(cx+wob+8,cy+r+12);c.closePath();c.fill();
+    c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.ellipse(cx+wob-r*0.3,cy-r*0.35,r*0.14,r*0.28,-0.5,0,7);c.fill();
+    // ふくらみゲージ
+    c.fillStyle='rgba(0,0,0,.1)';c.fillRect(W*0.3,H*0.94,W*0.5,8);c.fillStyle='#2E9E5B';c.fillRect(W*0.3,H*0.94,W*0.5*s.f,8);
+  }else if(s.phase==='pop'){
+    const k=(performance.now()-s.pop)/900;
+    c.strokeStyle=col;c.lineWidth=6;c.lineCap='round';
+    for(let i=0;i<14;i++){const a=i*Math.PI*2/14,r1=H*(0.3+0.1*k),r2=H*(0.38+0.25*k);c.beginPath();c.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);c.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2);c.stroke();}
+    c.fillStyle='#E8554E';c.font='bold '+Math.round(H*0.2)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('パン！',cx,cy);
+  }
+  if(s.phase==='amb'){c.fillStyle='rgba(23,28,38,.55)';c.fillRect(0,0,W,H);c.fillStyle='#fff';c.font='bold '+Math.round(H*0.07)+'px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('まわりの音を測っています…',W/2,H/2);}
+}
+function balFinish(why){
+  const s=S.balloon;if(!s||s.over)return;
+  const cf=CF('balloon');cancelAnimationFrame(s.raf);micClose(s.mic);
+  const m=[['課題','風船をわる（'+cf.thr+'dB以上・約'+cf.need+'秒）'],['終了のしかた',STATUS[why]]];let image=null;
+  if(s.phase!=='amb'&&s.series.length){
+    const run=s.series[s.series.length-1][0];
+    m.push(['割った風船の数',s.pops.length+(cf.goal<=5?' / '+cf.goal:' 個（1分間）'),true]);
+    m.push(['1個あたりの平均時間',s.pops.length?sec2(mean(s.pops.map(p=>p.ms))):'—']);
+    m.push(['目安以上の大きな声が出ていた時間の割合',s.tot?Math.round(s.loud/s.tot*100)+' %':'—']);
+    m.push(['風船がしぼんでいた時間',sec2(s.sag*1000)]);
+    m.push(['声の最大（目安）','約 '+Math.round(s.maxdb)+' dB'],['走った時間',sec2(run*1000)]);
+    image=voiceChart(s.series,[[cf.thr,'約'+cf.thr+'dB'],[cf.thr-8,'約'+(cf.thr-8)+'dB']],[],s.pops.map(p=>p.t),Math.max(run,5),cf.thr-8,cf.thr,s.maxdb,'青線＝声の大きさ／緑の線＝風船が割れた時／点線＝ふくらみ始める声と十分な声');
+  }else m.push(['進んだところ','始める前に終了']);
+  endTask('balloon',why,m,{image,wide:true,legend:'声の大きさ（dB）は、iPadやパソコンのマイクで測った目安です。ふくらむ声の大きさは、「目安−8dB」から少しずつふくらみ、「目安」で最も速くふくらみます。まわりが騒がしいと、結果が変わります。'});
+}
+
+// ================= 時間ぴったり =================
+defTask({id:'timing',name:'時間ぴったり',title:'時間ぴったり（ちょうどの時間で止める）',cat:'att exe',
+  sub:'スタートをタップしてから、決められた時間がたったと思うところで、ストップをタップします。',
+  icon:'<circle cx="16" cy="18" r="11"/><path d="M16 18v-7M12 3h8M16 3v4"/>',
+  desc:'決められた秒数で、ぴったり止める。早押しや待つ力を見ます。',
+  rows:[
+    {k:'sec',label:'ねらう時間',def:10,opts:[[5,'5秒'],[10,'10秒'],[20,'20秒'],[30,'30秒'],[0,'まぜる','5・10・20秒をランダムに']]},
+    {k:'n',label:'回数',def:1,opts:[[1,'1回'],[3,'3回'],[5,'5回'],[8,'8回']]},
+    {k:'show',label:'経過時間の表示',def:0,opts:[[0,'表示しない','頭の中で数える'],[1,'表示する','数字が増えていく']]},
+    {k:'fb',label:'結果の表示',def:0,opts:[[0,'見せない','終わるまで表示なし'],[1,'毎回見せる','何秒で止めたかを表示']]}],
+  note:'「スタート」をタップしたあと、ねらう時間がたったと思うところで「ストップ」をタップします。声に出して数えたり、指で数えたりするかどうかは、実施する方が決めてください。早く押しすぎる傾向（待てずに押す）や、遅れる傾向を見ます。',
+  area:'<div class="calc-box tm-box" style="width:100%;max-width:760px"><div class="tm-target" id="timing-tg"></div><button class="tm-btn" id="timing-btn"></button><div class="tm-el" id="timing-el"></div><div class="calc-fb" id="timing-fb"></div></div>',
+  start:tmStart,finish:tmFinish,
+  init(){$('timing-time').parentNode.style.display='none';$('timing-btn').addEventListener('pointerdown',e=>{e.preventDefault();tmTap();});}});
+function tmStart(){
+  const cf=CF('timing');enterPlay('timing');
+  const list=[];for(let i=0;i<cf.n;i++)list.push(cf.sec||pick([5,10,20]));
+  S.timing={list,i:0,rec:[],phase:'ready',st:0,lockT:0,timers:[],over:false,raf:0};
+  startClock('timing');tmReady();
+}
+function tmReady(){
+  const s=S.timing;if(!s||s.over)return;
+  if(s.i>=s.list.length){tmFinish('done');return;}
+  s.phase='ready';s.lockT=performance.now();
+  const b=$('timing-btn');b.textContent='スタート';b.className='tm-btn go';
+  $('timing-tg').textContent=s.list[s.i]+'秒 ぴったりで止めてください（'+(s.i+1)+' / '+s.list.length+'回目）';
+  $('timing-el').textContent='';$('timing-fb').textContent='';msg('timing','準備ができたら「スタート」をタップ');
+}
+function tmTap(){
+  const s=S.timing;if(!s||s.over)return;const now=performance.now();
+  if(now-s.lockT<250)return;
+  if(s.phase==='ready'){
+    s.phase='run';s.st=now;s.lockT=now;
+    const b=$('timing-btn');b.textContent='ストップ';b.className='tm-btn stop';msg('timing',s.list[s.i]+'秒たったと思うところで、「ストップ」をタップ');
+    const tick=()=>{if(!S.timing||s.phase!=='run')return;$('timing-el').textContent=CF('timing').show?((performance.now()-s.st)/1000).toFixed(1)+' 秒':'';s.raf=requestAnimationFrame(tick);};tick();
+  }else if(s.phase==='run'){
+    const ms=now-s.st,tg=s.list[s.i];s.rec.push({tg,ms,err:ms/1000-tg});s.phase='fb';s.lockT=now;cancelAnimationFrame(s.raf);
+    const fb=CF('timing').fb;
+    $('timing-btn').textContent='';$('timing-btn').className='tm-btn off';
+    $('timing-el').textContent='';
+    $('timing-fb').textContent=fb?(ms/1000).toFixed(2)+' 秒（'+(ms/1000>=tg?'+':'−')+Math.abs(ms/1000-tg).toFixed(2)+' 秒）':'記録しました';
+    $('timing-fb').style.color=fb?'#2A6EBB':'#5A6A7A';
+    s.i++;s.timers.push(setTimeout(tmReady,fb?1800:900));
+  }
+}
+function tmFinish(why){
+  const s=S.timing;if(!s||s.over)return;
+  const cf=CF('timing'),r=s.rec;
+  const m=[['課題','時間ぴったり（'+(cf.sec?cf.sec+'秒':'5・10・20秒まぜる')+'・経過'+(cf.show?'表示あり':'表示なし')+'）'],['終了のしかた',STATUS[why]]];
+  let image=null;
+  if(r.length){
+    const rel=r.map(x=>x.err/x.tg*100),abs=r.map(x=>Math.abs(x.err));
+    const early=r.filter(x=>x.ms/1000<x.tg*0.7).length,late=r.filter(x=>x.ms/1000>x.tg*1.3).length;
+    m.push(['ずれの平均の大きさ',(mean(abs)).toFixed(2)+' 秒（目標の約 '+Math.round(mean(r.map(x=>Math.abs(x.err)/x.tg*100)))+' %）',true]);
+    m.push(['ずれの平均（早い−／遅い＋）',(mean(r.map(x=>x.err))>=0?'+':'−')+Math.abs(mean(r.map(x=>x.err))).toFixed(2)+' 秒']);
+    m.push(['早く止めすぎた回数（目標の7割より早い）',early+' 回']);
+    m.push(['遅すぎた回数（目標の1.3倍より遅い）',late+' 回']);
+    m.push(['いちばん大きなずれ',(r.reduce((a,x)=>Math.abs(x.err)>Math.abs(a.err)?x:a)).err.toFixed(2)+' 秒']);
+    r.forEach((x,i)=>m.push(['　'+(i+1)+'回目（'+x.tg+'秒）',(x.ms/1000).toFixed(2)+' 秒（'+(x.err>=0?'+':'−')+Math.abs(x.err).toFixed(2)+'）']));
+    const cv=document.createElement('canvas');cv.width=640;cv.height=230;const c=cv.getContext('2d');
+    c.fillStyle='#fff';c.fillRect(0,0,640,230);
+    const mx=Math.max(50,...rel.map(Math.abs))*1.1,y0=105,sc=85/mx,bw=Math.min(50,520/r.length);
+    c.strokeStyle='#8FA3B8';c.lineWidth=1;c.beginPath();c.moveTo(40,y0);c.lineTo(630,y0);c.stroke();
+    c.fillStyle='#5A6A7A';c.font='12px sans-serif';c.textAlign='right';c.textBaseline='middle';c.fillText('ぴったり',38,y0);c.fillText('遅い',38,y0-70);c.fillText('早い',38,y0+70);
+    rel.forEach((v,i)=>{const x=60+i*(bw+10);c.fillStyle=v<0?WARN_C:'#2A6EBB';if(Math.abs(v)<5)c.fillStyle=OK_C;c.fillRect(x,v>=0?y0-v*sc:y0,bw,Math.max(2,Math.abs(v)*sc));c.fillStyle='#5A6A7A';c.textAlign='center';c.fillText(r[i].tg+'秒',x+bw/2,205);c.fillText((v>=0?'+':'')+Math.round(v)+'%',x+bw/2,v>=0?y0-v*sc-10:y0-v*sc+12);});
+    c.textAlign='left';c.fillText('目標からのずれ（%）。オレンジ＝早く止めた／青＝遅く止めた／緑＝ほぼぴったり（±5%）',40,222);
+    image=cv.toDataURL('image/png');
+  }else m.push(['記録','止める前に終了']);
+  endTask('timing',why,m,{image,wide:true,legend:'ずれの平均の大きさ＝目標の時間と、実際に止めた時間の差（早い・遅いにかかわらず）の平均。早く止めすぎる回数が多いときは、待つことが難しい（行動を抑える力が弱い）可能性があります。'});
+}
+
+
+// ================= 日付の見当識 =================
+const ORI_W=['日','月','火','水','木','金','土'];
+function eraName(y){
+  if(y>=2019){const r=y-2018;return '令和'+(r===1?'元':r)+'年';}
+  if(y>=1989){const r=y-1988;return '平成'+(r===1?'元':r)+'年';}
+  const r=y-1925;return '昭和'+(r===1?'元':r)+'年';
+}
+function oriSeason(m){return m>=3&&m<=5?'春':m>=6&&m<=8?'夏':m>=9&&m<=11?'秋':'冬';}
+function oriPick(correct,pool,n){return shuffle(pool.filter(v=>v!==correct)).slice(0,n);}
+defTask({id:'orient',name:'日付の見当識',title:'日付の見当識（いまは何年・何月・何日？）',cat:'ori mem',
+  sub:'端末の日付をもとに、年・月・日・曜日を、5つの候補から選びます。',
+  icon:'<rect x="4" y="6" width="24" height="22" rx="3"/><path d="M4 13h24M10 3v6M22 3v6"/><path d="M10 19h4M18 19h4M10 23h4"/>',
+  desc:'いまの年・月・日・曜日を選ぶ。日付の見当識（いまを把握できているか）を見ます。',
+  rows:[
+    {k:'items',label:'質問',def:'ymdw',opts:[['ymd','年・月・日'],['ymdw','年・月・日・曜日','標準'],['ymdws','年・月・日・曜日・季節']]},
+    {k:'era',label:'年の表示',def:'both',opts:[['both','西暦と和暦','2026年（令和8年）'],['seireki','西暦のみ'],['wareki','和暦のみ']]}],
+  note:'',
+  area:'<div class="calc-box" style="width:100%;max-width:980px"><div class="calc-q" id="orient-q" style="font-size:40px;margin-bottom:18px"></div><div class="ori-ch" id="orient-ch"></div></div>',
+  start:oriStart,finish:oriFinish,
+  init(){
+    window.oriNote=()=>{
+      const e=$('orient-set').querySelector('.set-note'),d=new Date();
+      e.innerHTML='正解は、<b>この端末の日付</b>から自動で決まります。実施前に、下の日付が合っているか確認してください。<br><b style="font-size:18px;color:#1A2332">端末の日付：'+d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日（'+ORI_W[d.getDay()]+'曜日）</b><br>各質問で5つの候補（季節は4つ）が出ます。正誤は画面に出しません。通信は使わないので、オフラインでも使えます。';
+    };
+    oriNote();setInterval(oriNote,20000);
+    document.addEventListener('click',e=>{if(e.target.closest('.mcard'))oriNote();},true);
+  }});
+function oriStart(){
+  const cf=CF('orient');enterPlay('orient');window.oriNote();
+  const d=new Date(),y=d.getFullYear(),mo=d.getMonth()+1,da=d.getDate(),wd=d.getDay(),dim=new Date(y,mo,0).getDate();
+  const ylab=v=>cf.era==='seireki'?v+'年':cf.era==='wareki'?eraName(v):v+'年（'+eraName(v)+'）';
+  const qs=[];
+  const yc=oriPick(y,[y-3,y-2,y-1,y+1,y+2,y+3],4);
+  qs.push({key:'年',q:'今年は、何年ですか？',ans:y,ch:[y].concat(yc).sort((a,b)=>a-b),lab:ylab});
+  const mc=oriPick(mo,[-3,-2,-1,1,2,3].map(k=>((mo-1+k+12)%12)+1),4);
+  qs.push({key:'月',q:'いまは、何月ですか？',ans:mo,ch:[mo].concat(mc).sort((a,b)=>a-b),lab:v=>v+'月'});
+  let dp=[];for(let k=-5;k<=5;k++){const v=da+k;if(k&&v>=1&&v<=dim)dp.push(v);}
+  const dc=oriPick(da,dp,4);
+  qs.push({key:'日',q:'今日は、何日ですか？',ans:da,ch:[da].concat(dc).sort((a,b)=>a-b),lab:v=>v+'日'});
+  if(cf.items.indexOf('w')>=0)qs.push({key:'曜日',q:'今日は、何曜日ですか？',ans:wd,ch:[wd].concat(oriPick(wd,[0,1,2,3,4,5,6],4)).sort((a,b)=>a-b),lab:v=>ORI_W[v]+'曜日'});
+  if(cf.items.indexOf('s')>=0)qs.push({key:'季節',q:'いまの季節は、どれですか？',ans:oriSeason(mo),ch:['春','夏','秋','冬'],lab:v=>v});
+  S.orient={qs,i:0,rec:[],at:{y,mo,da,wd},timers:[],over:false};
+  startClock('orient');oriQ();
+}
+function oriQ(){
+  const s=S.orient;if(!s||s.over)return;
+  if(s.i>=s.qs.length){oriFinish('done');return;}
+  const q=s.qs[s.i];msg('orient','質問 '+(s.i+1)+' / '+s.qs.length);
+  $('orient-q').textContent=q.q;
+  const box=$('orient-ch');box.innerHTML='';
+  q.ch.forEach(v=>{const b=document.createElement('button');b.textContent=q.lab(v);b.dataset.v=v;box.appendChild(b);});
+  s.lock=true;s.qt0=performance.now();setTimeout(()=>{if(S.orient)S.orient.lock=false;},300);
+  box.onclick=e=>{const b=e.target.closest('button');if(!b||s.lock)return;s.lock=true;
+    const raw=b.dataset.v,val=typeof q.ans==='number'?+raw:raw;
+    s.rec.push({key:q.key,ok:val===q.ans,ans:q.lab(q.ans),pick:b.textContent,ms:performance.now()-s.qt0});s.i++;setTimeout(oriQ,150);};
+}
+function oriFinish(why){
+  const s=S.orient;if(!s||s.over)return;
+  const r=s.rec,ok=r.filter(x=>x.ok).length,a=s.at;
+  const m=[['課題','日付の見当識'],['終了のしかた',STATUS[why]],
+    ['基準にした端末の日付',a.y+'年'+a.mo+'月'+a.da+'日（'+ORI_W[a.wd]+'曜日）'],
+    ['正答',ok+' / '+s.qs.length+' 問',true]];
+  r.forEach(x=>m.push(['　'+x.key,(x.ok?'○　':'×　')+x.pick+(x.ok?'':'　（正解：'+x.ans+'）')]));
+  m.push(['平均の回答時間',r.length?sec2(mean(r.map(x=>x.ms))):'—'],['所要時間',sec2(performance.now()-s.t0)]);
+  endTask('orient',why,m,{legend:'正解は、実施した端末の日付をもとに自動で決めています。端末の日付が実際の日付と違うときは、結果は正しくありません。'});
 }
 
 // スタッフ採点が必要な課題は、メニューの末尾に並べる
