@@ -213,6 +213,14 @@ table.mt tr.em td{font-weight:700;font-size:18px;color:var(--acd);}
 .chip.staffchip.active{background:#FFD08A;color:#1A2332;}
 #hdesc{min-height:130px;}
 </style>
+<link rel="manifest" href="pwa/manifest.webmanifest">
+<link rel="apple-touch-icon" href="pwa/icon-180.png">
+<link rel="icon" type="image/png" href="pwa/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="課題ツール">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#171C26">
 </head>
 <body data-screen="s-menu">
 <header class="app">
@@ -2854,6 +2862,7 @@ function oddFinish(why){
 
 setToday();
 show('s-menu');
+if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 </script>
 </body>
 </html>
